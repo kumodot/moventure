@@ -1,0 +1,219 @@
+{
+  "meta": {
+    "title": "Silence on the Ninth Meridian",
+    "author": "Moventure generator",
+    "version": 1,
+    "start": "start",
+    "tier": 1,
+    "category": "Sci-Fi",
+    "blurb": "Theme: starship, seed: 7. Choices only.",
+    "generator": {
+      "theme": "starship",
+      "seed": 7,
+      "tier": 1,
+      "sides": [
+        "cargo",
+        "medbay"
+      ],
+      "roles": [
+        "key",
+        "ally"
+      ]
+    },
+    "license": "CC0"
+  },
+  "flags": [
+    "done_cargo",
+    "done_medbay",
+    "has_ally",
+    "has_item",
+    "has_key"
+  ],
+  "nodes": {
+    "start": {
+      "title": "ARRIVAL",
+      "text": "Your boarding tube kisses the hull with a soft clang. No lights on the other side. No answer on any channel for six days.\nInside the airlock, a cutting torch is clamped to the wall where someone dropped it in a hurry.",
+      "choices": [
+        {
+          "label": "Take the cutting to",
+          "to": "take_item",
+          "set": [
+            "has_item"
+          ]
+        },
+        {
+          "label": "Leave it",
+          "to": "ignore_item"
+        }
+      ]
+    },
+    "take_item": {
+      "title": "ARRIVAL",
+      "text": "You unclip the cutting torch. The battery is low but not dead. Better than nothing.",
+      "goto": "hub"
+    },
+    "ignore_item": {
+      "title": "ARRIVAL",
+      "text": "You leave it. You are not here to pick up junk.",
+      "goto": "hub"
+    },
+    "cargo": {
+      "title": "CARGO BAY",
+      "text": "Crates the size of houses, half of them open. Scratches on the inside of the lids. One crate hums.",
+      "choices": [
+        {
+          "label": "Search",
+          "to": "cargo_found",
+          "set": [
+            "has_key",
+            "done_cargo"
+          ]
+        },
+        {
+          "label": "Go back",
+          "to": "hub"
+        }
+      ]
+    },
+    "cargo_found": {
+      "title": "CARGO BAY",
+      "text": "You climb onto the humming crate and look in.\nThe crate holds a dead crewman and, in his fist, an engineering keycard. You take it. You do not look at his face.\nYou make your way back to the crossroads.",
+      "goto": "hub"
+    },
+    "medbay": {
+      "title": "MEDBAY",
+      "text": "Cots overturned. A single monitor still traces a heartbeat, steady and slow. Behind a curtain, someone whispers: don't let it hear you.",
+      "choices": [
+        {
+          "label": "Investigate",
+          "to": "medbay_found",
+          "set": [
+            "has_ally",
+            "done_medbay"
+          ]
+        },
+        {
+          "label": "Go back",
+          "to": "hub"
+        }
+      ]
+    },
+    "medbay_found": {
+      "title": "MEDBAY",
+      "text": "You pull the curtain aside.\nthe ship's last surviving medic looks up at you, alive, barely. I know what it is, they say. And I know how it dies. Take me with you.\nYou make your way back to the crossroads.",
+      "goto": "hub"
+    },
+    "hub": {
+      "title": "CROSSROADS",
+      "text": "The central corridor runs the length of the ship. Emergency strips glow the color of old blood. Doors lead off in every direction. Ahead, the sealed bridge hatch is shut tight, a red panel beside it.",
+      "choices": [
+        {
+          "label": "Go to Cargo Bay",
+          "to": "cargo",
+          "require": [
+            "!done_cargo"
+          ]
+        },
+        {
+          "label": "Go to Medbay",
+          "to": "medbay",
+          "require": [
+            "!done_medbay"
+          ]
+        },
+        {
+          "label": "Open the way",
+          "to": "gate_open",
+          "require": [
+            "has_key"
+          ]
+        },
+        {
+          "label": "Try the way",
+          "to": "gate_locked",
+          "require": [
+            "!has_key"
+          ]
+        },
+        {
+          "label": "Turn back",
+          "to": "end_leave"
+        }
+      ]
+    },
+    "gate_locked": {
+      "title": "CROSSROADS",
+      "text": "The panel by the sealed bridge hatch blinks red. NO CARD. Somewhere on this ship there is a way in.",
+      "goto": "hub"
+    },
+    "end_leave": {
+      "title": "HOME",
+      "text": "You back into the tube and seal it. The Ninth Meridian keeps drifting. Six weeks later the beacon starts up on its own, and you spend the rest of your life not answering it.",
+      "ending": "neutral"
+    },
+    "gate_open": {
+      "title": "THE WAY",
+      "text": "The card turns the panel green. the sealed bridge hatch groans open on a room lit only by the stars.",
+      "goto": "passage"
+    },
+    "passage": {
+      "title": "THE WAY",
+      "text": "A narrow way, then a wider one. Your footsteps come back to you a beat late. Then a door, and beyond it, light.",
+      "goto": "confront"
+    },
+    "confront": {
+      "title": "THE END",
+      "text": "the thing that used to be the captain is waiting in the captain's chair. It turns. It still has the captain's voice.\nBehind it, the distress beacon blinks, unlit, one switch away.",
+      "choices": [
+        {
+          "label": "Fight together",
+          "to": "end_best",
+          "require": [
+            "has_item",
+            "has_ally"
+          ]
+        },
+        {
+          "label": "Use the cutting tor",
+          "to": "end_good",
+          "require": [
+            "has_item",
+            "!has_ally",
+            "!has_lore"
+          ]
+        },
+        {
+          "label": "Face it",
+          "to": "end_bad",
+          "require": [
+            "!has_item"
+          ]
+        },
+        {
+          "label": "Run",
+          "to": "end_flee"
+        }
+      ]
+    },
+    "end_best": {
+      "title": "THE END",
+      "text": "the ship's last surviving medic shouts the word and you strike with the cutting torch where they told you. It comes apart like wet paper. You throw the switch and the distress beacon screams into the dark, and this time, someone answers.",
+      "ending": "good"
+    },
+    "end_good": {
+      "title": "THE END",
+      "text": "You swing the cutting torch with everything you have. It is enough, barely. You hit the switch with a broken hand. the distress beacon lights. Rescue comes, and you never tell them what you saw.",
+      "ending": "good"
+    },
+    "end_bad": {
+      "title": "THE END",
+      "text": "You have nothing but your hands. It has the whole ship.",
+      "ending": "bad"
+    },
+    "end_flee": {
+      "title": "THE END",
+      "text": "You run. You make the tube. Behind you the Ninth Meridian tumbles on, dark, and the distress beacon never lights. You tell the inquiry there was nothing to find.",
+      "ending": "neutral"
+    }
+  }
+}

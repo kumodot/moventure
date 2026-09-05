@@ -1,0 +1,115 @@
+{
+  "name": "Moventure Library",
+  "updated": "2026-09-05",
+  "count": 4,
+  "books": [
+    {
+      "id": "hollow_lighthouse",
+      "file": "stories/hollow_lighthouse.json",
+      "title": {
+        "en": "The Hollow Lighthouse",
+        "pt": "O Farol Vazio"
+      },
+      "blurb": {
+        "en": "A storm, a dead light, a door that should not be open.",
+        "pt": "Uma tempestade, uma luz apagada, uma porta que não devia estar aberta."
+      },
+      "author": "Marcelo Souza / Kumodot.art",
+      "category": "Horror",
+      "tier": 1,
+      "langs": [
+        "en",
+        "pt"
+      ],
+      "license": "CC BY-NC-ND 4.0",
+      "based_on": "",
+      "series": "",
+      "nodes": 21,
+      "endings": 8,
+      "words": 688,
+      "pages": 36,
+      "version": 1
+    },
+    {
+      "id": "last_train",
+      "file": "stories/last_train.json",
+      "title": {
+        "en": "The Last Train to Halvard",
+        "pt": "O Último Trem para Halvard"
+      },
+      "blurb": {
+        "en": "A night train, a locked door, and a passenger who was never on the list.",
+        "pt": "Um trem noturno, uma porta trancada e uma passageira que nunca esteve na lista."
+      },
+      "author": "Marcelo Souza / Kumodot.art",
+      "category": "Mystery",
+      "tier": 2,
+      "langs": [
+        "en",
+        "pt"
+      ],
+      "license": "CC BY-NC-ND 4.0",
+      "based_on": "",
+      "series": "",
+      "nodes": 21,
+      "endings": 6,
+      "words": 853,
+      "pages": 41,
+      "version": 1
+    },
+    {
+      "id": "bronze_gate",
+      "file": "stories/bronze_gate.json",
+      "title": {
+        "en": "The Bronze Gate",
+        "pt": "O Portão de Bronze"
+      },
+      "blurb": {
+        "en": "A pocket dungeon crawl. Luck, aim and grit decide who walks out.",
+        "pt": "Uma masmorra de bolso. Sorte, mira e garra decidem quem sai andando."
+      },
+      "author": "Marcelo Souza / Kumodot.art",
+      "category": "Fantasy",
+      "tier": 3,
+      "langs": [
+        "en",
+        "pt"
+      ],
+      "license": "CC BY-NC-ND 4.0",
+      "based_on": "",
+      "series": "",
+      "nodes": 21,
+      "endings": 6,
+      "words": 703,
+      "pages": 38,
+      "version": 1
+    },
+    {
+      "id": "scp_087_descent",
+      "file": "stories/scp_087_descent.json",
+      "title": {
+        "en": "087: Descent",
+        "pt": "087: Descida"
+      },
+      "blurb": {
+        "en": "A staircase that only goes down. A child crying, always the same distance below. Foundation Files, no. 1.",
+        "pt": "Uma escadaria que só desce. Uma criança chorando, sempre à mesma distância abaixo. Arquivos da Fundação, n. 1."
+      },
+      "author": "Marcelo Souza / Kumodot.art (adaptation)",
+      "category": "SCP",
+      "tier": 2,
+      "langs": [
+        "en",
+        "pt"
+      ],
+      "license": "CC BY-SA 3.0",
+      "based_on": "SCP-087 by Zaeyde, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-087 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+      "series": "Foundation Files",
+      "nodes": 26,
+      "endings": 8,
+      "words": 1168,
+      "pages": 59,
+      "version": 1
+    }
+  ]
+}

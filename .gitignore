@@ -1,0 +1,14 @@
+# generated files (rebuilt by run_sim.bat / run_studio.bat / tools/build_site.py)
+simulator/stories.js
+simulator/moventure_player_v*.html
+/catalog.json
+__pycache__/
+*.pyc
+
+# local only
+_to_delete/
+Claude outputs/
+OLED_SIMULATOR_GUIDE.md
+*.bat
+.DS_Store
+Thumbs.db

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moventure Library</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Tiny interactive gamebooks for a 128x64 screen. Read, choose, roll. Play in the browser, write your own.">
+<style>
+  :root { --bg:#0f1115; --panel:#181b22; --line:#2a2f3a; --txt:#d7dae0; --dim:#8a92a3; --acc:#7fd4ff; --warn:#f3c969; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); font-family: ui-monospace, Menlo, Consolas, monospace; font-size:14px; }
+  header { padding:26px 22px 10px; max-width:1100px; margin:0 auto; display:flex; align-items:flex-end; gap:18px; flex-wrap:wrap; }
+  header h1 { margin:0; font-size:22px; letter-spacing:4px; color:var(--acc); font-weight:normal; }
+  header h1 small { display:block; font-size:12px; letter-spacing:1px; color:var(--dim); margin-top:4px; }
+  header .grow { flex:1; }
+  nav { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  nav a, nav button { background:#22262f; color:var(--txt); border:1px solid var(--line); border-radius:6px; padding:8px 14px; text-decoration:none; font-family:inherit; font-size:13px; cursor:pointer; }
+  nav a:hover, nav button:hover { border-color:var(--acc); }
+  nav a.primary { background:var(--acc); color:#0f1115; border-color:var(--acc); font-weight:bold; }
+  nav .lang.on { border-color:var(--acc); color:var(--acc); }
+  .filters { max-width:1100px; margin:8px auto 0; padding:0 22px; display:flex; gap:6px; flex-wrap:wrap; }
+  .filters button { background:transparent; color:var(--dim); border:1px solid var(--line); border-radius:14px; padding:4px 12px; font-family:inherit; font-size:12px; cursor:pointer; }
+  .filters button.on { color:var(--txt); border-color:var(--acc); }
+  main { max-width:1100px; margin:0 auto; padding:18px 22px 60px; display:grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap:16px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; overflow:hidden; display:flex; flex-direction:column; }
+  .cover { aspect-ratio: 2 / 1; position:relative; display:flex; align-items:flex-end; padding:12px; background:#000; }
+  .cover canvas { position:absolute; inset:0; width:100%; height:100%; image-rendering:pixelated; }
+  .body { padding:12px 14px 14px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .title { font-size:16px; color:#fff; }
+  .meta { color:var(--dim); font-size:12px; display:flex; gap:10px; flex-wrap:wrap; }
+  .meta .tier { color:var(--warn); }
+  .blurb { color:var(--txt); line-height:1.45; flex:1; }
+  .row { display:flex; gap:8px; align-items:center; margin-top:4px; }
+  .row a { background:var(--acc); color:#0f1115; text-decoration:none; padding:7px 14px; border-radius:6px; font-weight:bold; font-size:13px; }
+  .row .dl { background:transparent; color:var(--dim); border:1px solid var(--line); font-weight:normal; }
+  .row .dl:hover { color:var(--txt); }
+  .lic { color:var(--dim); font-size:11px; }
+  footer { max-width:1100px; margin:0 auto; padding:0 22px 40px; color:var(--dim); font-size:12px; line-height:1.6; }
+  footer a { color:var(--acc); }
+  .about { max-width:1100px; margin:0 auto; padding:0 22px; color:var(--dim); line-height:1.6; font-size:13px; }
+  .about b { color:var(--txt); font-weight:normal; }
+  .empty { color:var(--dim); padding:40px; text-align:center; grid-column:1/-1; }
+</style>
+</head>
+<body>
+<header>
+  <h1>MOVENTURE <small data-i18n="tag">tiny gamebooks for a 128x64 screen</small></h1>
+  <div class="grow"></div>
+  <nav>
+    <button class="lang" data-lang="en">EN</button><button class="lang" data-lang="pt">PT-BR</button>
+    <a href="player/?player=1" class="primary" data-i18n="open_player">Open the player</a>
+    <a href="studio/" data-i18n="write">Write a book</a>
+    <a href="https://github.com/kumodot/moventure" data-i18n="source">Source</a>
+  </nav>
+</header>
+<p class="about" data-i18n="about">Read, turn pages, choose, roll the dice. Every book is a small text adventure written for a screen the size of a matchbox. Play here, on your phone, or on the Moventure device one day. Written in the Studio, shared as a single file.</p>
+<div class="filters" id="filters"></div>
+<main id="grid"><div class="empty" data-i18n="loading">loading…</div></main>
+<footer>
+  <span data-i18n="foot">Moventure is open source. Books belong to their authors and carry their own license. Adaptations of SCP Foundation entries are CC BY-SA 3.0.</span><br>
+  Marcelo Souza / Kumodot.art - 2026 // <a href="https://instagram.com/msouza3d">@Msouza3d</a> · <a href="https://ko-fi.com/msouza3d" data-i18n="support">support the project</a>
+</footer>
+
+<script>
+const I18N = {
+  en: { tag: 'tiny gamebooks for a 128x64 screen', open_player: 'Open the player', write: 'Write a book', source: 'Source', loading: 'loading…',
+        about: 'Read, turn pages, choose, roll the dice. Every book is a small text adventure written for a screen the size of a matchbox. Play here, on your phone, or on the Moventure device one day. Written in the Studio, shared as a single file.',
+        foot: 'Moventure is open source. Books belong to their authors and carry their own license. Adaptations of SCP Foundation entries are CC BY-SA 3.0.',
+        support: 'support the project', play: 'Play', file: 'JSON', all: 'All', tier: 'Tier', endings: 'endings', pages: 'pages', by: 'by',
+        cats: { Horror: 'Horror', Mystery: 'Mystery', Fantasy: 'Fantasy', 'Sci-Fi': 'Sci-Fi', Adventure: 'Adventure', Kids: 'Kids', SCP: 'SCP', Misc: 'Misc' } },
+  pt: { tag: 'livros-jogo minúsculos para uma tela 128x64', open_player: 'Abrir o leitor', write: 'Escrever um livro', source: 'Código', loading: 'carregando…',
+        about: 'Leia, vire páginas, escolha, jogue o dado. Cada livro é uma pequena aventura de texto escrita para uma tela do tamanho de uma caixa de fósforos. Jogue aqui, no celular, ou um dia no aparelho Moventure. Escrito no Studio, compartilhado como um arquivo só.',
+        foot: 'Moventure é código aberto. Os livros pertencem aos seus autores e têm licença própria. Adaptações da Fundação SCP são CC BY-SA 3.0.',
+        support: 'apoie o projeto', play: 'Jogar', file: 'JSON', all: 'Todos', tier: 'Nível', endings: 'finais', pages: 'páginas', by: 'de',
+        cats: { Horror: 'Terror', Mystery: 'Mistério', Fantasy: 'Fantasia', 'Sci-Fi': 'Ficção', Adventure: 'Aventura', Kids: 'Infantil', SCP: 'SCP', Misc: 'Outros' } },
+};
+let LANG = 'en';
+try { const l = localStorage.getItem('moventure_lang'); if (l && I18N[l]) LANG = l; else if (navigator.language.toLowerCase().startsWith('pt')) LANG = 'pt'; } catch (e) {}
+const T = k => I18N[LANG][k] ?? I18N.en[k];
+const L = x => (x && typeof x === 'object') ? (x[LANG] || x.en || Object.values(x)[0] || '') : (x || '');
+let catalog = null, filter = 'All';
+
+function applyI18n() {
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = T(el.dataset.i18n); });
+  document.querySelectorAll('nav .lang').forEach(b => b.classList.toggle('on', b.dataset.lang === LANG));
+}
+/* a pixel "cover": the title rendered big on a fake 128x64 OLED, category decides the pattern */
+function drawCover(canvas, book) {
+  const ctx = canvas.getContext('2d'); canvas.width = 128; canvas.height = 64;
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 128, 64);
+  const seed = [...book.id].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) >>> 0;
+  let r = seed; const rnd = () => (r = (r * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+  ctx.fillStyle = '#7fd4ff';
+  const pat = { Horror: () => { for (let i = 0; i < 90; i++) ctx.fillRect(rnd() * 128 | 0, rnd() * 64 | 0, 1, 1); },
+                Mystery: () => { for (let y = 0; y < 64; y += 6) ctx.fillRect(0, y, 128, 1); },
+                Fantasy: () => { for (let i = 0; i < 12; i++) { const x = rnd() * 128 | 0, y = rnd() * 64 | 0; ctx.fillRect(x - 1, y, 3, 1); ctx.fillRect(x, y - 1, 1, 3); } },
+                'Sci-Fi': () => { for (let x = 0; x < 128; x += 8) ctx.fillRect(x, 0, 1, 64); for (let y = 0; y < 64; y += 8) ctx.fillRect(0, y, 128, 1); },
+                Adventure: () => { for (let x = 0; x < 128; x++) ctx.fillRect(x, 40 + Math.sin(x / 9) * 6 | 0, 1, 1); },
+                Kids: () => { for (let i = 0; i < 20; i++) ctx.fillRect(rnd() * 128 | 0, rnd() * 64 | 0, 3, 3); },
+                SCP: () => { ctx.fillRect(4, 4, 120, 1); ctx.fillRect(4, 59, 120, 1); ctx.fillRect(4, 4, 1, 56); ctx.fillRect(123, 4, 1, 56); } };
+  (pat[book.category] || pat.Adventure)();
+  ctx.fillStyle = '#000'; ctx.fillRect(6, 22, 116, 22); ctx.fillStyle = '#fff';
+  ctx.font = 'bold 12px monospace'; ctx.textBaseline = 'middle';
+  const t = L(book.title).toUpperCase(); const lines = []; let cur = '';
+  for (const w of t.split(' ')) { if ((cur + ' ' + w).trim().length > 15) { lines.push(cur.trim()); cur = w; } else cur += ' ' + w; } lines.push(cur.trim());
+  lines.slice(0, 2).forEach((ln, i) => ctx.fillText(ln, 10, 30 + i * 12));
+}
+function render() {
+  applyI18n();
+  const grid = document.getElementById('grid'); const filters = document.getElementById('filters');
+  if (!catalog) return;
+  const cats = ['All'].concat([...new Set(catalog.books.map(b => b.category))].sort());
+  filters.innerHTML = cats.map(c => `<button class="${filter === c ? 'on' : ''}" data-cat="${c}">${c === 'All' ? T('all') : (T('cats')[c] || c)}</button>`).join('');
+  const list = catalog.books.filter(b => filter === 'All' || b.category === filter);
+  grid.innerHTML = list.map(b => `
+    <div class="card">
+      <div class="cover"><canvas data-cover="${b.id}"></canvas></div>
+      <div class="body">
+        <div class="title">${esc(L(b.title))}</div>
+        <div class="meta"><span>${T('cats')[b.category] || b.category}</span><span class="tier">${T('tier')} ${b.tier}</span><span>${b.langs.map(l => l.toUpperCase()).join(' ')}</span><span>${b.endings} ${T('endings')}</span><span>${b.pages} ${T('pages')}</span></div>
+        <div class="blurb">${esc(L(b.blurb))}</div>
+        <div class="meta">${T('by')} ${esc(b.author)}${b.series ? ' · ' + esc(b.series) : ''}</div>
+        <div class="row"><a href="player/?player=1&book=${encodeURIComponent(b.id)}">${T('play')} &#9654;</a><a class="dl" href="${b.file}" download>${T('file')}</a></div>
+        <div class="lic">${esc(b.license)}${b.based_on ? ' · ' + esc(b.based_on.split(',')[0]) : ''}</div>
+      </div>
+    </div>`).join('') || `<div class="empty">–</div>`;
+  list.forEach(b => drawCover(document.querySelector(`canvas[data-cover="${b.id}"]`), b));
+}
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+document.getElementById('filters').addEventListener('click', ev => { const b = ev.target.closest('[data-cat]'); if (b) { filter = b.dataset.cat; render(); } });
+document.querySelectorAll('nav .lang').forEach(b => b.addEventListener('click', () => { LANG = b.dataset.lang; try { localStorage.setItem('moventure_lang', LANG); } catch (e) {} render(); }));
+applyI18n();
+fetch('catalog.json', { cache: 'no-cache' }).then(r => r.json()).then(c => { catalog = c; render(); }).catch(() => { document.getElementById('grid').innerHTML = '<div class="empty">catalog.json not found</div>'; });
+</script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+{
+  "meta": {
+    "title": "The Whisperfen Does Not Forget",
+    "author": "Moventure generator",
+    "version": 1,
+    "start": "start",
+    "tier": 3,
+    "category": "Fantasy",
+    "blurb": "Theme: forest, seed: 11. Choices, dice and stats.",
+    "stats": {
+      "luck": 1,
+      "grit": 3
+    },
+    "generator": {
+      "theme": "forest",
+      "seed": 11,
+      "tier": 3,
+      "sides": [
+        "hut",
+        "hanging"
+      ],
+      "roles": [
+        "key",
+        "ally"
+      ]
+    },
+    "license": "CC0"
+  },
+  "flags": [
+    "done_hanging",
+    "done_hut",
+    "has_ally",
+    "has_item",
+    "has_key"
+  ],
+  "nodes": {
+    "start": {
+      "title": "ARRIVAL",
+      "text": "The village stops at the treeline and so does the road. Your brother went in three nights ago after the goats. The goats came back.\nOn the last fencepost someone has left an iron knife.",
+      "choices": [
+        {
+          "label": "Take the iron knife",
+          "to": "take_item",
+          "set": [
+            "has_item"
+          ]
+        },
+        {
+          "label": "Leave it",
+          "to": "ignore_item"
+        }
+      ]
+    },
+    "take_item": {
+      "title": "ARRIVAL",
+      "text": "You work the iron knife free. Cold iron. The old women say it matters.",
+      "goto": "hub"
+    },
+    "ignore_item": {
+      "title": "ARRIVAL",
+      "text": "You leave it. You are not here to pick up junk.",
+      "goto": "hub"
+    },
+    "hut": {
+      "title": "THE HUT",
+      "text": "A charcoal burner's hut, door open, fire out. Two bowls on the table. One is still warm.",
+      "choices": [
+        {
+          "label": "Search",
+          "to": "hut_found",
+          "set": [
+            "has_key",
+            "done_hut"
+          ]
+        },
+        {
+          "label": "Go back",
+          "to": "hub"
+        }
+      ]
+    },
+    "hut_found": {
+      "title": "THE HUT",
+      "text": "You touch the warm bowl.\nUnder the warm bowl is a carved token, carved with a stag. Whoever left it wanted it found.\nYou make your way back to the crossroads.",
+      "goto": "hub"
+    },
+    "hanging": {
+      "title": "THE HANGING TRE",
+      "text": "An oak so old it has grown around its own branches. Ribbons tied to every one, some new, some rotten. One has your brother's colors.",
+      "choices": [
+        {
+          "label": "Investigate",
+          "to": "hanging_found",
+          "set": [
+            "has_ally",
+            "done_hanging"
+          ]
+        },
+        {
+          "label": "Go back",
+          "to": "hub"
+        }
+      ]
+    },
+    "hanging_found": {
+      "title": "THE HANGING TRE",
+      "text": "You reach for his ribbon.\nthe charcoal burner's daughter drops from the branches beside you. Don't touch it, she says. It counts them. I know another way.\nYou feel luckier already.\nYou make your way back to the crossroads.",
+      "goto": "hub",
+      "mod": {
+        "luck": 2
+      }
+    },
+    "hub": {
+      "title": "CROSSROADS",
+      "text": "A clearing where three paths meet under a sky you can barely see. Deeper in, the ring of white stones glows faintly between the trunks, and you know without knowing that you cannot cross it uninvited.",
+      "choices": [
+        {
+          "label": "Go to The Hut",
+          "to": "hut",
+          "require": [
+            "!done_hut"
+          ]
+        },
+        {
+          "label": "Go to The Hanging T",
+          "to": "hanging",
+          "require": [
+            "!done_hanging"
+          ]
+        },
+        {
+          "label": "Open the way",
+          "to": "gate_open",
+          "require": [
+            "has_key"
+          ]
+        },
+        {
+          "label": "Try the way",
+          "to": "gate_locked",
+          "require": [
+            "!has_key"
+          ]
+        },
+        {
+          "label": "Turn back",
+          "to": "end_leave"
+        }
+      ]
+    },
+    "gate_locked": {
+      "title": "CROSSROADS",
+      "text": "You step toward the ring of white stones and the forest simply turns you around. You are facing the clearing again. You need to be invited.",
+      "goto": "hub"
+    },
+    "end_leave": {
+      "title": "HOME",
+      "text": "You walk back to the treeline and the village lights. Your mother does not ask. Every autumn after that, the goats come back on their own, and you count them twice.",
+      "ending": "neutral"
+    },
+    "gate_open": {
+      "title": "THE WAY",
+      "text": "You hold up the carved token and the ring of white stones lets you pass. On the other side the trees are taller and the moon is wrong.",
+      "goto": "passage"
+    },
+    "passage": {
+      "title": "THE WAY",
+      "text": "The way beyond slopes down and grows warm. You count your breaths to keep from counting anything else.",
+      "goto": "confront"
+    },
+    "confront": {
+      "title": "THE END",
+      "text": "A hall of living trunks. the Antlered One sits on a throne of roots, and at its feet, asleep or worse, is your brother.",
+      "choices": [
+        {
+          "label": "Strike together",
+          "require": [
+            "has_item",
+            "has_ally"
+          ],
+          "roll": {
+            "dice": "1d6",
+            "dc": 3,
+            "pass": "end_best",
+            "fail": "miss",
+            "stat": "luck"
+          }
+        },
+        {
+          "label": "Use the iron knife",
+          "require": [
+            "has_item",
+            "!has_ally"
+          ],
+          "roll": {
+            "dice": "1d6",
+            "dc": 5,
+            "pass": "end_good",
+            "fail": "miss",
+            "stat": "luck"
+          }
+        },
+        {
+          "label": "Bare hands",
+          "require": [
+            "!has_item"
+          ],
+          "roll": {
+            "dice": "1d6",
+            "dc": 6,
+            "pass": "end_good",
+            "fail": "miss",
+            "stat": "luck"
+          }
+        },
+        {
+          "label": "Run",
+          "to": "end_flee"
+        }
+      ]
+    },
+    "miss": {
+      "title": "THE END",
+      "text": "You miss, or it does not care. Something hits you hard enough to make the room ring.",
+      "mod": {
+        "grit": -1
+      },
+      "choices": [
+        {
+          "label": "Get up",
+          "to": "confront",
+          "require": [
+            "grit>0"
+          ]
+        },
+        {
+          "label": "Stay down",
+          "to": "end_bad",
+          "require": [
+            "grit<=0"
+          ]
+        }
+      ]
+    },
+    "end_best": {
+      "title": "THE END",
+      "text": "the charcoal burner's daughter names it, and a named thing can be bargained with. You lay the iron knife at its feet, iron for a life, and it accepts. You carry your brother home and he wakes at the treeline.",
+      "ending": "good"
+    },
+    "end_good": {
+      "title": "THE END",
+      "text": "You put the iron knife to the root-throne and the whole hall recoils. You grab your brother and run while it screams. He does not speak for a month, but he speaks.",
+      "ending": "good"
+    },
+    "end_bad": {
+      "title": "THE END",
+      "text": "You have nothing of iron and nothing of its name. It has your brother, and now it has you.",
+      "ending": "bad"
+    },
+    "end_flee": {
+      "title": "THE END",
+      "text": "You run and the forest lets you. You never go past the stones again. Some nights you hear two voices calling from the trees now, not one.",
+      "ending": "neutral"
+    }
+  }
+}

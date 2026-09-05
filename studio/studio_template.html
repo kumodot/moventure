@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moventure Studio</title>
+<style>
+  :root { --paper:#f6f2ea; --ink:#2b2622; --muted:#8a8078; --line:#ddd5c8; --card:#fffdf8; --acc:#c8572b; --acc2:#2b6cb0; --ok:#3a8f4a; --bad:#b23a2f; --soft:#f1ebe0; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family: Georgia, 'Iowan Old Style', 'Palatino Linotype', serif; font-size:17px; line-height:1.55; }
+  header { position:sticky; top:0; z-index:20; background:var(--paper); border-bottom:1px solid var(--line); padding:8px 18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  header h1 { margin:0; font-size:15px; letter-spacing:2px; font-weight:normal; }
+  header h1 span { color:var(--acc); font-size:11px; margin-left:6px; font-family:monospace; }
+  header .grow { flex:1; }
+  button, select, input[type=text], textarea { font-family:inherit; font-size:15px; color:var(--ink); }
+  button { background:transparent; border:1px solid transparent; border-radius:6px; padding:5px 10px; cursor:pointer; color:var(--muted); }
+  button:hover { color:var(--ink); background:var(--soft); }
+  button.primary { background:var(--acc); color:#fff; }
+  button.primary:hover { background:#b34a22; color:#fff; }
+  button.lang { font-family:monospace; font-size:12px; padding:3px 7px; }
+  button.lang.on { background:var(--acc2); color:#fff; }
+  select { border:1px solid var(--line); border-radius:6px; padding:4px 6px; background:#fff; }
+  input[type=text] { border:none; border-bottom:1px solid var(--line); background:transparent; padding:4px 2px; }
+  input[type=text]:focus, textarea:focus { outline:none; border-color:var(--acc); }
+  textarea { width:100%; border:none; background:transparent; resize:none; padding:2px 0; line-height:1.6; font-size:17px; overflow:hidden; }
+  main { display:grid; grid-template-columns: minmax(0, 1fr) 380px; gap:28px; padding:22px 26px; align-items:start; max-width:1400px; margin:0 auto; }
+  @media (max-width: 1000px) { main { grid-template-columns: 1fr; } .side { position:static !important; } }
+
+  /* ---- manuscript ---- */
+  .cover { margin-bottom:18px; }
+  .cover input.title { font-size:30px; width:100%; }
+  .cover .row { display:flex; gap:14px; align-items:center; margin-top:6px; color:var(--muted); font-size:14px; flex-wrap:wrap; }
+  .cover .row input[type=text] { font-size:14px; }
+  .cover .row .blurb { flex:1; min-width:220px; }
+  .crumbs { font-family:monospace; font-size:12px; color:var(--muted); margin:6px 0 10px 0; display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+  .crumbs a { color:var(--acc2); cursor:pointer; }
+  .crumbs .x { color:var(--line); }
+
+  .section { border-left:2px solid var(--line); margin:6px 0 6px 0; padding-left:14px; }
+  .section.root { border-left:none; padding-left:0; }
+  .section.focus > .shead .code { background:var(--ink); color:#fff; }
+  .shead { display:flex; align-items:center; gap:10px; cursor:pointer; padding:4px 0; user-select:none; }
+  .shead .code { font-family:monospace; font-size:12px; background:var(--soft); border-radius:4px; padding:1px 7px; color:var(--ink); }
+  .shead .sum { color:var(--muted); font-size:14px; flex:1; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+  .shead .pill { font-size:12px; color:var(--muted); font-family:monospace; }
+  .shead .prob { color:var(--bad); font-size:12px; }
+  .section.closed > .sbody { display:none; }
+
+  .block { position:relative; padding:4px 0; margin:2px 0; }
+  .block.sel { background:linear-gradient(90deg, #fff8ee, transparent); border-radius:6px; }
+  .block .more { position:absolute; right:0; top:2px; opacity:0; font-size:18px; line-height:1; padding:2px 8px; }
+  .block:hover .more, .block.sel .more { opacity:0.7; }
+  .block .more:hover { opacity:1; }
+  .block .cap { font-size:12px; color:var(--muted); font-family:monospace; display:flex; gap:10px; align-items:center; }
+  .block .cap input { font-family:monospace; font-size:12px; width:150px; border:none; color:var(--muted); }
+  .block .cap input:focus { color:var(--ink); }
+  .end { display:inline-flex; gap:6px; align-items:center; margin:6px 0; font-size:13px; }
+  .tag { font-family:monospace; font-size:12px; padding:2px 9px; border-radius:12px; color:#fff; background:var(--ok); }
+  .tag.goto { background:var(--acc2); }
+  .tag.q { background:var(--acc); }
+  .tag.fate { background:#7b5ea7; }
+
+  .question { margin-top:8px; padding:8px 12px; border:1px dashed #d8b8a0; border-radius:8px; background:#fff9f2; position:relative; }
+  .question > textarea { font-style:italic; font-size:16px; }
+  .question .more { position:absolute; right:6px; top:4px; opacity:0.5; font-size:18px; padding:0 6px; }
+  .opts { margin-top:6px; display:flex; flex-direction:column; gap:2px; }
+  .opt { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .opt .letter { font-family:monospace; color:var(--acc); font-weight:bold; width:16px; }
+  .opt input.label { flex:1; min-width:160px; font-size:15px; }
+  .opt .more { opacity:0.4; padding:2px 6px; font-size:16px; }
+  .opt:hover .more { opacity:1; }
+  .opt .note { font-size:12px; color:var(--muted); font-family:monospace; }
+  .opt .note b { color:var(--acc2); font-weight:normal; }
+  .addopt { font-size:13px; }
+  .roll { font-size:13px; color:var(--muted); display:flex; gap:6px; align-items:center; }
+  .roll input { width:34px; text-align:center; font-family:monospace; }
+
+  /* dropdown menu */
+  .menu { position:absolute; z-index:50; background:#fff; border:1px solid var(--line); border-radius:8px; box-shadow:0 10px 30px #0002; padding:6px; min-width:220px; font-size:14px; }
+  .menu div { padding:7px 12px; border-radius:6px; cursor:pointer; display:flex; justify-content:space-between; gap:12px; }
+  .menu div:hover { background:var(--soft); }
+  .menu div.danger { color:var(--bad); }
+  .menu div.sep { height:1px; padding:0; margin:4px 8px; background:var(--line); cursor:default; }
+  .menu div small { color:var(--muted); font-family:monospace; font-size:11px; }
+  .menu select { width:100%; margin:4px 0; }
+
+  /* ---- side ---- */
+  .side { position:sticky; top:56px; display:flex; flex-direction:column; gap:12px; }
+  .panel { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+  .panel h2 { margin:0 0 8px 0; font-size:11px; letter-spacing:2px; color:var(--muted); font-weight:normal; text-transform:uppercase; }
+  .device { background:#23262d; border-radius:12px; padding:10px; }
+  .screen { background:#000; border:4px solid #111; border-radius:4px; display:block; }
+  canvas { display:block; image-rendering:pixelated; width:100%; }
+  .pad { display:flex; justify-content:space-between; align-items:center; margin-top:8px; }
+  .dpad { display:grid; grid-template-columns:repeat(3,30px); grid-template-rows:repeat(3,30px); gap:2px; }
+  .dpad button, .ab button { background:#2e323b; border:1px solid #454b58; color:#c9cdd6; font-size:12px; font-weight:bold; padding:0; border-radius:6px; }
+  .dpad .c { background:#1c1f25; border-color:#1c1f25; }
+  .ab { display:flex; gap:8px; align-items:flex-end; }
+  .ab button { width:38px; height:38px; border-radius:50%; }
+  .ab .b { margin-bottom:12px; }
+  .pact { display:flex; gap:4px; margin-top:6px; flex-wrap:wrap; font-size:13px; }
+  #problems { font-size:14px; }
+  #problems .p { padding:4px 0; border-bottom:1px dashed var(--line); cursor:pointer; }
+  #problems .p:last-child { border-bottom:none; }
+  #problems .p:hover { color:var(--acc); }
+  #problems .ok { color:var(--ok); }
+  .stats { font-size:12px; color:var(--muted); font-family:monospace; margin-top:6px; }
+  .help { font-size:13px; color:var(--muted); line-height:1.5; }
+  .help b { color:var(--ink); font-weight:normal; }
+  input[type=file] { display:none; }
+  .toast { position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; padding:8px 16px; border-radius:20px; font-size:14px; opacity:0; transition:opacity .2s; pointer-events:none; z-index:60; }
+  .toast.show { opacity:1; }
+</style>
+</head>
+<body>
+<header>
+  <h1>MOVENTURE STUDIO <span id="ver"></span></h1>
+  <select id="projectSelect" title="Your stories (saved in this browser)"></select>
+  <button id="btnNew" title="New story">+ New</button>
+  <div class="grow"></div>
+  <span id="langbar"><button class="lang" data-lang="en">EN</button><button class="lang" data-lang="pt">PT-BR</button><button class="lang" data-lang="es">ES</button></span>
+  <button id="btnExpand" title="Show every path at once">Expand all</button>
+  <button id="btnImport">Import</button><input type="file" id="fileInput" accept=".json">
+  <button id="btnExport" class="primary">Export JSON</button>
+  <button id="btnMore" title="More">&#8943;</button>
+</header>
+
+<main>
+  <div>
+    <div class="cover">
+      <input type="text" id="mTitle" class="title" placeholder="Title">
+      <div class="row">
+        <select id="mCategory"></select>
+        <input type="text" id="mAuthor" placeholder="Author" style="width:180px">
+        <input type="text" id="mBlurb" class="blurb" placeholder="One line for the cover">
+      </div>
+    </div>
+    <div class="crumbs" id="crumbs"></div>
+    <div id="flow"></div>
+  </div>
+
+  <div class="side">
+    <div class="panel">
+      <div class="device">
+        <div class="screen"><canvas id="oled"></canvas></div>
+        <div class="pad">
+          <div class="dpad">
+            <button class="c" tabindex="-1"></button><button data-btn="UP">&#9650;</button><button class="c" tabindex="-1"></button>
+            <button data-btn="LEFT">&#9664;</button><button class="c" tabindex="-1"></button><button data-btn="RIGHT">&#9654;</button>
+            <button class="c" tabindex="-1"></button><button data-btn="DOWN">&#9660;</button><button class="c" tabindex="-1"></button>
+          </div>
+          <div class="ab"><button class="b" data-btn="B">B</button><button class="a" data-btn="A">A</button></div>
+        </div>
+      </div>
+      <div class="pact"><button id="btnPlayStart">&#9654; Play from start</button><button id="btnPlayHere">&#9654; From here</button></div>
+    </div>
+    <div class="panel">
+      <h2>Check</h2>
+      <div id="problems"></div>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div class="panel help" id="helpBox">
+      <h2>How to write</h2>
+      Just write your story top to bottom. When you want the reader to decide, put the cursor where the text should split, open <b>&#8943;</b> and pick <b>Fork here</b>: what comes after becomes path <b>A</b>, and an empty path <b>B</b> opens for you. <b>Random event</b> splits the same way but the dice decide. Every path has a code (A, B, A-B, A-P for "passed", A-F for "failed"). Finish each path with <b>The End</b> or <b>Go to</b> another path. Click a path's code to open it; the others fold away.
+    </div>
+  </div>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+const STUDIO_VERSION = '__STUDIO_VERSION__';
+const APP_VERSION = STUDIO_VERSION;
+/* ENGINE injected by tools/build_studio.py from the newest simulator */
+/* __ENGINE__ */
+</script>
+<script>
+/* =========================================================================
+   STUDIO v0.3: manuscript mode
+   model: story = { meta, blocks:{id:block}, root:[ids], nextId }
+   text block     = { kind:'text', title, text, after:null|'end'|'goto', ending, target }
+   question block = { kind:'question', title, text, options:[option], fate:null|{dc,pass:[],fail:[]} }
+   option         = { label, kind:'branch'|'goto', branch:[ids], target, roll:null|{dc,pass:[],fail:[]}, only:[{ref,not}] }
+   A "path" is a branch (array of block ids). Paths get codes from the choices that lead to them.
+   ========================================================================= */
+const CATEGORIES = ['Horror', 'Mystery', 'Fantasy', 'Sci-Fi', 'Adventure', 'Kids', 'SCP'];
+const LETTERS = 'ABCDEF';
+const LS_KEY = 'moventure_studio_v1';
+const STUDIO_LANGS = ['en', 'pt', 'es'];
+let EL = 'en';
+let S = null, projects = {}, currentId = null;
+let selected = null;               // selected block id
+let caret = { id: null, pos: 0 };  // last caret position inside a text block
+let openPaths = new Set(['START']);
+let expandAll = false;
+let order = [], pathOf = {}, pathList = [];   // computed each render: reading order, block -> path code, [{code, list, owner}]
+
+/* ---- localized field helpers ------------------------------------------------ */
+function g(x) { return (x && typeof x === 'object') ? (x[EL] || '') : (x || ''); }
+function other(x) { if (!(x && typeof x === 'object')) return ''; for (const l of STUDIO_LANGS) if (l !== EL && x[l]) return x[l]; return ''; }
+function any(x) { return g(x) || other(x); }
+function setg(obj, key, value) { const cur = obj[key]; obj[key] = (cur && typeof cur === 'object') ? cur : { en: cur || '' }; obj[key][EL] = value; }
+function isLoc(x) { return x && typeof x === 'object'; }
+function X(x) { if (!isLoc(x)) return x || ''; const f = STUDIO_LANGS.filter(l => (x[l] || '').trim()); if (f.length <= 1) return f.length ? x[f[0]] : ''; const o = {}; f.forEach(l => o[l] = x[l]); return o; }
+function storyLangs(s) { return STUDIO_LANGS.filter(l => (s.meta.title[l] || '').trim()); }
+function esc(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+
+/* ---- model ----------------------------------------------------------------- */
+function newStory(title = '') {
+  const s = { id: 's' + Date.now().toString(36), meta: { title: { en: title }, author: '', category: 'Adventure', blurb: { en: '' }, license: 'CC BY-NC-ND 4.0' }, blocks: {}, root: [], nextId: 1 };
+  s.root.push(addBlock(s, 'text').id);
+  return s;
+}
+function addBlock(s, kind) {
+  const id = s.nextId++;
+  s.blocks[id] = kind === 'question'
+    ? { id, kind, title: { en: '' }, text: { en: '' }, options: [], fate: null }
+    : { id, kind: 'text', title: { en: '' }, text: { en: '' }, after: null, ending: 'neutral', target: null };
+  return s.blocks[id];
+}
+function newOption() { return { label: { en: '' }, kind: 'branch', branch: [], target: null, roll: null, only: [] }; }
+function migrate(s) {
+  const up = (o, k) => { if (typeof o[k] === 'string') o[k] = { en: o[k] }; if (!o[k]) o[k] = { en: '' }; };
+  up(s.meta, 'title'); up(s.meta, 'blurb'); if (!s.meta.license) s.meta.license = 'CC BY-NC-ND 4.0';
+  for (const id in s.blocks) { const b = s.blocks[id]; up(b, 'title'); up(b, 'text'); if (b.kind === 'question') { b.options = b.options || []; b.options.forEach(o => up(o, 'label')); if (b.fate === undefined) b.fate = null; } }
+  return s;
+}
+function* branches(s) {
+  yield { list: s.root, code: 'START', owner: null };
+  for (const id of Object.keys(s.blocks)) {
+    const b = s.blocks[id]; if (b.kind !== 'question') continue;
+    for (let i = 0; i < b.options.length; i++) {
+      const o = b.options[i];
+      if (o.kind === 'branch' && !o.roll) yield { list: o.branch, owner: b, opt: i };
+      if (o.roll) { yield { list: o.roll.pass, owner: b, opt: i, side: 'P' }; yield { list: o.roll.fail, owner: b, opt: i, side: 'F' }; }
+    }
+    if (b.fate) { yield { list: b.fate.pass, owner: b, side: 'P' }; yield { list: b.fate.fail, owner: b, side: 'F' }; }
+  }
+}
+function findBranch(s, id) { for (const br of branches(s)) if (br.list.includes(id)) return br; return null; }
+function nextInBranch(s, id) { const br = findBranch(s, id); if (!br) return null; const i = br.list.indexOf(id); return i >= 0 && i < br.list.length - 1 ? br.list[i + 1] : null; }
+function deleteBlocks(s, ids) { ids.slice().forEach(id => deleteBlock(s, id)); }
+function deleteBlock(s, id) {
+  const b = s.blocks[id]; if (!b) return;
+  const br = findBranch(s, id); if (br) br.list.splice(br.list.indexOf(id), 1);
+  if (b.kind === 'question') { b.options.forEach(o => { deleteBlocks(s, o.branch || []); if (o.roll) { deleteBlocks(s, o.roll.pass); deleteBlocks(s, o.roll.fail); } }); if (b.fate) { deleteBlocks(s, b.fate.pass); deleteBlocks(s, b.fate.fail); } }
+  delete s.blocks[id];
+  for (const k of Object.keys(s.blocks)) { const x = s.blocks[k];
+    if (x.kind === 'text' && x.after === 'goto' && x.target === id) { x.after = null; x.target = null; }
+    if (x.kind === 'question') x.options.forEach(o => { if (o.kind === 'goto' && o.target === id) { o.kind = 'branch'; o.target = null; } o.only = o.only.filter(c => c.ref.split(':')[0] != id); });
+  }
+}
+/* reading order + path codes */
+function computeOrder(s) {
+  order = []; pathOf = {}; pathList = [];
+  const walk = (list, code, owner) => {
+    pathList.push({ code, list, owner });
+    for (const id of list) {
+      const b = s.blocks[id]; if (!b) continue;
+      order.push(id); pathOf[id] = code;
+      if (b.kind === 'question') {
+        const base = code === 'START' ? '' : code + '-';
+        b.options.forEach((o, i) => {
+          if (o.roll) { walk(o.roll.pass, base + LETTERS[i] + '-P', { block: b, opt: i, side: 'P' }); walk(o.roll.fail, base + LETTERS[i] + '-F', { block: b, opt: i, side: 'F' }); }
+          else if (o.kind === 'branch') walk(o.branch, base + LETTERS[i], { block: b, opt: i });
+        });
+        if (b.fate) { walk(b.fate.pass, base + 'P', { block: b, side: 'P' }); walk(b.fate.fail, base + 'F', { block: b, side: 'F' }); }
+      }
+    }
+  };
+  walk(s.root, 'START', null);
+  for (const id of Object.keys(s.blocks)) if (!pathOf[id]) { order.push(+id); pathOf[id] = '?'; }
+}
+function pathByCode(code) { return pathList.find(p => p.code === code); }
+function codeOfOption(bid, oi) { const b = S.blocks[bid]; const base = pathOf[bid] === 'START' ? '' : pathOf[bid] + '-'; return base + LETTERS[oi]; }
+function optFlag(ref) { return 'chose_' + ref.replace(':', '_'); }
+function blockTitle(s, id) {
+  let t = g(s.blocks[id].title); if (t) return t;
+  let i = order.indexOf(id);
+  while (--i >= 0) { const b = s.blocks[order[i]]; if (b && g(b.title)) return g(b.title); }
+  return g(s.meta.title) || 'STORY';
+}
+/* split a text block at caret: text before stays, text after goes into a new block returned (or null if empty) */
+function splitText(b, pos) {
+  const t = g(b.text); const before = t.slice(0, pos).replace(/\s+$/, ''), after = t.slice(pos).replace(/^\s+/, '');
+  setg(b, 'text', before);
+  if (!after) return null;
+  const nb = addBlock(S, 'text'); setg(nb, 'text', after);
+  return nb;
+}
+/* insert a question right after block `id`, moving the rest of the branch into option A (or fate pass) */
+function forkAt(id, pos, kind) {
+  const b = S.blocks[id]; const br = findBranch(S, id); if (!br) return;
+  const idx = br.list.indexOf(id);
+  const tail = br.list.splice(idx + 1);                 // blocks after this one in the same path
+  const q = addBlock(S, 'question'); br.list.push(q.id);
+  const rest = splitText(b, pos);
+  const carry = (rest ? [rest.id] : []).concat(tail);
+  if (b.after) { const last = carry.length ? S.blocks[carry[carry.length - 1]] : null; if (last && last.kind === 'text') { last.after = b.after; last.ending = b.ending; last.target = b.target; } b.after = null; }
+  if (kind === 'fate') { q.fate = { dc: 4, pass: carry, fail: [] }; }
+  else { const a = newOption(); a.branch = carry; const bo = newOption(); q.options = [a, bo]; }
+  selected = q.id; openPaths.add(pathOf[id]);
+  return q;
+}
+
+/* ---- export ------------------------------------------------------------------ */
+function firstOf(list) { return list.length ? 'b' + list[0] : null; }
+function inheritedTitle(s, id) {
+  const out = {};
+  for (const l of STUDIO_LANGS) {
+    let t = (s.blocks[id].title[l] || ''); let i = order.indexOf(id);
+    while (!t && --i >= 0) { const b = s.blocks[order[i]]; if (b) t = b.title[l] || ''; }
+    if (!t) t = s.meta.title[l] || '';
+    if (t) out[l] = t.toUpperCase().slice(0, 15);
+  }
+  return Object.keys(out).length ? out : { en: 'STORY' };
+}
+function toBook(s, startId = null) {
+  computeOrder(s);
+  const nodes = {}; let usesRoll = false; const flags = new Set(); const merged = {};   // question id -> text node id it merged into
+  for (const id of order) {
+    const b = s.blocks[id]; if (!b) continue;
+    if (b.kind === 'question' && !any(b.text).trim()) {           // silent fork: attach to the previous text block of the path
+      const br = findBranch(s, id); const i = br ? br.list.indexOf(id) : -1;
+      if (i > 0 && s.blocks[br.list[i - 1]].kind === 'text') merged[id] = br.list[i - 1];
+    }
+  }
+  const choicesOf = (b, id) => {
+    if (b.fate) { usesRoll = true; return { roll: { dice: '1d6', dc: +b.fate.dc || 4, pass: firstOf(b.fate.pass), fail: firstOf(b.fate.fail) } }; }
+    return { choices: b.options.map((o, i) => {
+      const c = { label: X(o.label) || LETTERS[i], set: [optFlag(id + ':' + i)] }; flags.add(c.set[0]);
+      if (o.only.length) c.require = o.only.map(x => (x.not ? '!' : '') + optFlag(x.ref));
+      if (o.roll) { usesRoll = true; c.roll = { dice: '1d6', dc: +o.roll.dc || 4, pass: firstOf(o.roll.pass), fail: firstOf(o.roll.fail) }; }
+      else if (o.kind === 'goto') c.to = o.target ? 'b' + o.target : null;
+      else c.to = firstOf(o.branch);
+      return c; }) };
+  };
+  for (const id of order) {
+    const b = s.blocks[id]; if (!b || merged[id]) continue;
+    const node = { title: X(inheritedTitle(s, id)), text: X(b.text) };
+    if (b.kind === 'text') {
+      const n = nextInBranch(s, id);
+      if (b.after === 'end') node.ending = b.ending || 'neutral';
+      else if (b.after === 'goto' && b.target && s.blocks[b.target]) node.goto = 'b' + b.target;
+      else if (n && merged[n] === id) Object.assign(node, choicesOf(s.blocks[n], n));
+      else if (n) node.goto = 'b' + n;
+      else node.choices = [];
+    } else Object.assign(node, choicesOf(b, id));
+    nodes['b' + id] = node;
+  }
+  // pure redirects (a block with no text that only says Go to) vanish: whoever pointed at them points at the target
+  const redirect = {};
+  for (const id of order) { const b = s.blocks[id]; if (b && b.kind === 'text' && !any(b.text).trim() && b.after === 'goto' && b.target && s.blocks[b.target]) redirect[id] = b.target; }
+  const resolve = t => { let seen = 0; while (t && redirect[t] && seen++ < 50) t = redirect[t]; return t; };
+  for (const id in redirect) delete nodes['b' + id];
+  // goto targets that point at a merged question resolve to the text node it merged into
+  for (const k in nodes) { const n = nodes[k]; const fix = t => { if (!t) return t; let id = resolve(+t.slice(1)); if (merged[id]) id = merged[id]; return 'b' + id; };
+    if (n.goto) n.goto = fix(n.goto); if (n.roll) { n.roll.pass = fix(n.roll.pass); n.roll.fail = fix(n.roll.fail); }
+    (n.choices || []).forEach(c => { if (c.to) c.to = fix(c.to); if (c.roll) { c.roll.pass = fix(c.roll.pass); c.roll.fail = fix(c.roll.fail); } }); }
+  let start = resolve(startId || s.root[0]); if (merged[start]) start = merged[start];
+  return { meta: { title: X(s.meta.title) || 'Untitled', author: s.meta.author || '', version: 1, tier: usesRoll ? 2 : 1, category: s.meta.category || 'Adventure',
+                   start: 'b' + start, blurb: X(s.meta.blurb), langs: storyLangs(s).length ? storyLangs(s) : ['en'], license: s.meta.license || 'CC BY-NC-ND 4.0', ...(s.meta.extra || {}), studio: STUDIO_VERSION },
+           flags: Array.from(flags), nodes };
+}
+
+/* ---- import ------------------------------------------------------------------ */
+function fromBook(book) {
+  const s = newStory(); s.blocks = {}; s.root = []; s.nextId = 1;
+  const locIn = x => (x && typeof x === 'object') ? Object.assign({}, x) : { en: x || '' };
+  s.meta.title = locIn(book.meta.title || 'Imported'); s.meta.blurb = locIn(book.meta.blurb);
+  s.meta.author = book.meta.author || ''; s.meta.category = book.meta.category || 'Adventure'; s.meta.license = book.meta.license || 'CC BY-NC-ND 4.0';
+  s.meta.extra = {}; for (const k of ['based_on', 'series', 'stats']) if (book.meta[k] !== undefined) s.meta.extra[k] = book.meta[k];
+  if (book.meta.stats) setTimeout(() => toast('This book uses stats (tier 3). Studio cannot edit stats yet; stat effects will be lost on export.'), 300);
+  const idOf = {}, visited = new Set(), nodes = book.nodes, flagToRef = {};
+  const place = (nid, list) => {
+    if (!nodes[nid]) return;
+    if (visited.has(nid)) { const t = addBlock(s, 'text'); t.after = 'goto'; t.target = idOf[nid]; list.push(t.id); return; }
+    visited.add(nid);
+    const n = nodes[nid];
+    const t = addBlock(s, 'text'); idOf[nid] = t.id; list.push(t.id); t.title = locIn(n.title); t.text = locIn(n.text);
+    if (n.ending) { t.after = 'end'; t.ending = n.ending; return; }
+    if (n.goto) { if (visited.has(n.goto)) { t.after = 'goto'; t.target = idOf[n.goto]; } else place(n.goto, list); return; }
+    if (n.roll) { const q = addBlock(s, 'question'); list.push(q.id); q.fate = { dc: n.roll.dc || 4, pass: [], fail: [] }; place(n.roll.pass, q.fate.pass); place(n.roll.fail, q.fate.fail); return; }
+    if (n.choices && n.choices.length) {
+      const q = addBlock(s, 'question'); list.push(q.id);       // silent fork right after the text
+      n.choices.slice(0, 6).forEach((c, i) => {
+        const o = newOption(); o.label = locIn(c.label); q.options.push(o);
+        (c.set || []).forEach(f => { flagToRef[f] = q.id + ':' + i; });
+        o._require = c.require || [];
+        if (c.roll) { o.roll = { dc: c.roll.dc || 4, pass: [], fail: [] }; place(c.roll.pass, o.roll.pass); place(c.roll.fail, o.roll.fail); }
+        else if (c.to) { if (visited.has(c.to)) { o.kind = 'goto'; o.target = idOf[c.to]; } else place(c.to, o.branch); }
+      });
+    }
+  };
+  place(book.meta.start, s.root);
+  for (const id of Object.keys(s.blocks)) { const b = s.blocks[id]; if (b.kind !== 'question') continue;
+    b.options.forEach(o => { o.only = (o._require || []).map(r => { const not = r.startsWith('!'); const f = not ? r.slice(1) : r; return flagToRef[f] ? { ref: flagToRef[f], not } : null; }).filter(Boolean); delete o._require; }); }
+  return s;
+}
+
+/* ---- checks --------------------------------------------------------------------- */
+function checkStory(s) {
+  const out = []; computeOrder(s);
+  for (const p of pathList) {
+    if (!p.list.length) { out.push({ id: p.owner ? p.owner.block.id : null, msg: `Path ${p.code} is empty. Write what happens there.` }); continue; }
+    const last = s.blocks[p.list[p.list.length - 1]];
+    if (last.kind === 'text' && !last.after) out.push({ id: last.id, msg: `Path ${p.code} does not end: add The End, Go to, or a fork.` });
+  }
+  for (const id of order) {
+    const b = s.blocks[id]; if (!b) continue;
+    const code = pathOf[id];
+    if (b.kind === 'text' && !g(b.text).trim() && b.after !== 'goto') out.push({ id, msg: other(b.text).trim() ? `A block in ${code} has no ${EL.toUpperCase()} text yet.` : `An empty block in ${code}.` });
+    if (b.kind === 'text' && b.after === 'goto' && !(b.target && s.blocks[b.target])) out.push({ id, msg: `Go to in ${code} has no target.` });
+    if (g(b.title).length > 15) out.push({ id, msg: `Caption "${g(b.title)}" is too long (15 max).` });
+    if (b.kind === 'question') {
+      if (!b.fate && b.options.length < 2) out.push({ id, msg: `Fork in ${code} needs at least two outputs.` });
+      b.options.forEach((o, i) => {
+        const name = `Output ${codeOfOption(id, i)}`;
+        if (!g(o.label).trim()) out.push({ id, msg: other(o.label).trim() ? `${name} has no ${EL.toUpperCase()} label.` : `${name} needs a label (what the reader picks).` });
+        if (g(o.label).length > 19) out.push({ id, msg: `${name}: label is ${g(o.label).length} chars, 19 fit on the screen.` });
+        if (o.kind === 'goto' && !(o.target && s.blocks[o.target])) out.push({ id, msg: `${name}: Go to has no target.` });
+      });
+    }
+  }
+  return out;
+}
+
+/* ---- render ---------------------------------------------------------------------- */
+const flowEl = document.getElementById('flow');
+function pagesOf(text) { return paginate(g(text)).length; }
+function pathSummary(p) {
+  const words = p.list.reduce((a, id) => a + any(S.blocks[id].text).split(/\s+/).filter(Boolean).length, 0);
+  const first = p.list.length ? any(S.blocks[p.list[0]].text).slice(0, 70) : '';
+  let ends = 0; const walk = list => list.forEach(id => { const b = S.blocks[id]; if (!b) return; if (b.kind === 'text' && b.after === 'end') ends++; if (b.kind === 'question') { b.options.forEach(o => { walk(o.branch || []); if (o.roll) { walk(o.roll.pass); walk(o.roll.fail); } }); if (b.fate) { walk(b.fate.pass); walk(b.fate.fail); } } });
+  walk(p.list);
+  return { first, words, ends };
+}
+function isOpen(code) { return expandAll || openPaths.has(code); }
+function render() {
+  computeOrder(S);
+  const problems = checkStory(S); const bad = new Set(problems.map(p => p.id));
+  const badPaths = new Set(problems.map(p => p.id ? pathOf[p.id] : 'START'));
+  if (selected && pathOf[selected]) openPathTo(pathOf[selected]);
+  flowEl.innerHTML = renderPath('START', bad, badPaths);
+  renderCrumbs(); renderSide(problems);
+  document.getElementById('mTitle').value = g(S.meta.title); document.getElementById('mTitle').placeholder = other(S.meta.title) || 'Title';
+  document.getElementById('mAuthor').value = S.meta.author; document.getElementById('mCategory').value = S.meta.category;
+  document.getElementById('mBlurb').value = g(S.meta.blurb); document.getElementById('mBlurb').placeholder = other(S.meta.blurb) || 'One line for the cover';
+  document.querySelectorAll('#langbar .lang').forEach(b => b.classList.toggle('on', b.dataset.lang === EL));
+  document.getElementById('btnExpand').textContent = expandAll ? 'Focus mode' : 'Expand all';
+  flowEl.querySelectorAll('textarea').forEach(autoGrow);
+  save();
+}
+function openPathTo(code) { const parts = code.split('-'); let acc = ''; openPaths.add('START'); for (const p of parts) { acc = acc ? acc + '-' + p : p; openPaths.add(acc); } }
+function renderPath(code, bad, badPaths) {
+  const p = pathByCode(code); if (!p) return '';
+  const root = code === 'START', open = root || isOpen(code);
+  const sm = pathSummary(p);
+  let h = `<div class="section ${root ? 'root' : ''} ${open ? '' : 'closed'} ${selected && pathOf[selected] === code ? 'focus' : ''}" data-code="${code}">`;
+  if (!root) h += `<div class="shead" data-open="${code}"><span class="code">${code}</span><span class="sum">${esc(sm.first) || '<i>empty</i>'}</span><span class="pill">${p.list.length} block${p.list.length === 1 ? '' : 's'} · ${sm.words} w · ${sm.ends} end${sm.ends === 1 ? '' : 's'}</span>${badPaths.has(code) ? '<span class="prob">&#9679;</span>' : ''}</div>`;
+  h += `<div class="sbody">`;
+  for (const id of p.list) h += renderBlock(S.blocks[id], bad, badPaths);
+  if (!p.list.length) h += `<div class="block"><textarea data-newin="${code}" placeholder="Write what happens in ${code}…"></textarea></div>`;
+  return h + `</div></div>`;
+}
+function renderBlock(b, bad, badPaths) {
+  const sel = selected === b.id ? 'sel' : '';
+  if (b.kind === 'text') {
+    let h = `<div class="block ${sel}" data-id="${b.id}"><button class="more" data-menu="block" data-id="${b.id}" title="Fork, end, go to…">&#8943;</button>`;
+    h += `<div class="cap"><input data-field="title" data-id="${b.id}" value="${esc(g(b.title))}" placeholder="${esc(other(b.title) || blockTitle(S, b.id))}" maxlength="15" title="Caption on the device status bar"><span>${pagesOf(b.text)} pg</span></div>`;
+    h += `<textarea data-field="text" data-id="${b.id}" placeholder="${esc(other(b.text) || (b.after === 'goto' ? '(optional text before the jump)' : 'Write…'))}">${esc(g(b.text))}</textarea>`;
+    if (b.after === 'end') h += `<div class="end"><span class="tag">THE END</span><select data-field="ending" data-id="${b.id}"><option value="good" ${b.ending === 'good' ? 'selected' : ''}>good ending</option><option value="neutral" ${b.ending === 'neutral' ? 'selected' : ''}>neutral ending</option><option value="bad" ${b.ending === 'bad' ? 'selected' : ''}>bad ending</option></select></div>`;
+    if (b.after === 'goto') h += `<div class="end"><span class="tag goto">GO TO</span>${pathSelect(b.target, `data-field="target" data-id="${b.id}"`)}</div>`;
+    return h + `</div>`;
+  }
+  // question / fork
+  let h = `<div class="question block ${sel}" data-id="${b.id}"><button class="more" data-menu="question" data-id="${b.id}">&#8943;</button>`;
+  h += `<span class="tag ${b.fate ? 'fate' : 'q'}">${b.fate ? 'RANDOM EVENT' : 'FORK'}</span> `;
+  h += `<textarea data-field="text" data-id="${b.id}" placeholder="${esc(other(b.text) || (b.fate ? 'What is at stake? (optional)' : 'Ask the reader something (optional)'))}">${esc(g(b.text))}</textarea>`;
+  if (b.fate) {
+    h += `<div class="roll">Roll 1d6, needs <input data-field="fdc" data-id="${b.id}" value="${b.fate.dc}"> or more</div>`;
+    const base = pathOf[b.id] === 'START' ? '' : pathOf[b.id] + '-';
+    h += renderPath(base + 'P', bad, badPaths) + renderPath(base + 'F', bad, badPaths);
+  } else {
+    h += `<div class="opts">`;
+    b.options.forEach((o, i) => {
+      const key = b.id + ':' + i, code = codeOfOption(b.id, i);
+      h += `<div class="opt"><span class="letter">${LETTERS[i]}</span><input type="text" class="label" data-field="olabel" data-key="${key}" value="${esc(g(o.label))}" placeholder="${esc(other(o.label) || 'What the reader can do')}" maxlength="19">`;
+      if (o.roll) h += `<span class="roll">dice, needs <input data-field="dc" data-key="${key}" value="${o.roll.dc}">+</span>`;
+      if (o.kind === 'goto') h += `<span class="tag goto">GO TO</span>${pathSelect(o.target, `data-field="otarget" data-key="${key}"`)}`;
+      o.only.forEach((c, ci) => { const [bid, oi] = c.ref.split(':'); h += `<span class="note">only if ${c.not ? 'NOT ' : ''}went through <b>${S.blocks[bid] ? codeOfOption(+bid, +oi) : '?'}</b> <button class="more" data-act="only-del" data-key="${key}" data-ci="${ci}" style="opacity:.6;font-size:12px">&#10005;</button></span>`; });
+      h += `<button class="more" data-menu="option" data-key="${key}">&#8943;</button></div>`;
+      if (o.roll) h += renderPath(code + '-P', bad, badPaths) + renderPath(code + '-F', bad, badPaths);
+      else if (o.kind === 'branch') h += renderPath(code, bad, badPaths);
+    });
+    h += `</div>`;
+    if (b.options.length < 6) h += `<button class="addopt" data-act="oadd" data-id="${b.id}">+ output</button>`;
+  }
+  return h + `</div>`;
+}
+function pathSelect(targetBlock, attrs) {
+  let h = `<select ${attrs}><option value="">path…</option>`;
+  for (const p of pathList) { if (!p.list.length) continue; const first = p.list[0]; h += `<option value="${first}" ${first == targetBlock ? 'selected' : ''}>${p.code}: ${esc(any(S.blocks[first].text).slice(0, 28))}</option>`; }
+  return h + `</select>`;
+}
+function renderCrumbs() {
+  const el = document.getElementById('crumbs');
+  const code = selected ? pathOf[selected] : 'START';
+  if (!code || code === 'START') { el.innerHTML = `<span>START</span>`; return; }
+  const parts = code.split('-'); let acc = ''; const items = ['<a data-go="START">START</a>'];
+  for (const p of parts) { acc = acc ? acc + '-' + p : p; items.push(`<a data-go="${acc}">${acc}</a>`); }
+  el.innerHTML = items.join('<span class="x">›</span>');
+}
+function renderSide(problems) {
+  const el = document.getElementById('problems');
+  el.innerHTML = problems.length ? problems.map(p => `<div class="p" data-id="${p.id || ''}">${esc(p.msg)}</div>`).join('') : `<div class="ok">Every path ends somewhere. Play it.</div>`;
+  const book = toBook(S);
+  const words = Object.values(S.blocks).reduce((a, b) => a + g(b.text).split(/\s+/).filter(Boolean).length, 0);
+  const ends = Object.values(book.nodes).filter(n => n.ending).length;
+  document.getElementById('stats').textContent = `${pathList.length} paths · ${ends} endings · ${words} words · tier ${book.meta.tier} · ${(book.meta.langs || ['en']).join('+').toUpperCase()}`;
+}
+function autoGrow(ta) { ta.style.height = 'auto'; ta.style.height = (ta.scrollHeight + 4) + 'px'; }
+function focusBlock(id) { const el = flowEl.querySelector(`[data-id="${id}"] textarea`); if (el) { el.focus(); el.scrollIntoView({ block: 'center', behavior: 'smooth' }); } }
+
+/* ---- dropdown menu ------------------------------------------------------------ */
+let menuEl = null;
+function closeMenu() { if (menuEl) { menuEl.remove(); menuEl = null; } }
+function openMenu(anchor, items) {
+  closeMenu();
+  menuEl = document.createElement('div'); menuEl.className = 'menu';
+  for (const it of items) {
+    const d = document.createElement('div');
+    if (it.sep) { d.className = 'sep'; menuEl.appendChild(d); continue; }
+    d.innerHTML = `<span>${it.label}</span>${it.hint ? `<small>${it.hint}</small>` : ''}`;
+    if (it.danger) d.className = 'danger';
+    if (it.el) { d.innerHTML = it.label; d.appendChild(it.el); d.style.display = 'block'; }
+    else d.addEventListener('click', () => { closeMenu(); it.run(); });
+    menuEl.appendChild(d);
+  }
+  document.body.appendChild(menuEl);
+  const r = anchor.getBoundingClientRect();
+  menuEl.style.left = Math.min(r.left, window.innerWidth - 260) + window.scrollX + 'px';
+  menuEl.style.top = r.bottom + 4 + window.scrollY + 'px';
+}
+document.addEventListener('click', ev => { if (menuEl && !menuEl.contains(ev.target) && !ev.target.closest('[data-menu]')) closeMenu(); });
+
+function blockMenu(id, anchor) {
+  const b = S.blocks[id]; const pos = caret.id === id ? caret.pos : g(b.text).length;
+  const atEnd = pos >= g(b.text).length;
+  const where = atEnd ? 'after this text' : 'at the cursor';
+  const items = [
+    { label: 'Fork here', hint: where, run: () => { const q = forkAt(id, pos, 'fork'); render(); const el = flowEl.querySelector(`input[data-key="${q.id}:0"]`); if (el) el.focus(); } },
+    { label: 'Random event here', hint: 'dice decide', run: () => { forkAt(id, pos, 'fate'); render(); } },
+    { sep: true },
+    { label: b.after === 'end' ? 'Remove The End' : 'The End here', run: () => { b.after = b.after === 'end' ? null : 'end'; b.target = null; render(); } },
+    { label: b.after === 'goto' ? 'Remove Go to' : 'Go to another path…', run: () => { b.after = b.after === 'goto' ? null : 'goto'; render(); } },
+    { sep: true },
+    { label: 'Delete this text', danger: true, run: () => { if (confirm('Delete this block?')) { deleteBlock(S, id); selected = null; render(); } } },
+  ];
+  openMenu(anchor, items);
+}
+function questionMenu(id, anchor) {
+  const b = S.blocks[id];
+  openMenu(anchor, [
+    { label: 'Delete this fork and everything under it', danger: true, run: () => { if (confirm('Delete the fork and all its paths?')) { deleteBlock(S, id); selected = null; render(); } } },
+  ]);
+}
+function optionMenu(key, anchor) {
+  const [bid, oi] = key.split(':'); const b = S.blocks[bid]; const o = b.options[oi];
+  const refs = []; for (const id of order) { const x = S.blocks[id]; if (x && x.kind === 'question') x.options.forEach((_, i) => { if (id + ':' + i !== key) refs.push({ ref: id + ':' + i, code: codeOfOption(+id, i), label: any(x.options[i].label) }); }); }
+  const sel = document.createElement('select'); sel.innerHTML = `<option value="">only if the reader went through…</option>` + refs.map(r => `<option value="${r.ref}">${r.code}  ${esc(r.label)}</option>`).join('') + refs.map(r => `<option value="!${r.ref}">NOT ${r.code}  ${esc(r.label)}</option>`).join('');
+  sel.addEventListener('change', () => { const v = sel.value; if (!v) return; const not = v.startsWith('!'); o.only.push({ ref: not ? v.slice(1) : v, not }); closeMenu(); render(); });
+  openMenu(anchor, [
+    { label: o.roll ? 'Remove the dice' : 'Roll the dice', hint: o.roll ? '' : 'pass / fail paths', run: () => {
+        if (o.roll) { if (o.roll.pass.length + o.roll.fail.length === 0 || confirm('Remove the dice? Both paths under it will be deleted.')) { deleteBlocks(S, o.roll.pass); deleteBlocks(S, o.roll.fail); o.roll = null; } }
+        else { o.roll = { dc: 4, pass: o.branch.slice(), fail: [] }; o.branch = []; o.kind = 'branch'; }
+        render(); } },
+    { label: o.kind === 'goto' ? 'Write a path instead' : 'Go to another path…', run: () => {
+        if (o.kind === 'goto') { o.kind = 'branch'; o.target = null; }
+        else { if (o.branch.length && !confirm('Turn this output into a Go to? The path under it will be deleted.')) return; deleteBlocks(S, o.branch); o.kind = 'goto'; }
+        render(); } },
+    ...(refs.length ? [{ label: '', el: sel }] : []),
+    { sep: true },
+    ...(b.options.length > 2 ? [{ label: 'Delete this output', danger: true, run: () => { if (confirm('Delete this output and its path?')) { deleteBlocks(S, o.branch || []); if (o.roll) { deleteBlocks(S, o.roll.pass); deleteBlocks(S, o.roll.fail); } b.options.splice(+oi, 1); render(); } } }] : []),
+  ]);
+}
+
+/* ---- events ------------------------------------------------------------------ */
+flowEl.addEventListener('click', ev => {
+  const menuBtn = ev.target.closest('[data-menu]');
+  if (menuBtn) { ev.stopPropagation(); const m = menuBtn.dataset.menu; if (m === 'block') blockMenu(+menuBtn.dataset.id, menuBtn); if (m === 'question') questionMenu(+menuBtn.dataset.id, menuBtn); if (m === 'option') optionMenu(menuBtn.dataset.key, menuBtn); return; }
+  const act = ev.target.closest('button[data-act]');
+  if (act) {
+    if (act.dataset.act === 'oadd') { S.blocks[act.dataset.id].options.push(newOption()); render(); }
+    if (act.dataset.act === 'only-del') { const [bid, oi] = act.dataset.key.split(':'); S.blocks[bid].options[oi].only.splice(+act.dataset.ci, 1); render(); }
+    return;
+  }
+  const head = ev.target.closest('.shead');
+  if (head) {
+    const code = head.dataset.open;
+    if (openPaths.has(code) && !expandAll) { openPaths.delete(code); }
+    else { // focus: close siblings (same parent), open this
+      const parent = code.includes('-') ? code.slice(0, code.lastIndexOf('-')) : 'START';
+      for (const c of Array.from(openPaths)) { const cp = c.includes('-') ? c.slice(0, c.lastIndexOf('-')) : 'START'; if (cp === parent && c !== code) openPaths.delete(c); }
+      openPathTo(code);
+      const p = pathByCode(code); if (p && p.list.length) selected = p.list[0];
+    }
+    render(); return;
+  }
+  const blk = ev.target.closest('.block');
+  if (blk) { selected = +blk.dataset.id; flowEl.querySelectorAll('.block.sel').forEach(x => x.classList.remove('sel')); blk.classList.add('sel'); renderCrumbs(); }
+});
+flowEl.addEventListener('input', ev => {
+  const el = ev.target, f = el.dataset.field;
+  if (el.dataset.newin) {                                          // first text typed into an empty path
+    const p = pathByCode(el.dataset.newin); const b = addBlock(S, 'text'); setg(b, 'text', el.value); p.list.push(b.id); selected = b.id; render(); focusBlock(b.id);
+    const ta = flowEl.querySelector(`[data-id="${b.id}"] textarea`); if (ta) ta.setSelectionRange(ta.value.length, ta.value.length); return;
+  }
+  if (!f) return;
+  if (f === 'text') { const b = S.blocks[el.dataset.id]; setg(b, 'text', el.value); autoGrow(el); const pg = el.closest('.block').querySelector('.cap span'); if (pg) pg.textContent = pagesOf(b.text) + ' pg'; save(); livePreview(b.id); return; }
+  if (f === 'title') { setg(S.blocks[el.dataset.id], 'title', el.value); save(); return; }
+  if (f === 'olabel') { const [bid, oi] = el.dataset.key.split(':'); setg(S.blocks[bid].options[oi], 'label', el.value); save(); return; }
+  if (f === 'dc') { const [bid, oi] = el.dataset.key.split(':'); S.blocks[bid].options[oi].roll.dc = +el.value || 4; save(); return; }
+  if (f === 'fdc') { S.blocks[el.dataset.id].fate.dc = +el.value || 4; save(); return; }
+});
+flowEl.addEventListener('change', ev => {
+  const el = ev.target, f = el.dataset.field; if (!f) return;
+  if (f === 'ending') { S.blocks[el.dataset.id].ending = el.value; render(); }
+  if (f === 'target') { S.blocks[el.dataset.id].target = +el.value || null; render(); }
+  if (f === 'otarget') { const [bid, oi] = el.dataset.key.split(':'); S.blocks[bid].options[oi].target = +el.value || null; render(); }
+});
+['keyup', 'click', 'select'].forEach(evn => flowEl.addEventListener(evn, ev => { const el = ev.target; if (el.tagName === 'TEXTAREA' && el.dataset.field === 'text') caret = { id: +el.dataset.id, pos: el.selectionStart }; }));
+flowEl.addEventListener('focusin', ev => { const b = ev.target.closest('.block'); if (b) { selected = +b.dataset.id; flowEl.querySelectorAll('.block.sel').forEach(x => x.classList.remove('sel')); b.classList.add('sel'); renderCrumbs(); } });
+document.getElementById('crumbs').addEventListener('click', ev => { const a = ev.target.closest('a[data-go]'); if (!a) return; const p = pathByCode(a.dataset.go); if (p && p.list.length) { selected = p.list[0]; render(); focusBlock(selected); } });
+document.getElementById('problems').addEventListener('click', ev => { const p = ev.target.closest('.p'); if (p && p.dataset.id) { selected = +p.dataset.id; render(); focusBlock(selected); } });
+document.getElementById('btnExpand').addEventListener('click', () => { expandAll = !expandAll; render(); });
+document.getElementById('mAuthor').addEventListener('input', ev => { S.meta.author = ev.target.value; save(); });
+['mTitle', 'mBlurb'].forEach(id => document.getElementById(id).addEventListener('input', ev => { setg(S.meta, id === 'mTitle' ? 'title' : 'blurb', ev.target.value); save(); refreshProjectSelect(); }));
+document.getElementById('mCategory').addEventListener('change', ev => { S.meta.category = ev.target.value; save(); });
+document.getElementById('mCategory').innerHTML = CATEGORIES.map(c => `<option>${c}</option>`).join('');
+document.querySelectorAll('#langbar .lang').forEach(b => b.addEventListener('click', () => { EL = b.dataset.lang; try { localStorage.setItem('moventure_studio_lang', EL); } catch (e) {} LANG = EL; BOOK_LANG = EL; engine.setLang(EL); render(); engine.draw(); }));
+document.getElementById('btnMore').addEventListener('click', ev => {
+  ev.stopPropagation();
+  const lic = document.createElement('select'); ['CC BY-NC-ND 4.0', 'CC BY-SA 4.0', 'CC BY 4.0', 'CC0', 'All rights reserved'].forEach(l => { const o = document.createElement('option'); o.textContent = l; o.selected = l === S.meta.license; lic.appendChild(o); });
+  lic.addEventListener('change', () => { S.meta.license = lic.value; save(); });
+  openMenu(ev.currentTarget, [
+    { label: 'License', el: lic },
+    { sep: true },
+    { label: 'Delete this story', danger: true, run: () => { if (!confirm(`Delete "${any(S.meta.title) || 'Untitled'}" from this browser?`)) return; delete projects[S.id]; if (!Object.keys(projects).length) { const s = newStory(); projects[s.id] = s; } openStory(Object.keys(projects)[0]); } },
+  ]);
+});
+
+/* ---- persistence ---------------------------------------------------------------- */
+function save() { try { projects[S.id] = S; localStorage.setItem(LS_KEY, JSON.stringify({ current: S.id, projects })); } catch (e) {} }
+function load() { try { const d = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); if (d && d.projects) { projects = d.projects; currentId = d.current; } } catch (e) {} }
+function refreshProjectSelect() { document.getElementById('projectSelect').innerHTML = Object.values(projects).map(p => `<option value="${p.id}" ${p.id === S.id ? 'selected' : ''}>${esc(any(p.meta.title) || 'Untitled')}</option>`).join(''); }
+function openStory(id) { S = migrate(projects[id]); selected = null; openPaths = new Set(['START']); refreshProjectSelect(); render(); }
+document.getElementById('projectSelect').addEventListener('change', ev => openStory(ev.target.value));
+document.getElementById('btnNew').addEventListener('click', () => { const s = newStory(); projects[s.id] = s; openStory(s.id); document.getElementById('mTitle').focus(); });
+document.getElementById('btnExport').addEventListener('click', () => {
+  const book = toBook(S); const name = ((S.meta.title.en || any(S.meta.title) || 'story').normalize('NFD').replace(/[̀-ͯ]/g, '')).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '') + '.json';
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(book, null, 2)], { type: 'application/json' })); a.download = name; a.click();
+  toast('Exported ' + name + '. Drop it in stories/ and run run_sim.bat.');
+});
+document.getElementById('btnImport').addEventListener('click', () => document.getElementById('fileInput').click());
+document.getElementById('fileInput').addEventListener('change', ev => {
+  const f = ev.target.files[0]; if (!f) return; const r = new FileReader();
+  r.onload = () => { try { const s = fromBook(JSON.parse(r.result)); projects[s.id] = s; openStory(s.id); toast('Imported. Loops became Go to.'); } catch (e) { alert('Could not import: ' + e.message); } ev.target.value = ''; };
+  r.readAsText(f);
+});
+function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 2600); }
+
+/* ---- device preview ------------------------------------------------------------- */
+const display = new OLED(document.getElementById('oled'));
+const engine = new Engine(display, () => {});
+engine.screen = 'LIBRARY';
+function playFrom(id) { LANG = EL; BOOK_LANG = EL; const book = toBook(S, id); engine.setLibrary([book]); engine.startBook(book); engine.draw(); }
+let liveTimer = null;
+function livePreview(id) { clearTimeout(liveTimer); liveTimer = setTimeout(() => { if (engine.book && engine.nodeId === 'b' + id) { const pg = engine.page; playFrom(id); engine.page = Math.min(pg, engine.pages.length - 1); engine.draw(); } }, 250); }
+document.getElementById('btnPlayStart').addEventListener('click', () => playFrom(null));
+document.getElementById('btnPlayHere').addEventListener('click', () => { if (selected) playFrom(selected); else toast('Click a block first.'); });
+function press(btn) { if (!engine.book) { playFrom(null); return; } engine.press(btn); engine.draw(); }
+document.querySelectorAll('[data-btn]').forEach(b => b.addEventListener('click', () => press(b.dataset.btn)));
+const KEYS = { ArrowUp: 'UP', ArrowDown: 'DOWN', ArrowLeft: 'LEFT', ArrowRight: 'RIGHT', a: 'A', A: 'A', Enter: 'A', b: 'B', B: 'B', Escape: 'B' };
+window.addEventListener('keydown', e => { if (['TEXTAREA', 'INPUT', 'SELECT'].includes(e.target.tagName)) return; const k = KEYS[e.key]; if (k) { e.preventDefault(); press(k); } });
+setInterval(() => { engine.blink = !engine.blink; if (engine.screen === 'READER' && engine.page >= engine.pages.length - 1) engine.draw(); }, 400);
+setInterval(() => { engine.tick++; const l = engine.currentList(); const cur = (engine.screen === 'COVER' || engine.screen === 'READER') ? 0 : engine.cursor; const ng = engine.noticeTick(); if ((l && engine.marqueeActive(l.items, cur, l.cols)) || ng) engine.draw(); }, 150);
+setInterval(() => { if (engine.diceTick()) engine.draw(); }, 60);
+
+/* ---- boot ------------------------------------------------------------------------- */
+document.getElementById('ver').textContent = 'v' + STUDIO_VERSION; document.title = 'Moventure Studio v' + STUDIO_VERSION;
+load();
+try { const l = localStorage.getItem('moventure_studio_lang'); if (l && STUDIO_LANGS.includes(l)) EL = l; } catch (e) {}
+LANG = EL; BOOK_LANG = EL;
+if (!currentId || !projects[currentId]) { const s = newStory(); projects[s.id] = s; currentId = s.id; }
+openStory(currentId);
+engine.draw();
+</script>
+</body>
+</html>

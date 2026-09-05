@@ -1,0 +1,314 @@
+{
+  "meta": {
+    "title": "Beneath the Dunes of Sel-Amun",
+    "author": "Moventure generator",
+    "version": 1,
+    "start": "start",
+    "tier": 2,
+    "category": "Adventure",
+    "blurb": "Theme: tomb, seed: 3. Choices and dice.",
+    "generator": {
+      "theme": "tomb",
+      "seed": 3,
+      "tier": 2,
+      "sides": [
+        "well",
+        "offering",
+        "gallery"
+      ],
+      "roles": [
+        "key",
+        "ally",
+        "trap"
+      ]
+    },
+    "license": "CC0"
+  },
+  "flags": [
+    "done_gallery",
+    "done_offering",
+    "done_well",
+    "has_ally",
+    "has_item",
+    "has_key",
+    "has_lore"
+  ],
+  "nodes": {
+    "start": {
+      "title": "ARRIVAL",
+      "text": "The sandstorm dies at dusk and there it is: a black doorway in the dune where yesterday there was only sand.\nYour porters have fled. One of them dropped an oil lamp.",
+      "choices": [
+        {
+          "label": "Take the oil lamp",
+          "to": "take_item",
+          "set": [
+            "has_item"
+          ]
+        },
+        {
+          "label": "Leave it",
+          "to": "ignore_item"
+        }
+      ]
+    },
+    "take_item": {
+      "title": "ARRIVAL",
+      "text": "You fill the oil lamp from your own flask of oil and light it. The doorway swallows the glow.",
+      "goto": "hub"
+    },
+    "ignore_item": {
+      "title": "ARRIVAL",
+      "text": "You leave it. You are not here to pick up junk.",
+      "goto": "hub"
+    },
+    "well": {
+      "title": "THE WELL",
+      "text": "A shaft drops into the earth. A rope ladder hangs into it, fraying. Cool air rises, smelling of water.",
+      "choices": [
+        {
+          "label": "Search",
+          "to": "well_found",
+          "set": [
+            "has_key",
+            "done_well"
+          ]
+        },
+        {
+          "label": "Go back",
+          "to": "hub"
+        }
+      ]
+    },
+    "well_found": {
+      "title": "THE WELL",
+      "text": "You climb down.\nAt the bottom, in the shallow spring, something glints: a scarab seal, dropped by someone in a hurry to climb.\nYou make your way back to the crossroads.",
+      "goto": "hub"
+    },
+    "offering": {
+      "title": "OFFERING ROOM",
+      "text": "Jars, bowls, bread gone to stone. Someone has been here recently. The dust has footprints.",
+      "choices": [
+        {
+          "label": "Investigate",
+          "to": "offering_found",
+          "set": [
+            "has_ally",
+            "done_offering"
+          ]
+        },
+        {
+          "label": "Go back",
+          "to": "hub"
+        }
+      ]
+    },
+    "offering_found": {
+      "title": "OFFERING ROOM",
+      "text": "You follow the footprints.\nThey end at the old guide, Nefret, sitting against a jar with a broken ankle. You came, she says. Then you can carry me. I know the words.\nYou make your way back to the crossroads.",
+      "goto": "hub"
+    },
+    "gallery": {
+      "title": "THE GALLERY",
+      "text": "Statues line both walls, each one a little larger than the last. The last one is missing.",
+      "choices": [
+        {
+          "label": "Look closer",
+          "to": "gallery_live",
+          "require": [
+            "has_item"
+          ],
+          "set": [
+            "has_lore",
+            "done_gallery"
+          ]
+        },
+        {
+          "label": "Risk it",
+          "require": [
+            "!has_item"
+          ],
+          "set": [
+            "has_lore",
+            "done_gallery"
+          ],
+          "roll": {
+            "dice": "1d6",
+            "dc": 5,
+            "pass": "gallery_live",
+            "fail": "gallery_die"
+          }
+        },
+        {
+          "label": "Go back",
+          "to": "hub"
+        }
+      ]
+    },
+    "gallery_live": {
+      "title": "THE GALLERY",
+      "text": "You look at the empty plinth.\nThe last statue is not missing. The oil lamp throws its shadow on the wall a heartbeat before it moves. You run.\nScratched on the wall on your way out is a single word. A name. You remember it.\nYou make your way back to the crossroads.",
+      "goto": "hub"
+    },
+    "gallery_die": {
+      "title": "THE GALLERY",
+      "text": "You look at the empty plinth.\nThe last statue is not missing. It was behind you.",
+      "ending": "bad"
+    },
+    "hub": {
+      "title": "CROSSROADS",
+      "text": "A long hall, painted floor to ceiling with a procession that walks the same way you do. Side passages open left and right. At the far end, the sealed inner door is carved with an empty circle the size of your palm.",
+      "choices": [
+        {
+          "label": "Go to The Well",
+          "to": "well",
+          "require": [
+            "!done_well"
+          ]
+        },
+        {
+          "label": "Go to Offering Room",
+          "to": "offering",
+          "require": [
+            "!done_offering"
+          ]
+        },
+        {
+          "label": "Go to The Gallery",
+          "to": "gallery",
+          "require": [
+            "!done_gallery"
+          ]
+        },
+        {
+          "label": "Open the way",
+          "to": "gate_open",
+          "require": [
+            "has_key"
+          ]
+        },
+        {
+          "label": "Try the way",
+          "to": "gate_locked",
+          "require": [
+            "!has_key"
+          ]
+        },
+        {
+          "label": "Turn back",
+          "to": "end_leave"
+        }
+      ]
+    },
+    "gate_locked": {
+      "title": "CROSSROADS",
+      "text": "The empty circle on the sealed inner door wants something you do not have. The painted procession seems to be laughing.",
+      "goto": "hub"
+    },
+    "end_leave": {
+      "title": "HOME",
+      "text": "You climb back out into the dark and the sand has already started to fill the doorway. By morning there is only dune. You tell no one, and no one asks.",
+      "ending": "neutral"
+    },
+    "gate_open": {
+      "title": "THE WAY",
+      "text": "The scarab seal fits the circle. The stone drinks it in and the sealed inner door swings inward without a sound.",
+      "goto": "passage"
+    },
+    "passage": {
+      "title": "THE WAY",
+      "text": "The way beyond slopes down and grows warm. You count your breaths to keep from counting anything else.",
+      "goto": "confront"
+    },
+    "confront": {
+      "title": "THE END",
+      "text": "The burial chamber is lit by its own gold. the sun disc rests on the sarcophagus. Between you and it, the guardian that was buried standing up steps down from its alcove, sand pouring from its joints.",
+      "choices": [
+        {
+          "label": "Strike together",
+          "require": [
+            "has_item",
+            "has_ally"
+          ],
+          "roll": {
+            "dice": "1d6",
+            "dc": 3,
+            "pass": "end_best",
+            "fail": "miss"
+          }
+        },
+        {
+          "label": "Use the oil lamp",
+          "require": [
+            "has_item",
+            "!has_ally"
+          ],
+          "roll": {
+            "dice": "1d6",
+            "dc": 5,
+            "pass": "end_good",
+            "fail": "miss"
+          }
+        },
+        {
+          "label": "Speak the name",
+          "to": "end_lore",
+          "require": [
+            "has_lore",
+            "!has_ally"
+          ]
+        },
+        {
+          "label": "Bare hands",
+          "require": [
+            "!has_item"
+          ],
+          "roll": {
+            "dice": "1d6",
+            "dc": 6,
+            "pass": "end_good",
+            "fail": "miss"
+          }
+        },
+        {
+          "label": "Run",
+          "to": "end_flee"
+        }
+      ]
+    },
+    "miss": {
+      "title": "THE END",
+      "text": "You miss, or it does not care. Something hits you hard enough to make the room ring.\nYou are still breathing. Barely.",
+      "roll": {
+        "dice": "1d6",
+        "dc": 3,
+        "pass": "confront",
+        "fail": "end_bad"
+      }
+    },
+    "end_best": {
+      "title": "THE END",
+      "text": "the old guide, Nefret speaks the words and the guardian falters. You raise the oil lamp and it sees its own shadow for the first time in three thousand years, and kneels. the sun disc is warm in your hands as you carry her out.",
+      "ending": "good"
+    },
+    "end_good": {
+      "title": "THE END",
+      "text": "You hold the oil lamp high and the guardian flinches from the light long enough for you to reach the sun disc. The chamber shakes. You do not stop running until you see stars.",
+      "ending": "good"
+    },
+    "end_lore": {
+      "title": "THE END",
+      "text": "You say the name you learned. The guardian stops. It looks at you a long time, then returns to its alcove. You leave the sun disc where it is. Some things are not for taking.",
+      "ending": "neutral"
+    },
+    "end_bad": {
+      "title": "THE END",
+      "text": "You have no light and no words. The guardian has all night.",
+      "ending": "bad"
+    },
+    "end_flee": {
+      "title": "THE END",
+      "text": "You run back through the procession and out into the cold. The dune closes behind you. You have sand in your teeth for a year and you never go back.",
+      "ending": "neutral"
+    }
+  }
+}

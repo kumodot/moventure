@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "title": {
+      "pt": "A Casa do Farol",
+      "en": "The Lighthouse House"
+    },
+    "author": "Marcelo Souza / Kumodot.art",
+    "version": 1,
+    "tier": 1,
+    "category": "Horror",
+    "start": "inicio",
+    "blurb": {
+      "pt": "Um teste em português: acentuação, ç, til e aspas “curvas”.",
+      "en": "A Portuguese test: accents, ç, tilde and “curly” quotes."
+    },
+    "langs": [
+      "pt",
+      "en"
+    ],
+    "license": "CC BY-NC-ND 4.0"
+  },
+  "flags": [
+    "tem_lanterna"
+  ],
+  "nodes": {
+    "inicio": {
+      "title": {
+        "pt": "O CAIS",
+        "en": "THE PIER"
+      },
+      "text": {
+        "pt": "A chuva açoita as tábuas e o mar tem a cor de chumbo. Você não vê luz nenhuma no farol.\nUma lanterna a óleo balança num poste. “Leve-a”, diz alguém atrás de você. Não há ninguém.",
+        "en": "Rain lashes the planks and the sea is the color of lead. You see no light in the lighthouse.\nAn oil lantern swings on a post. “Take it,” someone says behind you. There is no one."
+      },
+      "choices": [
+        {
+          "label": {
+            "pt": "Pegar a lanterna",
+            "en": "Take the lantern"
+          },
+          "to": "porta",
+          "set": [
+            "tem_lanterna"
+          ]
+        },
+        {
+          "label": {
+            "pt": "Ir até a porta",
+            "en": "Go to the door"
+          },
+          "to": "porta"
+        },
+        {
+          "label": {
+            "pt": "Voltar pra casa",
+            "en": "Go back home"
+          },
+          "to": "fim_casa"
+        }
+      ]
+    },
+    "porta": {
+      "title": {
+        "pt": "A PORTA",
+        "en": "THE DOOR"
+      },
+      "text": {
+        "pt": "A porta de ferro está entreaberta. Não deveria. É a terceira noite sem luz e a vila inteira já desistiu.\nLá dentro é breu. À esquerda, um galpão de ferramentas.",
+        "en": "The iron door is ajar. It should not be. Third night without a light and the whole village has given up.\nInside is pitch black. To the left, a tool shed."
+      },
+      "choices": [
+        {
+          "label": {
+            "pt": "Entrar com luz",
+            "en": "Go in with light"
+          },
+          "to": "fim_bom",
+          "require": [
+            "tem_lanterna"
+          ]
+        },
+        {
+          "label": {
+            "pt": "Entrar no escuro",
+            "en": "Go in blind"
+          },
+          "to": "fim_ruim",
+          "require": [
+            "!tem_lanterna"
+          ]
+        }
+      ]
+    },
+    "fim_bom": {
+      "title": {
+        "pt": "A LUZ",
+        "en": "THE LIGHT"
+      },
+      "text": {
+        "pt": "Você sobe a escada em caracol com a lanterna à frente. No topo, a lente rachada espera. Você acende o pavio e o feixe corta a tempestade até o navio.\nEle vira. Você também.",
+        "en": "You climb the spiral stair with the lantern ahead of you. At the top the cracked lens waits. You light the wick and the beam cuts the storm all the way to the ship.\nIt turns. So do you."
+      },
+      "ending": "good"
+    },
+    "fim_ruim": {
+      "title": {
+        "pt": "ESCURIDÃO",
+        "en": "DARKNESS"
+      },
+      "text": {
+        "pt": "O primeiro degrau não está onde deveria. Os outros encontram você na descida.\nO navio nunca vê luz.",
+        "en": "The first step is not where it should be. The others find you on the way down.\nThe ship never sees a light."
+      },
+      "ending": "bad"
+    },
+    "fim_casa": {
+      "title": {
+        "pt": "CASA",
+        "en": "HOME"
+      },
+      "text": {
+        "pt": "Você dá as costas ao farol e volta pela chuva. De manhã a praia está cheia de madeira quebrada.\nNinguém te culpa. Você se culpa.",
+        "en": "You turn your back on the lighthouse and walk home through the rain. In the morning the beach is full of broken wood.\nNobody blames you. You blame you."
+      },
+      "ending": "neutral"
+    }
+  }
+}

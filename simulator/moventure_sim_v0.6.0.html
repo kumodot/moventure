@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0f1115">
+<link rel="icon" href="data:,">
+<title>Moventure Simulator</title>
+<style>
+  :root { --bg:#0f1115; --panel:#181b22; --line:#2a2f3a; --txt:#d7dae0; --dim:#7d8494; --acc:#7fd4ff; --good:#4caf50; --bad:#e5533d; --warn:#f3c969; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); font-family: ui-monospace, Menlo, Consolas, monospace; font-size:13px; }
+  header { display:flex; gap:12px; align-items:center; padding:10px 16px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+  header h1 #ver { color:var(--warn); font-size:12px; margin-left:6px; }
+  header h1 { font-size:15px; margin:0 12px 0 0; letter-spacing:2px; color:var(--acc); }
+  header label { color:var(--dim); }
+  select, button, input[type=file] { background:#22262f; color:var(--txt); border:1px solid var(--line); border-radius:4px; padding:4px 8px; font-family:inherit; font-size:12px; }
+  button:hover { border-color:var(--acc); cursor:pointer; }
+  main { display:grid; grid-template-columns: 720px 1fr; gap:16px; padding:16px; min-height: calc(100vh - 50px); }
+  @media (max-width: 1200px) { main { grid-template-columns: 1fr; } }
+
+  /* ---- device mock-up ---- */
+  .device { background:#23262d; border:2px solid #3a3f4b; border-radius:22px; padding:22px 26px; width:690px; box-shadow: 0 20px 40px #0008, inset 0 1px 0 #ffffff12; }
+  .device .brand { display:flex; justify-content:space-between; color:#6b7280; font-size:11px; letter-spacing:3px; margin-bottom:10px; }
+  .screen { background:#000; border:6px solid #111; border-radius:6px; display:inline-block; box-shadow: inset 0 0 12px #000; }
+  canvas { display:block; image-rendering: pixelated; }
+  .controls { display:flex; justify-content:space-between; align-items:center; margin-top:18px; padding:0 10px; }
+  .dpad { display:grid; grid-template-columns: repeat(3, 44px); grid-template-rows: repeat(3, 44px); gap:2px; }
+  .dpad button, .ab button { background:#2e323b; border:1px solid #454b58; color:#c9cdd6; font-size:16px; font-weight:bold; box-shadow: 0 3px 0 #15171b; }
+  .dpad button:active, .ab button:active, .dpad button.down, .ab button.down { transform: translateY(2px); box-shadow: 0 1px 0 #15171b; background:#3b4150; border-color:var(--acc); }
+  .dpad .c { background:#1c1f25; border-color:#1c1f25; box-shadow:none; }
+  .ab { display:flex; gap:14px; align-items:flex-end; }
+  .ab button { width:58px; height:58px; border-radius:50%; font-size:18px; }
+  .ab .b { margin-bottom:22px; }
+  .ab button.a { color:var(--acc); }
+  .hint { color:var(--dim); font-size:11px; margin-top:12px; text-align:center; }
+  .hint b { color:var(--txt); }
+
+  /* ---- right column ---- */
+  .col { display:flex; flex-direction:column; gap:12px; min-width:0; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:10px 12px; }
+  .panel h2 { font-size:11px; letter-spacing:2px; color:var(--dim); margin:0 0 8px 0; font-weight:normal; }
+  #graphWrap { overflow:auto; max-height: 520px; background:#111318; border-radius:4px; }
+  #graph { display:block; }
+  .state { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+  .flag { display:inline-block; margin:2px 4px 2px 0; padding:1px 6px; border-radius:3px; border:1px solid var(--line); color:var(--dim); }
+  .flag.on { color:#111; background:var(--warn); border-color:var(--warn); }
+  #log { max-height:140px; overflow:auto; color:var(--dim); white-space:pre-wrap; }
+  #log .cur { color:var(--txt); }
+
+  /* ---- player mode: only the device, scaled to fit the viewport ---- */
+  body.player { overflow:hidden; }
+  body.player header, body.player .col, body.player .hint { display:none; }
+  body.player main { display:block; padding:0; min-height:100vh; }
+  body.player .stage { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; }
+  body.player .device { transform-origin:center center; }
+  #playerBar { display:none; position:fixed; top:8px; right:10px; gap:6px; z-index:5; }
+  body.player #playerBar { display:flex; }
+  #playerBar button { opacity:0.35; } #playerBar button:hover { opacity:1; }
+  #padStatus { position:fixed; left:10px; bottom:8px; color:var(--dim); font-size:11px; display:none; }
+  body.player #padStatus { display:block; }
+
+  /* ---- portrait (phone) player layout: same 128x64 screen, controls rearranged for thumbs ---- */
+  body.player.portrait .stage { align-items:flex-start; }
+  body.player.portrait .device { transform:none !important; width:100vw; min-height:100vh; border-radius:0; border:none; padding:12px 12px calc(24px + env(safe-area-inset-bottom)) 12px; display:flex; flex-direction:column; box-shadow:none; }
+  body.player.portrait .brand { font-size:10px; margin-top:22px; }
+  body.player.portrait .screen { display:block; width:100%; border-width:5px; }
+  body.player.portrait canvas { width:100%; height:auto; }
+  body.player.portrait .controls { flex:1; align-items:center; margin-top:26px; padding:0 4px; }
+  body.player.portrait .dpad { grid-template-columns:repeat(3, 62px); grid-template-rows:repeat(3, 62px); gap:3px; }
+  body.player.portrait .dpad button { font-size:22px; }
+  body.player.portrait .ab button { width:78px; height:78px; font-size:24px; }
+  body.player.portrait .ab .b { margin-bottom:30px; }
+  body.player.portrait #padStatus { display:none; }
+  body.player.portrait #playerBar { top:4px; right:8px; }
+  body.player.portrait #playerBar button { font-size:11px; padding:2px 6px; }
+  .dpad button, .ab button { touch-action:manipulation; -webkit-user-select:none; user-select:none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>MOVENTURE SIM <span id="ver"></span></h1>
+  <label>Book <select id="bookSelect"></select></label>
+  <label>Load JSON <input type="file" id="fileInput" accept=".json"></label>
+  <label>OLED <select id="colorSelect">
+    <option value="#7fd4ff">blue</option>
+    <option value="#ffffff">white</option>
+    <option value="#f5d142">yellow</option>
+    <option value="split">yellow/blue split</option>
+  </select></label>
+  <label>UI <select id="langSelect"><option value="en">EN</option><option value="pt">PT-BR</option><option value="es">ES</option></select></label>
+  <button id="btnReboot">Reboot</button>
+  <button id="btnRestart">Restart book</button>
+  <button id="btnPlayer" title="Only the device, scaled to the screen. Gamepad supported.">Player mode</button>
+</header>
+<div id="playerBar"><button id="btnFull">Fullscreen</button><button id="btnExitPlayer">Exit player</button></div>
+<div id="padStatus">no gamepad</div>
+
+<main>
+  <div class="stage">
+    <div class="device">
+      <div class="brand"><span>MOVENTURE</span><span id="verDevice"></span><span>128x64 OLED</span></div>
+      <div class="screen"><canvas id="oled"></canvas></div>
+      <div class="controls">
+        <div class="dpad">
+          <button class="c" tabindex="-1"></button><button data-btn="UP">&#9650;</button><button class="c" tabindex="-1"></button>
+          <button data-btn="LEFT">&#9664;</button><button class="c" tabindex="-1"></button><button data-btn="RIGHT">&#9654;</button>
+          <button class="c" tabindex="-1"></button><button data-btn="DOWN">&#9660;</button><button class="c" tabindex="-1"></button>
+        </div>
+        <div class="ab">
+          <button class="b" data-btn="B">B</button>
+          <button class="a" data-btn="A">A</button>
+        </div>
+      </div>
+    </div>
+    <div class="hint">
+      Keyboard: <b>arrows</b> = D-pad &nbsp; <b>A</b> (or Z / Enter / Space) = A &nbsp; <b>B</b> (or X / Backspace / Esc) = B<br>
+      Library: Left / Right = change shelf (category), A = book cover, A again = start.<br>Reader: A / Right = next page, B / Left = previous page (B on first page opens the menu), Up = stats sheet (tier 3), Down = next page. Choices: Up / Down pick, A confirms.
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="panel">
+      <h2>STORY MAP (live)</h2>
+      <div id="graphWrap"><svg id="graph"></svg></div>
+    </div>
+    <div class="panel state">
+      <div><h2>STATE</h2><div id="stateBox"></div></div>
+      <div><h2>FLAGS</h2><div id="flagBox"></div></div>
+    </div>
+    <div class="panel"><h2>PATH TAKEN</h2><div id="log"></div></div>
+  </div>
+</main>
+
+<script src="stories.js"></script>
+<script>
+/* =========================================================================
+   SECTION 1: SSD1306 128x64 framebuffer + drawing primitives
+   Mirror this class 1:1 in the firmware (see OLED_SIMULATOR_GUIDE.md).
+   ========================================================================= */
+const APP_VERSION = '0.6.0';   // bump this AND the file name on every release (see CHANGELOG.md)
+const WIDTH = 128, HEIGHT = 64, SCALE = 5;
+
+// Adafruit GFX glcdfont, ASCII 32..126, 5 bytes per glyph, LSB = top row.
+const FONT_5X7 = [0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x5F,0x00,0x00,0x00,0x07,0x00,0x07,0x00,0x14,0x7F,0x14,0x7F,0x14,0x24,0x2A,0x7F,0x2A,0x12,0x23,0x13,0x08,0x64,0x62,0x36,0x49,0x55,0x22,0x50,0x00,0x05,0x03,0x00,0x00,0x00,0x1C,0x22,0x41,0x00,0x00,0x41,0x22,0x1C,0x00,0x08,0x2A,0x1C,0x2A,0x08,0x08,0x08,0x3E,0x08,0x08,0x00,0x50,0x30,0x00,0x00,0x08,0x08,0x08,0x08,0x08,0x00,0x60,0x60,0x00,0x00,0x20,0x10,0x08,0x04,0x02,0x3E,0x51,0x49,0x45,0x3E,0x00,0x42,0x7F,0x40,0x00,0x42,0x61,0x51,0x49,0x46,0x21,0x41,0x45,0x4B,0x31,0x18,0x14,0x12,0x7F,0x10,0x27,0x45,0x45,0x45,0x39,0x3C,0x4A,0x49,0x49,0x30,0x01,0x71,0x09,0x05,0x03,0x36,0x49,0x49,0x49,0x36,0x06,0x49,0x49,0x29,0x1E,0x00,0x36,0x36,0x00,0x00,0x00,0x56,0x36,0x00,0x00,0x00,0x08,0x14,0x22,0x41,0x14,0x14,0x14,0x14,0x14,0x41,0x22,0x14,0x08,0x00,0x02,0x01,0x51,0x09,0x06,0x32,0x49,0x79,0x41,0x3E,0x7E,0x11,0x11,0x11,0x7E,0x7F,0x49,0x49,0x49,0x36,0x3E,0x41,0x41,0x41,0x22,0x7F,0x41,0x41,0x22,0x1C,0x7F,0x49,0x49,0x49,0x41,0x7F,0x09,0x09,0x01,0x01,0x3E,0x41,0x41,0x51,0x32,0x7F,0x08,0x08,0x08,0x7F,0x00,0x41,0x7F,0x41,0x00,0x20,0x40,0x41,0x3F,0x01,0x7F,0x08,0x14,0x22,0x41,0x7F,0x40,0x40,0x40,0x40,0x7F,0x02,0x04,0x02,0x7F,0x7F,0x04,0x08,0x10,0x7F,0x3E,0x41,0x41,0x41,0x3E,0x7F,0x09,0x09,0x09,0x06,0x3E,0x41,0x51,0x21,0x5E,0x7F,0x09,0x19,0x29,0x46,0x46,0x49,0x49,0x49,0x31,0x01,0x01,0x7F,0x01,0x01,0x3F,0x40,0x40,0x40,0x3F,0x1F,0x20,0x40,0x20,0x1F,0x7F,0x20,0x18,0x20,0x7F,0x63,0x14,0x08,0x14,0x63,0x03,0x04,0x78,0x04,0x03,0x61,0x51,0x49,0x45,0x43,0x00,0x00,0x7F,0x41,0x41,0x02,0x04,0x08,0x10,0x20,0x41,0x41,0x7F,0x00,0x00,0x04,0x02,0x01,0x02,0x04,0x40,0x40,0x40,0x40,0x40,0x00,0x01,0x02,0x04,0x00,0x20,0x54,0x54,0x54,0x78,0x7F,0x48,0x44,0x44,0x38,0x38,0x44,0x44,0x44,0x20,0x38,0x44,0x44,0x48,0x7F,0x38,0x54,0x54,0x54,0x18,0x08,0x7E,0x09,0x01,0x02,0x08,0x14,0x54,0x54,0x3C,0x7F,0x08,0x04,0x04,0x78,0x00,0x44,0x7D,0x40,0x00,0x20,0x40,0x44,0x3D,0x00,0x00,0x7F,0x10,0x28,0x44,0x00,0x41,0x7F,0x40,0x00,0x7C,0x04,0x18,0x04,0x78,0x7C,0x08,0x04,0x04,0x78,0x38,0x44,0x44,0x44,0x38,0x7C,0x14,0x14,0x14,0x08,0x08,0x14,0x14,0x18,0x7C,0x7C,0x08,0x04,0x04,0x08,0x48,0x54,0x54,0x54,0x20,0x04,0x3F,0x44,0x40,0x20,0x3C,0x40,0x40,0x20,0x7C,0x1C,0x20,0x40,0x20,0x1C,0x3C,0x40,0x30,0x40,0x3C,0x44,0x28,0x10,0x28,0x44,0x0C,0x50,0x50,0x50,0x3C,0x44,0x64,0x54,0x4C,0x44,0x00,0x08,0x36,0x41,0x00,0x00,0x00,0x7F,0x00,0x00,0x00,0x41,0x36,0x08,0x00,0x08,0x08,0x2A,0x1C,0x08];
+// Extended glyphs (Portuguese / Spanish accents), generated by tools/make_font_ext.py.
+const FONT_EXT = {
+  161: [0x00, 0x00, 0x7D, 0x00, 0x00],  // ¡
+  170: [0x00, 0x0A, 0x0A, 0x0E, 0x00],  // ª
+  176: [0x00, 0x06, 0x09, 0x06, 0x00],  // °
+  186: [0x00, 0x06, 0x09, 0x09, 0x06],  // º
+  191: [0x00, 0x30, 0x4A, 0x44, 0x00],  // ¿
+  192: [0x78, 0x15, 0x16, 0x14, 0x78],  // À
+  193: [0x78, 0x14, 0x16, 0x15, 0x78],  // Á
+  194: [0x78, 0x16, 0x15, 0x16, 0x78],  // Â
+  195: [0x7A, 0x15, 0x16, 0x15, 0x78],  // Ã
+  196: [0x78, 0x15, 0x14, 0x15, 0x78],  // Ä
+  199: [0x1C, 0x22, 0x62, 0x22, 0x14],  // Ç
+  200: [0x7C, 0x55, 0x56, 0x54, 0x44],  // È
+  201: [0x7C, 0x54, 0x56, 0x55, 0x44],  // É
+  202: [0x7C, 0x56, 0x55, 0x56, 0x44],  // Ê
+  203: [0x7C, 0x55, 0x54, 0x55, 0x44],  // Ë
+  204: [0x00, 0x45, 0x7E, 0x44, 0x00],  // Ì
+  205: [0x00, 0x44, 0x7E, 0x45, 0x00],  // Í
+  206: [0x00, 0x46, 0x7D, 0x46, 0x00],  // Î
+  207: [0x00, 0x45, 0x7C, 0x45, 0x00],  // Ï
+  209: [0x7E, 0x09, 0x12, 0x21, 0x7C],  // Ñ
+  210: [0x38, 0x45, 0x46, 0x44, 0x38],  // Ò
+  211: [0x38, 0x44, 0x46, 0x45, 0x38],  // Ó
+  212: [0x38, 0x46, 0x45, 0x46, 0x38],  // Ô
+  213: [0x3A, 0x45, 0x46, 0x45, 0x38],  // Õ
+  214: [0x38, 0x45, 0x44, 0x45, 0x38],  // Ö
+  217: [0x3C, 0x41, 0x42, 0x40, 0x3C],  // Ù
+  218: [0x3C, 0x40, 0x42, 0x41, 0x3C],  // Ú
+  219: [0x3C, 0x42, 0x41, 0x42, 0x3C],  // Û
+  220: [0x3C, 0x41, 0x40, 0x41, 0x3C],  // Ü
+  224: [0x20, 0x55, 0x56, 0x54, 0x78],  // à
+  225: [0x20, 0x54, 0x56, 0x55, 0x78],  // á
+  226: [0x20, 0x56, 0x55, 0x56, 0x78],  // â
+  227: [0x22, 0x55, 0x56, 0x55, 0x78],  // ã
+  228: [0x20, 0x55, 0x54, 0x55, 0x78],  // ä
+  231: [0x1C, 0x22, 0x62, 0x22, 0x10],  // ç
+  232: [0x38, 0x55, 0x56, 0x54, 0x18],  // è
+  233: [0x38, 0x54, 0x56, 0x55, 0x18],  // é
+  234: [0x38, 0x56, 0x55, 0x56, 0x18],  // ê
+  235: [0x38, 0x55, 0x54, 0x55, 0x18],  // ë
+  236: [0x00, 0x45, 0x7E, 0x40, 0x00],  // ì
+  237: [0x00, 0x44, 0x7E, 0x41, 0x00],  // í
+  238: [0x00, 0x46, 0x7D, 0x42, 0x00],  // î
+  239: [0x00, 0x45, 0x7C, 0x41, 0x00],  // ï
+  241: [0x7E, 0x09, 0x06, 0x05, 0x78],  // ñ
+  242: [0x38, 0x45, 0x46, 0x44, 0x38],  // ò
+  243: [0x38, 0x44, 0x46, 0x45, 0x38],  // ó
+  244: [0x38, 0x46, 0x45, 0x46, 0x38],  // ô
+  245: [0x3A, 0x45, 0x46, 0x45, 0x38],  // õ
+  246: [0x38, 0x45, 0x44, 0x45, 0x38],  // ö
+  249: [0x3C, 0x41, 0x42, 0x20, 0x7C],  // ù
+  250: [0x3C, 0x40, 0x42, 0x21, 0x7C],  // ú
+  251: [0x3C, 0x42, 0x41, 0x22, 0x7C],  // û
+  252: [0x3C, 0x41, 0x40, 0x21, 0x7C],  // ü
+};
+
+class OLED {
+  constructor(canvas) {
+    this.width = WIDTH; this.height = HEIGHT; this.scale = SCALE;
+    this.color = '#7fd4ff'; this.splitColor = null;   // splitColor: color for rows 0..15 on split panels
+    this.buf = new Uint8Array(WIDTH * HEIGHT / 8);
+    this.canvas = canvas;
+    canvas.width = WIDTH * SCALE; canvas.height = HEIGHT * SCALE;
+  }
+  clear() { this.buf.fill(0); }
+  setPixel(x, y, on = true) {
+    if (x < 0 || x >= this.width || y < 0 || y >= this.height) return;
+    const idx = x + (y >> 3) * this.width, mask = 1 << (y & 7);
+    if (on) this.buf[idx] |= mask; else this.buf[idx] &= ~mask;
+  }
+  getPixel(x, y) { return (this.buf[x + (y >> 3) * this.width] >> (y & 7)) & 1; }
+  fillRect(x, y, w, h, on = true) { for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) this.setPixel(x + i, y + j, on); }
+  rect(x, y, w, h, on = true) { this.hline(x, y, w, on); this.hline(x, y + h - 1, w, on); this.vline(x, y, h, on); this.vline(x + w - 1, y, h, on); }
+  hline(x, y, w, on = true) { for (let i = 0; i < w; i++) this.setPixel(x + i, y, on); }
+  vline(x, y, h, on = true) { for (let j = 0; j < h; j++) this.setPixel(x, y + j, on); }
+  line(x0, y0, x1, y1, on = true) {          // Bresenham, integer only (firmware friendly)
+    x0 |= 0; y0 |= 0; x1 |= 0; y1 |= 0;
+    const dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1, dy = -Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+    let err = dx + dy;
+    for (;;) {
+      this.setPixel(x0, y0, on);
+      if (x0 === x1 && y0 === y1) break;
+      const e2 = 2 * err;
+      if (e2 >= dy) { err += dy; x0 += sx; }
+      if (e2 <= dx) { err += dx; y0 += sy; }
+    }
+  }
+  invertRect(x, y, w, h) { for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) this.setPixel(x + i, y + j, !this.getPixel(x + i, y + j)); }
+  ditherRect(x, y, w, h) { for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) if (((x + i) + (y + j)) & 1) this.setPixel(x + i, y + j, true); }
+  drawChar(x, y, ch, scale = 1) {
+    let code = ch.charCodeAt(0);
+    let cols = null;
+    if (code > 126 && FONT_EXT[code]) cols = FONT_EXT[code];
+    else { if (code < 32 || code > 126) code = 63; cols = FONT_5X7.slice((code - 32) * 5, (code - 32) * 5 + 5); }
+    for (let col = 0; col < 5; col++) {
+      const bits = cols[col];
+      for (let row = 0; row < 7; row++) if (bits & (1 << row)) this.fillRect(x + col * scale, y + row * scale, scale, scale);
+    }
+  }
+  drawText(x, y, str, scale = 1) { for (let i = 0; i < str.length; i++) this.drawChar(x + i * 6 * scale, y, str[i], scale); }
+  textWidth(str, scale = 1) { return str.length * 6 * scale - scale; }
+  drawTextCentered(y, str, scale = 1) { this.drawText(Math.floor((this.width - this.textWidth(str, scale)) / 2), y, str, scale); }
+  render() {
+    const ctx = this.canvas.getContext('2d');
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    for (let y = 0; y < this.height; y++) {
+      ctx.fillStyle = (this.splitColor && y < 16) ? this.splitColor : this.color;
+      for (let x = 0; x < this.width; x++)
+        if (this.getPixel(x, y)) ctx.fillRect(x * this.scale, y * this.scale, this.scale - 1, this.scale - 1);
+    }
+  }
+}
+
+/* =========================================================================
+   SECTION 2: text layout (must match tools/validate_story.py wrap())
+   ========================================================================= */
+const TEXT_COLS = 21, TEXT_ROWS = 7, ROW_H = 8, TEXT_Y0 = 9, MENU_ROWS = 6, LABEL_COLS = 19;
+const MARQUEE_PAUSE = 8;   // ticks to hold before a long selected item starts scrolling   // 7 rows of 8 px from y=9, last glyph row ends at y=63
+
+// Typographic characters that have no glyph become their plain cousins (same in validate_story.py).
+const NORMALIZE = { '\u2018': "'", '\u2019': "'", '\u201A': "'", '\u201C': '"', '\u201D': '"', '\u201E': '"', '\u2013': '-', '\u2014': '-', '\u2026': '...', '\u00A0': ' ' };
+function normalize(text) { return String(text).replace(/[\u2018\u2019\u201A\u201C\u201D\u201E\u2013\u2014\u2026\u00A0]/g, c => NORMALIZE[c]); }
+function wrap(text, cols = TEXT_COLS) {
+  const lines = [];
+  for (const para of normalize(text).split('\n')) {
+    let line = '';
+    for (let word of para.split(' ')) {
+      if (!word) continue;
+      while (word.length > cols) { if (line) { lines.push(line); line = ''; } lines.push(word.slice(0, cols)); word = word.slice(cols); }
+      if (!line) line = word;
+      else if (line.length + 1 + word.length <= cols) line += ' ' + word;
+      else { lines.push(line); line = word; }
+    }
+    lines.push(line);
+  }
+  return lines;
+}
+function paginate(text) {
+  const lines = wrap(text), pages = [];
+  for (let i = 0; i < lines.length; i += TEXT_ROWS) pages.push(lines.slice(i, i + TEXT_ROWS));
+  return pages.length ? pages : [['']];
+}
+
+/* =========================================================================
+   SECTION 3: the gamebook engine (state machine driven by 6 buttons)
+   Screens: BOOT, LIBRARY, COVER, READER, CHOICE, DICE, ENDING, MENU, STATS, ABOUT
+   Format v2: tiers, categories, dice rolls (choice.roll), stats (meta.stats + mod).
+   ========================================================================= */
+const CREDIT = ['MOVENTURE v' + APP_VERSION, '', 'Marcelo Souza /', 'Kumodot.art - 2026', '// @Msouza3d', ''];
+
+/* ---- localization -----------------------------------------------------------
+   Book strings (title, blurb, node text/title, choice labels) may be a plain string
+   or an object {en: "...", pt: "..."}. L(x) resolves them for the current language,
+   falling back to English, then to whatever language exists. UI strings live in UI. */
+let LANG = 'en';          // UI language (device setting, remembered)
+let BOOK_LANG = 'en';     // language of the book being read (per book, only among what the author provided)
+const LANGS = ['en', 'pt', 'es'];
+const LANG_NAMES = { en: 'English', pt: 'Português', es: 'Español' };
+function L(x) {
+  if (x == null) return '';
+  if (typeof x !== 'object') return String(x);
+  if (x[BOOK_LANG]) return x[BOOK_LANG];
+  if (x.en) return x.en;
+  for (const k in x) if (x[k]) return x[k];
+  return '';
+}
+function bookLangs(book) {                 // which languages a book actually carries
+  const t = book.meta.title;
+  return (t && typeof t === 'object') ? LANGS.filter(l => t[l]) : [book.meta.lang || 'en'];
+}
+function pickBookLang(book) {              // UI language if the author provided it, else the book's first
+  const ls = bookLangs(book);
+  return ls.includes(LANG) ? LANG : ls[0];
+}
+const UI = {
+  en: { LIBRARY: 'LIBRARY', CHOOSE: 'CHOOSE', MENU: 'MENU', STATS: 'STATS', ABOUT: 'ABOUT', THE_END: 'THE END', ROLL: 'ROLL',
+        GOOD: 'GOOD ENDING', BAD: 'BAD ENDING', NEUTRAL: 'AN ENDING', pages: 'pages', rolling: 'rolling', PASS: 'PASS', FAIL: 'FAIL',
+        TIER: 'TIER', nobooks: 'No books here.', tagline: 'gamebook reader',
+        h_lib: 'A: open  <> shelf', h_cover: 'A: start  B: back', h_dice: 'A: continue', h_end: 'A: again  B: library',
+        h_menu: 'A: select  B: back', h_any: 'any button: back', h_back: 'B: back',
+        m_resume: 'Resume', m_stats: 'Stats', m_restart: 'Restart book', m_library: 'Library', m_lang: 'Language: ', m_about: 'About',
+        all: 'All', deadend: ['DEAD END', 'No choices here.', 'B: menu'], m_booklang: 'Book: ',
+        cats: { Horror: 'Horror', Mystery: 'Mystery', Fantasy: 'Fantasy', 'Sci-Fi': 'Sci-Fi', Adventure: 'Adventure', Kids: 'Kids', SCP: 'SCP', Misc: 'Misc' } },
+  pt: { LIBRARY: 'BIBLIOTECA', CHOOSE: 'ESCOLHA', MENU: 'MENU', STATS: 'ATRIBUTOS', ABOUT: 'SOBRE', THE_END: 'FIM', ROLL: 'DADO',
+        GOOD: 'FINAL BOM', BAD: 'FINAL RUIM', NEUTRAL: 'UM FINAL', pages: 'páginas', rolling: 'rolando', PASS: 'PASSOU', FAIL: 'FALHOU',
+        TIER: 'NIVEL', nobooks: 'Nenhum livro aqui.', tagline: 'leitor de livro-jogo',
+        h_lib: 'A: abrir  <> estante', h_cover: 'A: começar  B: voltar', h_dice: 'A: continuar', h_end: 'A: de novo  B: livros',
+        h_menu: 'A: escolher  B: voltar', h_any: 'qualquer botão: voltar', h_back: 'B: voltar',
+        m_resume: 'Continuar', m_stats: 'Atributos', m_restart: 'Reiniciar livro', m_library: 'Biblioteca', m_lang: 'Idioma: ', m_about: 'Sobre',
+        all: 'Todos', deadend: ['BECO SEM SAÍDA', 'Nenhuma escolha aqui.', 'B: menu'],
+        cats: { Horror: 'Terror', Mystery: 'Mistério', Fantasy: 'Fantasia', 'Sci-Fi': 'Ficção', Adventure: 'Aventura', Kids: 'Infantil', SCP: 'SCP', Misc: 'Outros' },
+        m_booklang: 'Livro: ' },
+  es: { LIBRARY: 'BIBLIOTECA', CHOOSE: 'ELIGE', MENU: 'MENÚ', STATS: 'ATRIBUTOS', ABOUT: 'ACERCA', THE_END: 'FIN', ROLL: 'DADO',
+        GOOD: 'FINAL BUENO', BAD: 'FINAL MALO', NEUTRAL: 'UN FINAL', pages: 'páginas', rolling: 'rodando', PASS: 'ÉXITO', FAIL: 'FALLO',
+        TIER: 'NIVEL', nobooks: 'No hay libros aquí.', tagline: 'lector de librojuegos',
+        h_lib: 'A: abrir  <> estante', h_cover: 'A: empezar  B: volver', h_dice: 'A: continuar', h_end: 'A: otra vez  B: libros',
+        h_menu: 'A: elegir  B: volver', h_any: 'cualquier botón: volver', h_back: 'B: volver',
+        m_resume: 'Continuar', m_stats: 'Atributos', m_restart: 'Reiniciar libro', m_library: 'Biblioteca', m_lang: 'Idioma: ', m_about: 'Acerca',
+        m_booklang: 'Libro: ', all: 'Todos', deadend: ['SIN SALIDA', 'No hay opciones.', 'B: menú'],
+        cats: { Horror: 'Terror', Mystery: 'Misterio', Fantasy: 'Fantasía', 'Sci-Fi': 'Ciencia ficción', Adventure: 'Aventura', Kids: 'Infantil', SCP: 'SCP', Misc: 'Otros' } },
+};
+function T(key) { return (UI[LANG] && UI[LANG][key] !== undefined) ? UI[LANG][key] : UI.en[key]; }
+function TC(cat) { return T('cats')[cat] || cat; }
+const DICE_FRAMES = 18;
+const NOTICE_TICKS = 14;                   // marquee ticks (150 ms each) a stat-change notice stays on the status bar                    // animation frames before the result is shown (timer-driven)
+const CMP_RE = /^(\w+)(>=|<=|==|!=|>|<)(-?\d+)$/;
+
+class Engine {
+  constructor(display, onChange) {
+    this.d = display; this.onChange = onChange || (() => {});
+    this.library = [];
+    this.blink = false;
+    this.tick = 0;        // marquee clock, advanced by the simulator timer
+    this.reset();
+  }
+  reset() {
+    this.screen = 'BOOT'; this.bootFrame = 0;
+    this.book = null; this.nodeId = null; this.pages = [['']]; this.page = 0;
+    this.flags = new Set(); this.stats = {}; this.history = []; this.cursor = 0; this.scroll = 0;
+    this.menuItems = []; this.visibleChoices = [];
+    this.catIndex = 0; this.roll = null; this.rolling = false; this.diceFrame = 0; this.diceFace = 1;
+    this.notice = null; this.noticeTtl = 0; this.noticeQueue = []; this.returnTo = 'READER';
+  }
+  setLibrary(books) { this.library = books; this.cursor = 0; this.catIndex = 0; }
+
+  // ---- library / categories ---------------------------------------------
+  categories() {
+    const cats = []; this.library.forEach(b => { const c = (b.meta.category || 'Misc'); if (!cats.includes(c)) cats.push(c); });
+    return ['All'].concat(cats.sort());
+  }
+  shelf() {                                // books visible under the current category filter
+    const cat = this.categories()[this.catIndex];
+    return cat === 'All' ? this.library : this.library.filter(b => (b.meta.category || 'Misc') === cat);
+  }
+  tierTag(book) { return 'T' + (book.meta.tier || 1); }
+  setLang(l) { LANG = l; if (this.book && !this.nodeId) BOOK_LANG = pickBookLang(this.book); }          // UI language
+  setBookLang(l) {                                                                                       // book language, only if the author provided it
+    if (!this.book || !bookLangs(this.book).includes(l)) return;
+    BOOK_LANG = l;
+    if (this.nodeId && this.book.nodes[this.nodeId]) { const pg = this.page; this.pages = paginate(L(this.book.nodes[this.nodeId].text)); this.page = Math.min(pg, this.pages.length - 1); }
+  }
+  cycleBookLang(dir = 1) { const ls = bookLangs(this.book); if (ls.length < 2) return; this.setBookLang(ls[(ls.indexOf(BOOK_LANG) + dir + ls.length) % ls.length]); }
+
+  // ---- book flow ---------------------------------------------------------
+  startBook(book) {
+    if (this.book !== book || !bookLangs(book).includes(BOOK_LANG)) BOOK_LANG = pickBookLang(book);
+    this.book = book; this.flags = new Set(); this.history = [];
+    this.stats = Object.assign({}, book.meta.stats || {});
+    this.notice = null; this.noticeTtl = 0; this.noticeQueue = [];
+    this.enter(book.meta.start);
+  }
+  enter(nodeId) {
+    const n = this.book.nodes[nodeId];
+    if (!n) { this.pages = [['MISSING NODE', nodeId]]; this.screen = 'READER'; return; }
+    this.nodeId = nodeId; this.history.push(nodeId);
+    this.applyEffects(n);
+    this.pages = paginate(L(n.text)); this.page = 0;
+    this.screen = 'READER';
+    this.onChange();
+  }
+  applyEffects(obj) {
+    (obj.set || []).forEach(f => this.flags.add(f));
+    (obj.clear || []).forEach(f => this.flags.delete(f));
+    const deltas = [];
+    for (const k in obj.mod || {}) {
+      const before = this.stats[k] || 0;
+      this.stats[k] = Math.max(0, Math.min(99, before + obj.mod[k]));
+      const dlt = this.stats[k] - before;
+      if (dlt) deltas.push((dlt > 0 ? '+' : '') + dlt + ' ' + k.toUpperCase().slice(0, 4));
+    }
+    deltas.forEach(t => this.noticeQueue.push(t));          // shown one after another on the status bar
+    if (!this.notice && this.noticeQueue.length) { this.notice = this.noticeQueue.shift(); this.noticeTtl = NOTICE_TICKS; }
+  }
+  noticeTick() {                     // called by the simulator marquee timer
+    if (this.noticeTtl <= 0) return false;
+    if (--this.noticeTtl === 0) {
+      this.notice = this.noticeQueue.length ? this.noticeQueue.shift() : null;
+      if (this.notice) this.noticeTtl = NOTICE_TICKS;
+      return true;
+    }
+    return false;
+  }
+  node() { return this.book ? this.book.nodes[this.nodeId] : null; }
+  passes(req) {
+    for (const r of req || []) {
+      const m = CMP_RE.exec(r);
+      if (m) {                                                   // stat comparison, e.g. "luck>=3"
+        const v = this.stats[m[1]] || 0, n = +m[3], op = m[2];
+        const ok = op === '>=' ? v >= n : op === '<=' ? v <= n : op === '>' ? v > n : op === '<' ? v < n : op === '==' ? v === n : v !== n;
+        if (!ok) return false;
+      } else if (r.startsWith('!')) { if (this.flags.has(r.slice(1))) return false; }
+      else if (!this.flags.has(r)) return false;
+    }
+    return true;
+  }
+  choices() { return (this.node().choices || []).filter(c => this.passes(c.require)); }
+  advance() {                       // called when A is pressed on the last page
+    const n = this.node();
+    if (n.ending) { this.screen = 'ENDING'; return; }
+    if (n.goto) { this.enter(n.goto); return; }
+    if (n.roll) { this.startRoll(n.roll); return; }              // node-level roll: no choice, fate decides
+    this.visibleChoices = this.choices();
+    if (!this.visibleChoices.length) { this.pages = [T('deadend')]; this.page = 0; return; }
+    this.cursor = 0; this.scroll = 0; this.screen = 'CHOICE';
+  }
+  take(c) {
+    this.applyEffects(c);
+    if (c.roll) this.startRoll(c.roll); else this.enter(c.to);
+  }
+  // Dice: "NdS" + optional stat bonus vs a difficulty (dc). Result is decided here;
+  // the DICE screen animation is purely visual and gated by this.rolling.
+  startRoll(r) {
+    const m = /^(\d+)d(\d+)$/.exec(r.dice || '1d6');
+    const count = m ? +m[1] : 1, sides = m ? +m[2] : 6;
+    const dice = []; for (let i = 0; i < count; i++) dice.push(1 + Math.floor(Math.random() * sides));
+    const bonus = r.stat ? (this.stats[r.stat] || 0) : 0;
+    const total = dice.reduce((a, b) => a + b, 0) + bonus;
+    this.roll = { spec: r, dice, sides, bonus, total, pass: total >= (r.dc || 0) };
+    if (r.hidden) { this.resolveRoll(); return; }
+    this.rolling = true; this.diceFrame = 0; this.screen = 'DICE';
+  }
+  resolveRoll() {
+    const r = this.roll; this.roll = null; this.rolling = false;
+    this.enter(r.pass ? r.spec.pass : r.spec.fail);
+  }
+  diceTick() {                       // called by the simulator timer while rolling
+    if (!this.rolling) return false;
+    this.diceFrame++;
+    this.diceFace = 1 + Math.floor(Math.random() * this.roll.sides);
+    if (this.diceFrame >= DICE_FRAMES) this.rolling = false;
+    return true;
+  }
+  hasStats() { return this.book && Object.keys(this.stats).length > 0; }
+  openStats(returnTo) {
+    if (!this.hasStats()) return;
+    this.returnTo = returnTo; this.screen = 'STATS';
+  }
+  openMenu() {
+    this.menuKeys = this.book ? ['m_resume', 'm_restart', 'm_library', 'm_lang', 'm_about'] : ['m_library', 'm_lang', 'm_about'];
+    if (this.book && Object.keys(this.stats).length) this.menuKeys.splice(1, 0, 'm_stats');
+    if (this.book && bookLangs(this.book).length > 1) this.menuKeys.splice(this.menuKeys.indexOf('m_lang'), 0, 'm_booklang');
+    this.menuItems = this.menuKeys.map(k => k === 'm_lang' ? T('m_lang') + LANG.toUpperCase() : k === 'm_booklang' ? T('m_booklang') + BOOK_LANG.toUpperCase() : T(k));
+    this.cursor = 0; this.screen = 'MENU';
+  }
+
+  // ---- input -------------------------------------------------------------
+  press(btn) {
+    const s = this.screen;
+    if (btn === 'UP' || btn === 'DOWN' || btn === 'LEFT' || btn === 'RIGHT') this.tick = 0;   // restart marquee
+    if (s === 'BOOT') return;                                   // boot animation is not skippable, keep it short
+    if (s === 'LIBRARY') {
+      const shelf = this.shelf();
+      if (btn === 'UP') this.cursor = Math.max(0, this.cursor - 1);
+      if (btn === 'DOWN') this.cursor = Math.min(shelf.length - 1, this.cursor + 1);
+      if (btn === 'LEFT' || btn === 'RIGHT') {
+        const n = this.categories().length;
+        this.catIndex = (this.catIndex + (btn === 'RIGHT' ? 1 : n - 1)) % n; this.cursor = 0;
+      }
+      if (btn === 'A' && shelf.length) { this.book = shelf[this.cursor]; BOOK_LANG = pickBookLang(this.book); this.screen = 'COVER'; }
+      if (btn === 'B') this.openMenu();
+    } else if (s === 'COVER') {
+      if (btn === 'LEFT' || btn === 'RIGHT') this.cycleBookLang(btn === 'RIGHT' ? 1 : -1);
+      if (btn === 'A') this.startBook(this.book);
+      if (btn === 'B') { this.book = null; this.screen = 'LIBRARY'; }
+    } else if (s === 'READER') {
+      const last = this.page >= this.pages.length - 1;
+      if (btn === 'A' || btn === 'RIGHT') { if (last) { if (btn === 'A' || this.node().goto || this.node().ending) this.advance(); } else this.page++; }
+      if (btn === 'B' || btn === 'LEFT') { if (this.page > 0) this.page--; else if (btn === 'B') this.openMenu(); }
+      if ((btn === 'DOWN') && !last) this.page++;
+      if (btn === 'UP') this.openStats('READER');
+    } else if (s === 'CHOICE') {
+      const n = this.visibleChoices.length;
+      if (btn === 'UP') this.cursor = (this.cursor + n - 1) % n;
+      if (btn === 'DOWN') this.cursor = (this.cursor + 1) % n;
+      if (this.cursor < this.scroll) this.scroll = this.cursor;
+      if (this.cursor >= this.scroll + MENU_ROWS) this.scroll = this.cursor - MENU_ROWS + 1;
+      if (btn === 'A' || btn === 'RIGHT') this.take(this.visibleChoices[this.cursor]);
+      if (btn === 'B' || btn === 'LEFT') { this.screen = 'READER'; this.page = this.pages.length - 1; }
+    } else if (s === 'DICE') {
+      if (this.rolling) return;                                 // ignore input until the die settles
+      if (btn === 'A') this.resolveRoll();
+    } else if (s === 'ENDING') {
+      if (btn === 'A') this.startBook(this.book);
+      if (btn === 'B') { this.book = null; this.screen = 'LIBRARY'; this.cursor = 0; }
+    } else if (s === 'MENU') {
+      const n = this.menuItems.length;
+      if (btn === 'UP') this.cursor = (this.cursor + n - 1) % n;
+      if (btn === 'DOWN') this.cursor = (this.cursor + 1) % n;
+      if (btn === 'B') { this.screen = this.book ? 'READER' : 'LIBRARY'; this.cursor = 0; }
+      if (btn === 'A') {
+        const item = this.menuKeys[this.cursor];
+        if (item === 'm_resume') this.screen = 'READER';
+        if (item === 'm_restart') this.startBook(this.book);
+        if (item === 'm_library') { this.book = null; this.screen = 'LIBRARY'; this.cursor = 0; }
+        if (item === 'm_stats') this.openStats('MENU');
+        if (item === 'm_lang') { const c = this.cursor; this.setLang(LANGS[(LANGS.indexOf(LANG) + 1) % LANGS.length]); this.openMenu(); this.cursor = c; if (this.onLangChange) this.onLangChange(LANG); }
+        if (item === 'm_booklang') { const c = this.cursor; this.cycleBookLang(1); this.openMenu(); this.cursor = c; }
+        if (item === 'm_about') this.screen = 'ABOUT';
+      }
+    } else if (s === 'STATS') {
+      if (this.returnTo === 'MENU') this.openMenu(); else this.screen = this.returnTo;
+    } else if (s === 'ABOUT') {
+      if (btn === 'B' || btn === 'A') this.openMenu();
+    }
+    this.onChange();
+  }
+
+  // ---- drawing -----------------------------------------------------------
+  statusBar(left, right = '') {
+    const cols = 21 - (right ? right.length + 1 : 0);
+    this.d.drawText(1, 0, this.marquee(left.toUpperCase(), Math.min(cols, 15 + (right ? 0 : 6))), 1);
+    if (right) this.d.drawText(WIDTH - 1 - this.d.textWidth(right), 0, right, 1);
+    this.d.hline(0, 7, WIDTH);
+  }
+  // Long selected items scroll like a marquee: hold, scroll through, loop.
+  marquee(text, cols) {
+    if (text.length <= cols) return text;
+    const loop = text + '   ';
+    const off = Math.max(0, this.tick - MARQUEE_PAUSE) % loop.length;
+    return (loop + loop).slice(off, off + cols);
+  }
+  marqueeActive(items, cursor, cols = LABEL_COLS) { return !!items[cursor] && items[cursor].length > cols; }
+  list(items, cursor, scroll, y0 = TEXT_Y0, cols = LABEL_COLS, tags = null) {
+    for (let i = 0; i < MENU_ROWS; i++) {
+      const idx = scroll + i; if (idx >= items.length) break;
+      const y = y0 + i * ROW_H;
+      if (idx === cursor) this.d.drawText(1, y, '>', 1);
+      const label = idx === cursor ? this.marquee(items[idx], cols) : items[idx].slice(0, cols);
+      this.d.drawText(13, y, label, 1);
+      if (tags && tags[idx]) this.d.drawText(WIDTH - 1 - this.d.textWidth(tags[idx]), y, tags[idx], 1);
+    }
+    if (scroll > 0) this.d.drawText(WIDTH - 6, y0, '^', 1);
+    if (scroll + MENU_ROWS < items.length) this.d.drawText(WIDTH - 6, y0 + (MENU_ROWS - 1) * ROW_H, 'v', 1);
+  }
+  currentList() {
+    if (this.screen === 'LIBRARY') return { items: this.shelf().map(b => L(b.meta.title)), cols: 16 };
+    if (this.screen === 'CHOICE') return { items: this.visibleChoices.map(c => L(c.label)), cols: LABEL_COLS };
+    if (this.screen === 'MENU') return { items: this.menuItems, cols: LABEL_COLS };
+    if (this.screen === 'COVER' || this.screen === 'READER') return { items: [this.screen === 'COVER' ? L(this.book.meta.title) : L(this.node().title)], cols: 15 };
+    return null;
+  }
+  // A wireframe cube tumbling: 8 vertices, 12 edges, two rotation angles from the frame counter.
+  drawCube(cx, cy, size, frame) {
+    const a = frame * 0.33, b = frame * 0.47;
+    const ca = Math.cos(a), sa = Math.sin(a), cb = Math.cos(b), sb = Math.sin(b);
+    const pts = [];
+    for (let i = 0; i < 8; i++) {
+      let x = (i & 1) ? 1 : -1, y = (i & 2) ? 1 : -1, z = (i & 4) ? 1 : -1;
+      let y1 = y * ca - z * sa, z1 = y * sa + z * ca;          // rotate around X
+      let x2 = x * cb + z1 * sb, z2 = -x * sb + z1 * cb;       // rotate around Y
+      const p = 1.6 / (2.6 + z2 * 0.5);                        // mild perspective
+      pts.push([cx + x2 * size * p, cy + y1 * size * p]);
+    }
+    for (let i = 0; i < 8; i++) for (const bit of [1, 2, 4]) if (!(i & bit)) {
+      const j = i | bit; this.d.line(pts[i][0], pts[i][1], pts[j][0], pts[j][1]);
+    }
+  }
+  // A settled d6 face: rounded square with real pips.
+  drawDieFace(cx, cy, value) {
+    const d = this.d, h = 12;                                   // half size -> 25 px die
+    d.rect(cx - h + 1, cy - h, 2 * h - 1, 2 * h + 1); d.rect(cx - h, cy - h + 1, 2 * h + 1, 2 * h - 1);
+    const P = { 1: [[0, 0]], 2: [[-1, -1], [1, 1]], 3: [[-1, -1], [0, 0], [1, 1]], 4: [[-1, -1], [1, -1], [-1, 1], [1, 1]],
+                5: [[-1, -1], [1, -1], [0, 0], [-1, 1], [1, 1]], 6: [[-1, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [1, 1]] };
+    for (const [px, py] of P[value] || []) d.fillRect(cx + px * 7 - 1, cy + py * 7 - 1, 3, 3);
+  }
+  draw() {
+    const d = this.d; d.clear();
+    const s = this.screen;
+    if (s === 'BOOT') {
+      const f = this.bootFrame;
+      d.drawTextCentered(20, 'MOVENTURE', 2);
+      d.fillRect(10, 40, Math.min(108, f * 6), 2);
+      if (f > 18) d.drawTextCentered(50, T('tagline'), 1);
+      d.drawText(WIDTH - 1 - d.textWidth('v' + APP_VERSION), 0, 'v' + APP_VERSION, 1);
+    } else if (s === 'LIBRARY') {
+      const shelf = this.shelf(), cat = this.categories()[this.catIndex];
+      this.statusBar('<' + (cat === 'All' ? T('all') : TC(cat)).toUpperCase() + '>', `${shelf.length}`);
+      if (!shelf.length) d.drawText(1, TEXT_Y0 + 8, T('nobooks'), 1);
+      this.list(shelf.map(b => L(b.meta.title)), this.cursor, Math.max(0, this.cursor - MENU_ROWS + 1), TEXT_Y0, 16, shelf.map(b => this.tierTag(b)));
+      d.drawText(1, 57, T('h_lib'), 1);
+    } else if (s === 'COVER') {
+      const m = this.book.meta;
+      const ls = bookLangs(this.book), tags = ls.map(l => l.toUpperCase()).join(' ');
+      this.statusBar(L(m.title), tags);
+      if (ls.length > 1) {                                  // invert the active language tag
+        const x0 = WIDTH - 1 - d.textWidth(tags) + ls.indexOf(BOOK_LANG) * 18;
+        d.invertRect(x0 - 1, 0, 13, 7);
+      }
+      d.drawText(1, TEXT_Y0, TC(m.category || 'Misc').toUpperCase(), 1);
+      d.drawText(WIDTH - 1 - d.textWidth(T('TIER') + ' ' + (m.tier || 1)), TEXT_Y0, T('TIER') + ' ' + (m.tier || 1), 1);
+      wrap(L(m.blurb)).slice(0, 4).forEach((line, i) => d.drawText(1, TEXT_Y0 + 9 + i * ROW_H, line, 1));
+      d.drawText(1, 57, T('h_cover') + (ls.length > 1 ? ' <>' : ''), 1);
+    } else if (s === 'READER') {
+      const n = this.node();
+      this.statusBar(L(n.title), this.notice ? this.notice : `${this.page + 1}/${this.pages.length}`);
+      this.pages[this.page].forEach((line, i) => d.drawText(1, TEXT_Y0 + i * ROW_H, line, 1));
+      const last = this.page >= this.pages.length - 1;
+      if (last && this.blink) {             // blinking "press A" triangle, bottom right corner
+        for (let i = 0; i < 3; i++) d.hline(123 + i, 60 + i, 5 - i * 2);
+      }
+    } else if (s === 'CHOICE') {
+      this.statusBar(T('CHOOSE'), `${this.cursor + 1}/${this.visibleChoices.length}`);
+      this.list(this.visibleChoices.map(c => L(c.label)), this.cursor, this.scroll);
+    } else if (s === 'DICE') {
+      const r = this.roll, sp = r.spec;
+      this.statusBar(T('ROLL') + ' ' + (sp.dice || '1d6'), sp.stat ? `${sp.stat.toUpperCase()} +${r.bonus}` : '');
+      if (this.rolling) {
+        const f = this.diceFrame, bounce = Math.round(Math.abs(Math.sin(f * 0.6)) * 6 * (1 - f / DICE_FRAMES));
+        this.drawCube(64, 30 - bounce, 13, f);
+        d.drawTextCentered(56, T('rolling'), 1);
+      } else {
+        const n = r.dice.length;
+        if (r.sides === 6 && n <= 3) {                          // pip faces, side by side
+          const gap = 34, x0 = 64 - (n - 1) * gap / 2;
+          r.dice.forEach((v, i) => this.drawDieFace(x0 + i * gap, 24, v));
+        } else {                                                // d8, d20...: big number
+          const face = r.dice.join('+'), w = d.textWidth(face, 3);
+          d.rect(Math.floor((WIDTH - w) / 2) - 5, 10, w + 11, 29);
+          d.drawTextCentered(14, face, 3);
+        }
+        const sum = r.dice.reduce((a, b) => a + b, 0);
+        d.drawText(1, 42, (r.bonus ? `${sum}+${r.bonus}=${r.total}` : `${r.total}`) + ` vs ${sp.dc}`, 1);
+        const res = r.pass ? T('PASS') : T('FAIL');
+        d.drawText(WIDTH - 1 - d.textWidth(res), 42, res, 1);
+        if (!r.pass) d.ditherRect(0, 51, WIDTH, 4);
+        d.drawText(1, 57, T('h_dice'), 1);
+      }
+    } else if (s === 'ENDING') {
+      const kind = this.node().ending;
+      this.statusBar(T('THE_END'));
+      const label = kind === 'good' ? T('GOOD') : kind === 'bad' ? T('BAD') : T('NEUTRAL');
+      d.drawTextCentered(18, label, 1);
+      d.rect(Math.floor((WIDTH - d.textWidth(label)) / 2) - 4, 14, d.textWidth(label) + 9, 15);
+      if (kind === 'bad') d.ditherRect(0, 9, WIDTH, 4);
+      d.drawTextCentered(38, `${this.history.length} ${T('pages')}`, 1);
+      d.drawText(1, 57, T('h_end'), 1);
+    } else if (s === 'MENU') {
+      this.statusBar(T('MENU'));
+      this.list(this.menuItems, this.cursor, 0);
+      d.drawText(1, 57, T('h_menu'), 1);
+    } else if (s === 'STATS') {
+      this.statusBar(T('STATS'));
+      Object.keys(this.stats).slice(0, 5).forEach((k, i) => {
+        const y = TEXT_Y0 + i * ROW_H, v = this.stats[k];
+        d.drawText(1, y, k.toUpperCase().slice(0, 6), 1);
+        d.drawText(44, y, String(v).padStart(2), 1);
+        d.rect(60, y, 66, 7); d.fillRect(61, y + 1, Math.min(64, Math.round(v * 64 / 10)), 5);   // bar, 10 = full
+      });
+      d.drawText(1, 57, T('h_any'), 1);
+    } else if (s === 'ABOUT') {
+      this.statusBar(T('ABOUT'));
+      CREDIT.forEach((line, i) => d.drawText(1, TEXT_Y0 + i * ROW_H, line, 1));
+      d.drawText(1, 57, T('h_back'), 1);
+    }
+    d.render();
+  }
+}
+
+/* =========================================================================
+   SECTION 4: simulator glue (UI, keyboard, timers, live graph)
+   ========================================================================= */
+const display = new OLED(document.getElementById('oled'));
+const engine = new Engine(display, refreshPanels);
+try { const l = localStorage.getItem('moventure_lang'); if (l && LANGS.includes(l)) LANG = l; } catch (e) {}
+engine.onLangChange = l => { try { localStorage.setItem('moventure_lang', l); } catch (e) {} document.getElementById('langSelect').value = l; fillBookSelect(); refreshPanels(); };
+let books = (window.MOVENTURE_STORIES || []).slice();
+
+function boot() {
+  engine.reset(); engine.setLibrary(books);
+  let frames = 0;
+  const t = setInterval(() => {
+    engine.bootFrame = ++frames; engine.draw();
+    if (frames > 28) { clearInterval(t); engine.screen = 'LIBRARY'; engine.draw(); refreshPanels(); }
+  }, 40);
+}
+// Frame-timed blink, independent of input. Only redraws while the reader is on a last page.
+setInterval(() => {
+  engine.blink = !engine.blink;
+  if (engine.screen === 'READER' && engine.page >= engine.pages.length - 1) engine.draw();
+}, 400);
+
+// Marquee clock: only redraws while a list is showing a selected item that does not fit.
+setInterval(() => {
+  engine.tick++;
+  const l = engine.currentList();
+  const cur = (engine.screen === 'COVER' || engine.screen === 'READER') ? 0 : engine.cursor;
+  const noticeGone = engine.noticeTick();
+  if ((l && engine.marqueeActive(l.items, cur, l.cols)) || (noticeGone && engine.screen === 'READER')) engine.draw();
+}, 150);
+// Dice animation clock, gated by engine.rolling so input/data can't overwrite frames.
+setInterval(() => { if (engine.diceTick()) { engine.draw(); if (!engine.rolling) refreshPanels(); } }, 60);
+
+function press(btn) {
+  engine.press(btn); engine.draw();
+  const el = document.querySelector(`[data-btn="${btn}"]`);
+  if (el) { el.classList.add('down'); setTimeout(() => el.classList.remove('down'), 90); }
+}
+document.querySelectorAll('[data-btn]').forEach(b => {
+  b.addEventListener('pointerdown', ev => { ev.preventDefault(); press(b.dataset.btn); });
+  b.addEventListener('click', ev => ev.preventDefault());
+});
+const KEYS = { ArrowUp: 'UP', ArrowDown: 'DOWN', ArrowLeft: 'LEFT', ArrowRight: 'RIGHT',
+               a: 'A', A: 'A', z: 'A', Z: 'A', Enter: 'A', ' ': 'A',
+               b: 'B', B: 'B', x: 'B', X: 'B', Backspace: 'B', Escape: 'B' };
+window.addEventListener('keydown', e => {
+  if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+  const b = KEYS[e.key]; if (!b) return; e.preventDefault(); press(b);
+});
+
+// header controls
+const bookSelect = document.getElementById('bookSelect');
+function fillBookSelect() {
+  bookSelect.innerHTML = books.map((b, i) => `<option value="${i}">${esc(L(b.meta.title))} [${bookLangs(b).join('/')}]</option>`).join('');
+}
+bookSelect.addEventListener('change', () => { engine.setLibrary(books); engine.book = null; engine.startBook(books[+bookSelect.value]); engine.draw(); });
+document.getElementById('fileInput').addEventListener('change', ev => {
+  const f = ev.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const book = JSON.parse(r.result);
+      book.meta = book.meta || {}; book.meta.title = book.meta.title || f.name;
+      books.unshift(book); fillBookSelect(); bookSelect.value = 0;
+      engine.setLibrary(books); engine.startBook(book); engine.draw();
+    } catch (e) { alert('Not a valid story JSON: ' + e.message); }
+  };
+  r.readAsText(f);
+});
+document.getElementById('colorSelect').addEventListener('change', ev => {
+  const v = ev.target.value;
+  if (v === 'split') { display.color = '#7fd4ff'; display.splitColor = '#f5d142'; } else { display.color = v; display.splitColor = null; }
+  engine.draw();
+});
+document.getElementById('langSelect').value = LANG;
+document.getElementById('langSelect').addEventListener('change', ev => { engine.setLang(ev.target.value); engine.onLangChange(LANG); if (engine.screen === 'MENU') engine.openMenu(); engine.draw(); });
+document.getElementById('btnReboot').addEventListener('click', boot);
+document.getElementById('btnRestart').addEventListener('click', () => { if (engine.book) { engine.startBook(engine.book); engine.draw(); } });
+
+// ---- live story map ------------------------------------------------------
+const NODE_W = 96, NODE_H = 30, COL_GAP = 60, ROW_GAP = 14;
+let layoutCache = { book: null, pos: null };
+
+function layout(book) {
+  if (layoutCache.book === book) return layoutCache.pos;
+  const nodes = book.nodes, depth = {}, q = [book.meta.start]; depth[book.meta.start] = 0;
+  while (q.length) {                             // BFS columns from the start node
+    const id = q.shift(), n = nodes[id]; if (!n) continue;
+    const outs = outEdges(n).map(e => e.to);
+    for (const t of outs) if (nodes[t] && depth[t] === undefined) { depth[t] = depth[id] + 1; q.push(t); }
+  }
+  let maxD = 0; for (const id in nodes) { if (depth[id] === undefined) depth[id] = ++maxD; maxD = Math.max(maxD, depth[id]); }
+  const cols = {}; for (const id in nodes) (cols[depth[id]] = cols[depth[id]] || []).push(id);
+  const maxRows = Math.max(...Object.values(cols).map(c => c.length));
+  const totalH = maxRows * (NODE_H + ROW_GAP);
+  const pos = {};
+  for (const d in cols) cols[d].forEach((id, i) => {
+    const colH = cols[d].length * (NODE_H + ROW_GAP);
+    pos[id] = { x: 10 + d * (NODE_W + COL_GAP), y: 10 + (totalH - colH) / 2 + i * (NODE_H + ROW_GAP) };
+  });
+  pos._size = { w: 20 + (maxD + 1) * (NODE_W + COL_GAP), h: totalH + 20 };
+  layoutCache = { book, pos };
+  return pos;
+}
+
+function drawGraph() {
+  const svg = document.getElementById('graph');
+  if (!engine.book) { svg.innerHTML = ''; svg.setAttribute('height', 40); return; }
+  const book = engine.book, nodes = book.nodes, pos = layout(book);
+  const visited = new Set(engine.history), path = engine.history;
+  svg.setAttribute('width', pos._size.w); svg.setAttribute('height', pos._size.h);
+  let out = `<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6070"/></marker>
+  <marker id="arrHot" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#f3c969"/></marker></defs>`;
+  const taken = new Set(); for (let i = 1; i < path.length; i++) taken.add(path[i - 1] + '>' + path[i]);
+  for (const id in nodes) {
+    const n = nodes[id], edges = outEdges(n);
+    for (const e of edges) {
+      if (!pos[e.to]) continue;
+      const a = pos[id], b = pos[e.to];
+      const x1 = a.x + NODE_W, y1 = a.y + NODE_H / 2, x2 = b.x, y2 = b.y + NODE_H / 2;
+      const back = x2 <= x1;
+      const cx = back ? 70 : (x2 - x1) / 2;
+      const dPath = back
+        ? `M${x1},${y1} C${x1 + cx},${y1 + 40} ${x2 - cx},${y2 + 40} ${x2},${y2}`
+        : `M${x1},${y1} C${x1 + cx},${y1} ${x2 - cx},${y2} ${x2},${y2}`;
+      const hot = taken.has(id + '>' + e.to);
+      const stroke = hot ? '#f3c969' : e.roll ? (e.pass ? '#4f9d6b' : '#b0554a') : (e.goto ? '#3f4552' : '#5a6070');
+      out += `<path d="${dPath}" fill="none" stroke="${stroke}" stroke-width="${hot ? 2.2 : 1.2}" ${e.req ? 'stroke-dasharray="5,4"' : ''} marker-end="url(#${hot ? 'arrHot' : 'arr'})"><title>${esc(e.label || 'auto')}${e.set ? ' +' + e.set.join(',') : ''}</title></path>`;
+    }
+  }
+  for (const id in nodes) {
+    const n = nodes[id], p = pos[id];
+    const cur = id === engine.nodeId, was = visited.has(id);
+    const fill = n.ending === 'good' ? '#1f4d24' : n.ending === 'bad' ? '#5a1d16' : n.ending ? '#3a3d45' : '#1c2230';
+    const stroke = cur ? '#7fd4ff' : was ? '#f3c969' : '#3f4552';
+    out += `<g><rect x="${p.x}" y="${p.y}" width="${NODE_W}" height="${NODE_H}" rx="5" fill="${fill}" stroke="${stroke}" stroke-width="${cur ? 3 : 1.2}"/>
+      <text x="${p.x + 6}" y="${p.y + 12}" font-size="9" fill="#d7dae0" font-family="monospace">${esc((L(n.title) || id).slice(0, 15))}</text>
+      <text x="${p.x + 6}" y="${p.y + 24}" font-size="8" fill="#7d8494" font-family="monospace">${esc(id.slice(0, 16))}</text>
+      <title>${esc(L(n.text))}</title></g>`;
+  }
+  svg.innerHTML = out;
+  const wrapEl = document.getElementById('graphWrap'), p = pos[engine.nodeId];
+  if (p) wrapEl.scrollTo({ left: Math.max(0, p.x - wrapEl.clientWidth / 2 + NODE_W / 2), top: Math.max(0, p.y - wrapEl.clientHeight / 2), behavior: 'smooth' });
+}
+// Every outgoing edge of a node: choices, goto, and the pass/fail pair of a roll.
+function outEdges(n) {
+  const out = [];
+  const addRoll = (r, label) => { out.push({ to: r.pass, roll: true, pass: true, req: true, label: label + ' PASS' }); out.push({ to: r.fail, roll: true, pass: false, req: true, label: label + ' FAIL' }); };
+  for (const c of n.choices || []) {
+    if (c.roll) addRoll(c.roll, L(c.label) + ' (' + (c.roll.dice || '1d6') + (c.roll.stat ? '+' + c.roll.stat : '') + ' vs ' + c.roll.dc + ')');
+    else out.push({ to: c.to, req: !!(c.require && c.require.length), label: L(c.label), set: c.set });
+  }
+  if (n.goto) out.push({ to: n.goto, req: false, label: '', goto: true });
+  if (n.roll) addRoll(n.roll, 'fate (' + (n.roll.dice || '1d6') + ' vs ' + n.roll.dc + ')');
+  return out;
+}
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+
+function refreshPanels() {
+  drawGraph();
+  const b = engine.book;
+  document.getElementById('stateBox').innerHTML = b
+    ? `book: ${esc(L(b.meta.title))} (${esc(b.meta.category || 'Misc')}, T${b.meta.tier || 1}, ${bookLangs(b).join('/')})<br>ui: ${LANG}  book: ${BOOK_LANG}<br>screen: ${engine.screen}<br>node: <b>${esc(engine.nodeId || '-')}</b><br>page: ${engine.page + 1}/${engine.pages.length}<br>steps: ${engine.history.length}<br>stats: ${Object.keys(engine.stats).map(k => k + '=' + engine.stats[k]).join(' ') || '-'}${engine.roll ? '<br>roll: [' + engine.roll.dice.join('+') + '] +' + engine.roll.bonus + ' = ' + engine.roll.total + ' vs ' + engine.roll.spec.dc + ' -> ' + (engine.roll.pass ? 'PASS' : 'FAIL') : ''}`
+    : `screen: ${engine.screen}`;
+  const all = b ? (b.flags || Array.from(engine.flags)) : [];
+  const known = new Set(all); engine.flags.forEach(f => known.add(f));
+  document.getElementById('flagBox').innerHTML = Array.from(known).map(f => `<span class="flag ${engine.flags.has(f) ? 'on' : ''}">${esc(f)}</span>`).join('') || '<span class="flag">none</span>';
+  const log = document.getElementById('log');
+  log.innerHTML = engine.history.map((id, i) => `${i === engine.history.length - 1 ? '<span class="cur">' : ''}${String(i + 1).padStart(2)}. ${esc(id)}${i === engine.history.length - 1 ? '</span>' : ''}`).join('\n');
+  log.scrollTop = log.scrollHeight;
+}
+
+document.title = 'Moventure Simulator v' + APP_VERSION;
+document.getElementById('ver').textContent = 'v' + APP_VERSION;
+document.getElementById('verDevice').textContent = 'v' + APP_VERSION;
+// ---- player mode --------------------------------------------------------
+function fitDevice() {
+  const dev = document.querySelector('.device');
+  const portrait = window.innerHeight > window.innerWidth && window.innerWidth < 900;
+  document.body.classList.toggle('portrait', document.body.classList.contains('player') && portrait);
+  if (!document.body.classList.contains('player') || portrait) { dev.style.transform = ''; return; }
+  const sc = Math.min(window.innerWidth / (dev.offsetWidth + 24), window.innerHeight / (dev.offsetHeight + 24));
+  dev.style.transform = `scale(${sc.toFixed(3)})`;
+}
+function setPlayer(on) {
+  document.body.classList.toggle('player', on);
+  const url = new URL(location.href);
+  if (on) url.searchParams.set('player', '1'); else url.searchParams.delete('player');
+  history.replaceState(null, '', url);
+  fitDevice();
+}
+document.getElementById('btnPlayer').addEventListener('click', () => setPlayer(true));
+document.getElementById('btnExitPlayer').addEventListener('click', () => setPlayer(false));
+document.getElementById('btnFull').addEventListener('click', () => {
+  if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen().catch(() => {});
+});
+window.addEventListener('resize', fitDevice);
+document.addEventListener('fullscreenchange', fitDevice);
+
+// ---- gamepad (Steam Deck, Xbox, PS: "standard" mapping) -------------------
+// buttons: 0 = A, 1 = B, 12..15 = d-pad up/down/left/right. Left stick on axes 0/1.
+const PAD_MAP = { 0: 'A', 1: 'B', 12: 'UP', 13: 'DOWN', 14: 'LEFT', 15: 'RIGHT' };
+const padPrev = {}; let padAxisDir = null, padAxisNext = 0;
+function pollGamepad(ts) {
+  const pads = navigator.getGamepads ? navigator.getGamepads() : [];
+  let pad = null; for (const p of pads) if (p && p.connected) { pad = p; break; }
+  const st = document.getElementById('padStatus');
+  if (!pad) { st.textContent = 'no gamepad'; requestAnimationFrame(pollGamepad); return; }
+  st.textContent = 'gamepad: ' + pad.id.slice(0, 40);
+  for (const idx in PAD_MAP) {
+    const down = !!(pad.buttons[idx] && pad.buttons[idx].pressed);
+    if (down && !padPrev[idx]) press(PAD_MAP[idx]);
+    padPrev[idx] = down;
+  }
+  const ax = pad.axes[0] || 0, ay = pad.axes[1] || 0, dz = 0.5;
+  const dir = ay < -dz ? 'UP' : ay > dz ? 'DOWN' : ax < -dz ? 'LEFT' : ax > dz ? 'RIGHT' : null;
+  if (dir && (dir !== padAxisDir || ts > padAxisNext)) {          // first press, then auto-repeat
+    press(dir); padAxisNext = ts + (dir !== padAxisDir ? 350 : 120);
+  }
+  padAxisDir = dir;
+  requestAnimationFrame(pollGamepad);
+}
+requestAnimationFrame(pollGamepad);
+
+/* ---- online mode: catalog + personal library --------------------------------
+   When served over http(s) (GitHub Pages), books come from catalog.json instead of
+   stories.js. Books added with ?add=<url> (QR codes) are kept in this browser. */
+const LIB_KEY = 'moventure_library_v1';
+const ONLINE = !window.MOVENTURE_STORIES || window.MOVENTURE_STORIES.length === 0;
+const SITE_BASE = window.MOVENTURE_BASE || './';
+function loadLocalLibrary() { try { return JSON.parse(localStorage.getItem(LIB_KEY) || '[]'); } catch (e) { return []; } }
+function saveLocalLibrary(list) { try { localStorage.setItem(LIB_KEY, JSON.stringify(list)); } catch (e) {} }
+function bookId(b) { return b.meta.id || (b.meta.file || '').replace(/\.json$/, '') || (typeof b.meta.title === 'object' ? (b.meta.title.en || Object.values(b.meta.title)[0]) : b.meta.title); }
+function addToLibrary(book, source) {
+  book.meta.id = book.meta.id || bookId(book); book.meta.source = source || book.meta.source;
+  const lib = loadLocalLibrary().filter(b => b.meta.id !== book.meta.id); lib.unshift(book); saveLocalLibrary(lib);
+  books = books.filter(b => bookId(b) !== book.meta.id); books.unshift(book);
+  fillBookSelect(); engine.setLibrary(books);
+}
+async function fetchBook(url) {
+  const r = await fetch(url, { cache: 'no-cache' }); if (!r.ok) throw new Error(r.status + ' ' + url);
+  const book = await r.json(); if (!book.meta || !book.nodes) throw new Error('not a Moventure book'); return book;
+}
+async function loadCatalog() {
+  try {
+    const r = await fetch(SITE_BASE + 'catalog.json', { cache: 'no-cache' }); if (!r.ok) return;
+    const cat = await r.json();
+    const loaded = await Promise.all(cat.books.map(async e => { try { const b = await fetchBook(SITE_BASE + e.file); b.meta.id = e.id; b.meta.file = e.file; return b; } catch (err) { console.warn('book failed', e.file, err); return null; } }));
+    const local = loadLocalLibrary();
+    books = local.concat(loaded.filter(Boolean).filter(b => !local.some(l => l.meta.id === b.meta.id)));
+  } catch (e) { console.warn('catalog failed', e); books = loadLocalLibrary(); }
+}
+async function start() {
+  const q = new URLSearchParams(location.search);
+  if (ONLINE) await loadCatalog();
+  fillBookSelect(); boot();
+  if (q.has('player')) setPlayer(true);
+  const openById = id => { const b = books.find(x => bookId(x) === id); if (!b) return false; const wait = setInterval(() => { if (engine.screen !== 'BOOT') { clearInterval(wait); engine.setLibrary(books); engine.book = b; BOOK_LANG = pickBookLang(b); engine.screen = 'COVER'; engine.draw(); refreshPanels(); } }, 100); return true; };
+  if (q.get('add')) {                                            // QR / shared link: fetch, keep, open the cover
+    try { const b = await fetchBook(q.get('add')); b.meta.id = b.meta.id || (q.get('add').split('/').pop().split('?')[0].replace(/\.json$/i, '')); addToLibrary(b, q.get('add')); openById(b.meta.id); history.replaceState(null, '', location.pathname + (q.has('player') ? '?player=1' : '')); }
+    catch (e) { alert('Could not add that book: ' + e.message); }
+  } else if (q.get('book')) openById(q.get('book'));
+}
+start();
+</script>
+</body>
+</html>
