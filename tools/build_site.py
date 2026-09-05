@@ -33,11 +33,16 @@ def newest(pattern, folder):
 
 def main():
     subprocess.run([sys.executable, str(ROOT / "tools" / "build_catalog.py")], check=True)
-    if DOCS.exists():
-        shutil.rmtree(DOCS)
-    (DOCS / "stories").mkdir(parents=True)
-    (DOCS / "player").mkdir()
-    (DOCS / "studio").mkdir()
+    # Overwrite in place: folders are kept (Google Drive / Explorer can hold a lock on them on
+    # Windows, and rmtree would die halfway), stale files are removed one by one.
+    for sub in ("stories", "player", "studio"):
+        (DOCS / sub).mkdir(parents=True, exist_ok=True)
+    for old in DOCS.rglob("*"):
+        if old.is_file():
+            try:
+                old.unlink()
+            except PermissionError:
+                print(f"warning: could not remove {old.relative_to(ROOT)}, overwriting")
     (DOCS / ".nojekyll").write_text("")
 
     # catalog + books
