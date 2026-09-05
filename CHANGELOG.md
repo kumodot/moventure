@@ -6,6 +6,19 @@ browser tab, the page header, the device bezel, the boot screen and the About sc
 `run_sim.bat` always opens the newest file. Old versions can be kept or deleted, they are
 self-contained (they only share `stories.js`).
 
+## 0.7.0 / Studio 0.4.0 - 2026-09-05 (your own books)
+- **Load a book**: button in player mode (and in the sim header), or drag a `.json` onto the page.
+  The book goes to the browser's own library and opens on its cover. Works online and in the
+  local sim / single-file player.
+- **My books** shelf in the LIBRARY (right after All) lists everything added by the reader:
+  loaded files, QR / `?add=` books and books sent from the Studio. It only appears when there
+  is something in it.
+- **Remove book** in the menu of any My books title, with a yes / no screen.
+- Studio: **Open in Player** button. Saves the book straight into the Player's My books (same
+  site, same browser) and opens the Player on its cover: no export, no file. Export JSON is
+  still there for sharing the file.
+- Fixed `build_player.py` (the single-file player was not starting in player mode since 0.6.0).
+
 ## 0.6.0 - 2026-09-04 (first online release)
 - Online mode: when served over http(s) with no stories.js, the player loads `catalog.json`
   and fetches each book. `?book=<id>` opens a cover directly (the portal's Play buttons);

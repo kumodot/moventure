@@ -12,7 +12,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-STUDIO_VERSION = "0.3.0"
+STUDIO_VERSION = "0.4.0"
 
 sims = sorted((ROOT / "simulator").glob("moventure_sim_v*.html"), key=lambda p: [int(x) for x in re.findall(r"\d+", p.stem)])
 sim = sims[-1].read_text(encoding="utf-8")
@@ -22,7 +22,7 @@ engine = sim[start:end]
 engine = re.sub(r"const APP_VERSION = '[^']+';[^\n]*\n", "", engine)   # Studio defines its own APP_VERSION
 
 tpl = (ROOT / "studio" / "studio_template.html").read_text(encoding="utf-8")
-out_html = tpl.replace("/* __ENGINE__ */", engine).replace("__STUDIO_VERSION__", STUDIO_VERSION)
+out_html = tpl.replace("/* __ENGINE__ */", engine).replace("__STUDIO_VERSION__", STUDIO_VERSION).replace("__PLAYER_URL__", "../simulator/" + sims[-1].name)
 out = ROOT / "studio" / f"moventure_studio_v{STUDIO_VERSION}.html"
 for old in (ROOT / "studio").glob("moventure_studio_v*.html"):
     if old != out:

@@ -49,6 +49,13 @@ simulator, the newest Studio and every validated book in `stories/` (via `catalo
 - `player/?player=1&add=<url-of-a-book.json>` adds any Moventure book to that browser's
   library and opens it (the target for QR codes)
 
+## Reading your own books
+
+Books you add yourself live on the **My books** shelf of the LIBRARY (right after All), kept in
+that browser. Three ways in: **Load a book** in player mode (or drag a `.json` onto the page),
+a QR / `?add=` link, or **Open in Player** inside the Studio, which hands the book over with no
+file at all. Menu > **Remove book** takes one off the shelf.
+
 ## Quick start
 
 1. Double-click `run_sim.bat` (or open the newest `simulator/moventure_sim_v*.html`).
@@ -87,7 +94,8 @@ a code made of the choices that lead there (A, B, A-B, A-P…), folds to one lin
 one folds the others, so you always look at one path at a time. Finish every path with
 **The End** or **Go to** another path (same menu). An output can be hidden "only if the
 reader went through A-B". The device on the right plays what you write; the Check panel says
-what is missing in plain words; Export JSON gives a `stories/*.json` ready for `run_sim.bat`.
+what is missing in plain words. **Open in Player** reads the book on the real player (My books
+shelf); Export JSON gives a `stories/*.json` to share or to drop in `stories/` for `run_sim.bat`.
 
 ## Generating books with the tools
 

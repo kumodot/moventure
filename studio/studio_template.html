@@ -121,7 +121,8 @@
   <span id="langbar"><button class="lang" data-lang="en">EN</button><button class="lang" data-lang="pt">PT-BR</button><button class="lang" data-lang="es">ES</button></span>
   <button id="btnExpand" title="Show every path at once">Expand all</button>
   <button id="btnImport">Import</button><input type="file" id="fileInput" accept=".json">
-  <button id="btnExport" class="primary">Export JSON</button>
+  <button id="btnPlay" class="primary" title="Save this book to My books in the Player and open it there">Open in Player</button>
+  <button id="btnExport">Export JSON</button>
   <button id="btnMore" title="More">&#8943;</button>
 </header>
 
@@ -658,9 +659,22 @@ function openStory(id) { S = migrate(projects[id]); selected = null; openPaths =
 document.getElementById('projectSelect').addEventListener('change', ev => openStory(ev.target.value));
 document.getElementById('btnNew').addEventListener('click', () => { const s = newStory(); projects[s.id] = s; openStory(s.id); document.getElementById('mTitle').focus(); });
 document.getElementById('btnExport').addEventListener('click', () => {
-  const book = toBook(S); const name = ((S.meta.title.en || any(S.meta.title) || 'story').normalize('NFD').replace(/[̀-ͯ]/g, '')).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '') + '.json';
+  const book = toBook(S); const name = bookSlug() + '.json';
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(book, null, 2)], { type: 'application/json' })); a.download = name; a.click();
   toast('Exported ' + name + '. Drop it in stories/ and run run_sim.bat.');
+});
+/* Player handoff: the Player (same site) reads its My books shelf from localStorage,
+   so the book is stored there under a stable id and the Player opens on its cover. */
+const PLAYER_URL = '__PLAYER_URL__';
+const LIB_KEY = 'moventure_library_v1';
+function bookSlug() { return ((S.meta.title.en || any(S.meta.title) || 'story').normalize('NFD').replace(/[\u0300-\u036f]/g, '')).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '') || 'story'; }
+document.getElementById('btnPlay').addEventListener('click', () => {
+  const book = toBook(S); book.meta.id = 'studio_' + S.id; book.meta.source = 'studio'; book.meta.local = true;
+  try {
+    const lib = JSON.parse(localStorage.getItem(LIB_KEY) || '[]').filter(b => b.meta.id !== book.meta.id);
+    lib.unshift(book); localStorage.setItem(LIB_KEY, JSON.stringify(lib));
+  } catch (e) { alert('Could not hand the book to the Player: ' + e.message); return; }
+  window.open(PLAYER_URL + '?player=1&book=' + encodeURIComponent(book.meta.id), 'moventure_player');
 });
 document.getElementById('btnImport').addEventListener('click', () => document.getElementById('fileInput').click());
 document.getElementById('fileInput').addEventListener('change', ev => {

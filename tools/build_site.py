@@ -60,7 +60,9 @@ def main():
 
     # studio
     studio = newest("moventure_studio_v*.html", ROOT / "studio")
-    shutil.copy(studio, DOCS / "studio" / "index.html")
+    st = studio.read_text(encoding="utf-8")
+    st = re.sub(r"const PLAYER_URL = '[^']*';", "const PLAYER_URL = '../player/';", st)
+    (DOCS / "studio" / "index.html").write_text(st, encoding="utf-8")
 
     n = sum(1 for _ in DOCS.rglob("*") if _.is_file())
     print(f"built docs/ ({n} files) from {sim.name} and {studio.name}")

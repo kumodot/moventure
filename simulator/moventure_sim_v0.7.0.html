@@ -59,6 +59,8 @@
   body.player #playerBar { display:flex; }
   #playerBar button { opacity:0.35; } #playerBar button:hover { opacity:1; }
   #padStatus { position:fixed; left:10px; bottom:8px; color:var(--dim); font-size:11px; display:none; }
+  #dropHint { display:none; position:fixed; inset:0; z-index:50; align-items:center; justify-content:center; font-size:22px; color:#f3c969; background:rgba(10,12,18,0.82); border:3px dashed #f3c969; pointer-events:none; }
+  body.drop #dropHint { display:flex; }
   body.player #padStatus { display:block; }
 
   /* ---- portrait (phone) player layout: same 128x64 screen, controls rearranged for thumbs ---- */
@@ -82,7 +84,7 @@
 <header>
   <h1>MOVENTURE SIM <span id="ver"></span></h1>
   <label>Book <select id="bookSelect"></select></label>
-  <label>Load JSON <input type="file" id="fileInput" accept=".json"></label>
+  <button id="btnLoadHdr" onclick="document.getElementById('fileInput').click()" title="Open a book .json. It goes to the My books shelf.">Load a book</button><input type="file" id="fileInput" accept=".json" style="display:none">
   <label>OLED <select id="colorSelect">
     <option value="#7fd4ff">blue</option>
     <option value="#ffffff">white</option>
@@ -94,7 +96,8 @@
   <button id="btnRestart">Restart book</button>
   <button id="btnPlayer" title="Only the device, scaled to the screen. Gamepad supported.">Player mode</button>
 </header>
-<div id="playerBar"><button id="btnFull">Fullscreen</button><button id="btnExitPlayer">Exit player</button></div>
+<div id="playerBar"><button id="btnLoad" title="Open a book .json (from Studio or a friend). It stays in My books.">Load a book</button><button id="btnFull">Fullscreen</button><button id="btnExitPlayer">Exit player</button></div>
+<div id="dropHint">Drop the book here</div>
 <div id="padStatus">no gamepad</div>
 
 <main>
@@ -139,7 +142,7 @@
    SECTION 1: SSD1306 128x64 framebuffer + drawing primitives
    Mirror this class 1:1 in the firmware (see OLED_SIMULATOR_GUIDE.md).
    ========================================================================= */
-const APP_VERSION = '0.6.0';   // bump this AND the file name on every release (see CHANGELOG.md)
+const APP_VERSION = '0.7.0';   // bump this AND the file name on every release (see CHANGELOG.md)
 const WIDTH = 128, HEIGHT = 64, SCALE = 5;
 
 // Adafruit GFX glcdfont, ASCII 32..126, 5 bytes per glyph, LSB = top row.
@@ -326,6 +329,7 @@ const UI = {
         h_lib: 'A: open  <> shelf', h_cover: 'A: start  B: back', h_dice: 'A: continue', h_end: 'A: again  B: library',
         h_menu: 'A: select  B: back', h_any: 'any button: back', h_back: 'B: back',
         m_resume: 'Resume', m_stats: 'Stats', m_restart: 'Restart book', m_library: 'Library', m_lang: 'Language: ', m_about: 'About',
+        m_remove: 'Remove book', mine: 'My books', confirm_rm: ['Remove this book', 'from My books?', 'A: yes   B: no'],
         all: 'All', deadend: ['DEAD END', 'No choices here.', 'B: menu'], m_booklang: 'Book: ',
         cats: { Horror: 'Horror', Mystery: 'Mystery', Fantasy: 'Fantasy', 'Sci-Fi': 'Sci-Fi', Adventure: 'Adventure', Kids: 'Kids', SCP: 'SCP', Misc: 'Misc' } },
   pt: { LIBRARY: 'BIBLIOTECA', CHOOSE: 'ESCOLHA', MENU: 'MENU', STATS: 'ATRIBUTOS', ABOUT: 'SOBRE', THE_END: 'FIM', ROLL: 'DADO',
@@ -334,6 +338,7 @@ const UI = {
         h_lib: 'A: abrir  <> estante', h_cover: 'A: começar  B: voltar', h_dice: 'A: continuar', h_end: 'A: de novo  B: livros',
         h_menu: 'A: escolher  B: voltar', h_any: 'qualquer botão: voltar', h_back: 'B: voltar',
         m_resume: 'Continuar', m_stats: 'Atributos', m_restart: 'Reiniciar livro', m_library: 'Biblioteca', m_lang: 'Idioma: ', m_about: 'Sobre',
+        m_remove: 'Remover livro', mine: 'Meus livros', confirm_rm: ['Remover este livro', 'de Meus livros?', 'A: sim   B: não'],
         all: 'Todos', deadend: ['BECO SEM SAÍDA', 'Nenhuma escolha aqui.', 'B: menu'],
         cats: { Horror: 'Terror', Mystery: 'Mistério', Fantasy: 'Fantasia', 'Sci-Fi': 'Ficção', Adventure: 'Aventura', Kids: 'Infantil', SCP: 'SCP', Misc: 'Outros' },
         m_booklang: 'Livro: ' },
@@ -343,6 +348,7 @@ const UI = {
         h_lib: 'A: abrir  <> estante', h_cover: 'A: empezar  B: volver', h_dice: 'A: continuar', h_end: 'A: otra vez  B: libros',
         h_menu: 'A: elegir  B: volver', h_any: 'cualquier botón: volver', h_back: 'B: volver',
         m_resume: 'Continuar', m_stats: 'Atributos', m_restart: 'Reiniciar libro', m_library: 'Biblioteca', m_lang: 'Idioma: ', m_about: 'Acerca',
+        m_remove: 'Quitar libro', mine: 'Mis libros', confirm_rm: ['¿Quitar este libro', 'de Mis libros?', 'A: sí   B: no'],
         m_booklang: 'Libro: ', all: 'Todos', deadend: ['SIN SALIDA', 'No hay opciones.', 'B: menú'],
         cats: { Horror: 'Terror', Mystery: 'Misterio', Fantasy: 'Fantasía', 'Sci-Fi': 'Ciencia ficción', Adventure: 'Aventura', Kids: 'Infantil', SCP: 'SCP', Misc: 'Otros' } },
 };
@@ -373,12 +379,15 @@ class Engine {
   // ---- library / categories ---------------------------------------------
   categories() {
     const cats = []; this.library.forEach(b => { const c = (b.meta.category || 'Misc'); if (!cats.includes(c)) cats.push(c); });
-    return ['All'].concat(cats.sort());
+    const mine = this.library.some(b => b.meta.local) ? ['_mine'] : [];   // books added by the reader (file, QR, Studio)
+    return ['All'].concat(mine, cats.sort());
   }
   shelf() {                                // books visible under the current category filter
     const cat = this.categories()[this.catIndex];
+    if (cat === '_mine') return this.library.filter(b => b.meta.local);
     return cat === 'All' ? this.library : this.library.filter(b => (b.meta.category || 'Misc') === cat);
   }
+  shelfName(cat) { return cat === 'All' ? T('all') : cat === '_mine' ? T('mine') : TC(cat); }
   tierTag(book) { return 'T' + (book.meta.tier || 1); }
   setLang(l) { LANG = l; if (this.book && !this.nodeId) BOOK_LANG = pickBookLang(this.book); }          // UI language
   setBookLang(l) {                                                                                       // book language, only if the author provided it
@@ -486,6 +495,7 @@ class Engine {
     this.menuKeys = this.book ? ['m_resume', 'm_restart', 'm_library', 'm_lang', 'm_about'] : ['m_library', 'm_lang', 'm_about'];
     if (this.book && Object.keys(this.stats).length) this.menuKeys.splice(1, 0, 'm_stats');
     if (this.book && bookLangs(this.book).length > 1) this.menuKeys.splice(this.menuKeys.indexOf('m_lang'), 0, 'm_booklang');
+    if (this.book && this.book.meta.local) this.menuKeys.splice(this.menuKeys.indexOf('m_about'), 0, 'm_remove');
     this.menuItems = this.menuKeys.map(k => k === 'm_lang' ? T('m_lang') + LANG.toUpperCase() : k === 'm_booklang' ? T('m_booklang') + BOOK_LANG.toUpperCase() : T(k));
     this.cursor = 0; this.screen = 'MENU';
   }
@@ -543,7 +553,11 @@ class Engine {
         if (item === 'm_lang') { const c = this.cursor; this.setLang(LANGS[(LANGS.indexOf(LANG) + 1) % LANGS.length]); this.openMenu(); this.cursor = c; if (this.onLangChange) this.onLangChange(LANG); }
         if (item === 'm_booklang') { const c = this.cursor; this.cycleBookLang(1); this.openMenu(); this.cursor = c; }
         if (item === 'm_about') this.screen = 'ABOUT';
+        if (item === 'm_remove') this.screen = 'CONFIRM_RM';
       }
+    } else if (s === 'CONFIRM_RM') {
+      if (btn === 'A') { const b = this.book; this.book = null; this.screen = 'LIBRARY'; this.cursor = 0; if (this.onRemoveBook) this.onRemoveBook(b); }
+      if (btn === 'B') this.openMenu();
     } else if (s === 'STATS') {
       if (this.returnTo === 'MENU') this.openMenu(); else this.screen = this.returnTo;
     } else if (s === 'ABOUT') {
@@ -621,7 +635,7 @@ class Engine {
       d.drawText(WIDTH - 1 - d.textWidth('v' + APP_VERSION), 0, 'v' + APP_VERSION, 1);
     } else if (s === 'LIBRARY') {
       const shelf = this.shelf(), cat = this.categories()[this.catIndex];
-      this.statusBar('<' + (cat === 'All' ? T('all') : TC(cat)).toUpperCase() + '>', `${shelf.length}`);
+      this.statusBar('<' + this.shelfName(cat).toUpperCase() + '>', `${shelf.length}`);
       if (!shelf.length) d.drawText(1, TEXT_Y0 + 8, T('nobooks'), 1);
       this.list(shelf.map(b => L(b.meta.title)), this.cursor, Math.max(0, this.cursor - MENU_ROWS + 1), TEXT_Y0, 16, shelf.map(b => this.tierTag(b)));
       d.drawText(1, 57, T('h_lib'), 1);
@@ -694,6 +708,12 @@ class Engine {
         d.rect(60, y, 66, 7); d.fillRect(61, y + 1, Math.min(64, Math.round(v * 64 / 10)), 5);   // bar, 10 = full
       });
       d.drawText(1, 57, T('h_any'), 1);
+    } else if (s === 'CONFIRM_RM') {
+      this.statusBar(T('mine').toUpperCase());
+      const c = T('confirm_rm');
+      d.drawText(1, TEXT_Y0 + 4, c[0], 1); d.drawText(1, TEXT_Y0 + 14, c[1], 1);
+      d.drawText(1, TEXT_Y0 + 34, L(this.book.meta.title).slice(0, 21), 1);
+      d.drawText(1, 56, c[2], 1);
     } else if (s === 'ABOUT') {
       this.statusBar(T('ABOUT'));
       CREDIT.forEach((line, i) => d.drawText(1, TEXT_Y0 + i * ROW_H, line, 1));
@@ -760,19 +780,38 @@ function fillBookSelect() {
   bookSelect.innerHTML = books.map((b, i) => `<option value="${i}">${esc(L(b.meta.title))} [${bookLangs(b).join('/')}]</option>`).join('');
 }
 bookSelect.addEventListener('change', () => { engine.setLibrary(books); engine.book = null; engine.startBook(books[+bookSelect.value]); engine.draw(); });
-document.getElementById('fileInput').addEventListener('change', ev => {
-  const f = ev.target.files[0]; if (!f) return;
+// A book file (exported by Studio, or sent by a friend) goes into My books and opens on its cover.
+function loadBookFile(f) {
+  if (!f) return;
   const r = new FileReader();
   r.onload = () => {
     try {
       const book = JSON.parse(r.result);
-      book.meta = book.meta || {}; book.meta.title = book.meta.title || f.name;
-      books.unshift(book); fillBookSelect(); bookSelect.value = 0;
-      engine.setLibrary(books); engine.startBook(book); engine.draw();
-    } catch (e) { alert('Not a valid story JSON: ' + e.message); }
+      if (!book.meta || !book.nodes) throw new Error('no meta / nodes');
+      book.meta.id = book.meta.id || f.name.replace(/\.json$/i, '');
+      book.meta.title = book.meta.title || f.name;
+      addToLibrary(book, 'file:' + f.name);
+      openBook(book);
+    } catch (e) { alert('Not a Moventure book: ' + e.message); }
   };
   r.readAsText(f);
-});
+}
+function openBook(b) {
+  engine.setLibrary(books); engine.book = b; BOOK_LANG = pickBookLang(b);
+  engine.screen = 'COVER'; engine.cursor = 0; engine.draw(); refreshPanels();
+  try { bookSelect.value = books.indexOf(b); } catch (e) {}
+}
+document.getElementById('fileInput').addEventListener('change', ev => { loadBookFile(ev.target.files[0]); ev.target.value = ''; });
+document.getElementById('btnLoad').addEventListener('click', () => document.getElementById('fileInput').click());
+// drag a .json anywhere on the page
+window.addEventListener('dragover', ev => { ev.preventDefault(); document.body.classList.add('drop'); });
+window.addEventListener('dragleave', ev => { if (!ev.relatedTarget) document.body.classList.remove('drop'); });
+window.addEventListener('drop', ev => { ev.preventDefault(); document.body.classList.remove('drop'); const f = ev.dataTransfer.files && ev.dataTransfer.files[0]; if (f) loadBookFile(f); });
+engine.onRemoveBook = b => {
+  saveLocalLibrary(loadLocalLibrary().filter(x => x.meta.id !== b.meta.id));
+  books = books.filter(x => x !== b);
+  fillBookSelect(); engine.setLibrary(books); engine.draw(); refreshPanels();
+};
 document.getElementById('colorSelect').addEventListener('change', ev => {
   const v = ev.target.value;
   if (v === 'split') { display.color = '#7fd4ff'; display.splitColor = '#f5d142'; } else { display.color = v; display.splitColor = null; }
@@ -934,11 +973,11 @@ requestAnimationFrame(pollGamepad);
 const LIB_KEY = 'moventure_library_v1';
 const ONLINE = !window.MOVENTURE_STORIES || window.MOVENTURE_STORIES.length === 0;
 const SITE_BASE = window.MOVENTURE_BASE || './';
-function loadLocalLibrary() { try { return JSON.parse(localStorage.getItem(LIB_KEY) || '[]'); } catch (e) { return []; } }
+function loadLocalLibrary() { try { return JSON.parse(localStorage.getItem(LIB_KEY) || '[]').map(b => { b.meta.local = true; return b; }); } catch (e) { return []; } }
 function saveLocalLibrary(list) { try { localStorage.setItem(LIB_KEY, JSON.stringify(list)); } catch (e) {} }
 function bookId(b) { return b.meta.id || (b.meta.file || '').replace(/\.json$/, '') || (typeof b.meta.title === 'object' ? (b.meta.title.en || Object.values(b.meta.title)[0]) : b.meta.title); }
 function addToLibrary(book, source) {
-  book.meta.id = book.meta.id || bookId(book); book.meta.source = source || book.meta.source;
+  book.meta.id = book.meta.id || bookId(book); book.meta.source = source || book.meta.source; book.meta.local = true;
   const lib = loadLocalLibrary().filter(b => b.meta.id !== book.meta.id); lib.unshift(book); saveLocalLibrary(lib);
   books = books.filter(b => bookId(b) !== book.meta.id); books.unshift(book);
   fillBookSelect(); engine.setLibrary(books);
@@ -959,6 +998,7 @@ async function loadCatalog() {
 async function start() {
   const q = new URLSearchParams(location.search);
   if (ONLINE) await loadCatalog();
+  else { const local = loadLocalLibrary(); books = local.concat(books.filter(b => !local.some(l => l.meta.id === bookId(b)))); }
   fillBookSelect(); boot();
   if (q.has('player')) setPlayer(true);
   const openById = id => { const b = books.find(x => bookId(x) === id); if (!b) return false; const wait = setInterval(() => { if (engine.screen !== 'BOOT') { clearInterval(wait); engine.setLibrary(books); engine.book = b; BOOK_LANG = pickBookLang(b); engine.screen = 'COVER'; engine.draw(); refreshPanels(); } }, 100); return true; };

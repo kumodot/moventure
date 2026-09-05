@@ -24,8 +24,8 @@ stories = (SIM / "stories.js").read_text(encoding="utf-8")
 
 # inline the bundle and force player mode at startup
 html = html.replace('<script src="stories.js"></script>', "<script>\n" + stories + "</script>")
-html = html.replace("if (new URLSearchParams(location.search).has('player')) setPlayer(true);",
-                    "setPlayer(true);   // player build: always starts in player mode")
+assert "if (q.has('player')) setPlayer(true);" in html, "player-mode hook not found in the simulator"
+html = html.replace("if (q.has('player')) setPlayer(true);", "setPlayer(true);   // player build: always starts in player mode")
 html = html.replace("<title>Moventure Simulator</title>", "<title>Moventure Player</title>")
 html = html.replace("document.title = 'Moventure Simulator v' + APP_VERSION;", "document.title = 'Moventure Player v' + APP_VERSION;")
 
