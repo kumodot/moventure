@@ -55,7 +55,13 @@ def main():
             continue
         books.append(entry(p, json.loads(p.read_text(encoding="utf-8"))))
     order = {"SCP": 5}
-    books.sort(key=lambda b: (b["id"] != "hollow_lighthouse", order.get(b["category"], 0), b["tier"], b["id"]))
+    import re
+
+    def series_no(b):                       # "Foundation Files, no. 3." in the blurb -> 3
+        m = re.search(r"no\. ?(\d+)", loc(b["blurb"], "en") if isinstance(b["blurb"], dict) else str(b["blurb"]))
+        return int(m.group(1)) if m else 999
+
+    books.sort(key=lambda b: (b["id"] != "hollow_lighthouse", order.get(b["category"], 0), series_no(b), b["tier"], b["id"]))
     catalog = {"name": "Moventure Library", "updated": date.today().isoformat(), "count": len(books), "books": books}
     (ROOT / "catalog.json").write_text(json.dumps(catalog, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"wrote catalog.json with {len(books)} books: " + ", ".join(b["id"] for b in books))

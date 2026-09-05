@@ -1,0 +1,295 @@
+{
+  "meta": {
+    "title": { "en": "914: Very Fine", "pt": "914: Muito Fino" },
+    "author": "Marcelo Souza / Kumodot.art (adaptation)",
+    "version": 1,
+    "tier": 2,
+    "category": "SCP",
+    "start": "shift",
+    "blurb": {
+      "en": "A clockwork machine with five settings. Whatever goes in comes out refined. Never put anything living in. Foundation Files, no. 6.",
+      "pt": "Uma máquina de relojoaria com cinco ajustes. O que entra sai refinado. Nunca coloque nada vivo. Arquivos da Fundação, n. 6."
+    },
+    "langs": ["en", "pt"],
+    "license": "CC BY-SA 3.0",
+    "based_on": "SCP-914 by Dr Gears, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-914 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+    "series": "Foundation Files"
+  },
+  "flags": ["knows_theory", "wrong_time", "has_key", "forbade", "alone", "ignored", "discovery"],
+  "nodes": {
+    "shift": {
+      "title": { "en": "CELL 109-B", "pt": "CELA 109-B" },
+      "text": {
+        "en": "You are a Level 2 researcher and this is your first 914 shift.\nThe machine fills the room: brass, copper, tin, eight million parts ticking behind glass. Two booths, Intake and Output, joined by a fat copper tube. A panel with a winding key and a knob: Rough, Coarse, 1:1, Fine, Very Fine.\nTwo guards by the door. An approved test list on a clipboard: steel, a wristwatch, a flashlight.\nAnd Halden, your junior, who volunteered for this shift three times before someone said yes.",
+        "pt": "Você é pesquisador Nível 2 e este é seu primeiro turno na 914.\nA máquina ocupa a sala inteira: latão, cobre, estanho, oito milhões de peças tiquetaqueando atrás do vidro. Duas cabines, Entrada e Saída, unidas por um tubo grosso de cobre. Um painel com uma chave de corda e um botão: Bruto, Grosso, 1:1, Fino, Muito Fino.\nDois guardas na porta. Uma lista de testes aprovados numa prancheta: aço, um relógio de pulso, uma lanterna.\nE Halden, seu júnior, que se ofereceu para este turno três vezes antes que alguém dissesse sim."
+      },
+      "choices": [
+        { "label": { "en": "Ask why he is here", "pt": "Perguntar por que" }, "to": "halden" },
+        { "label": { "en": "Start with Rough", "pt": "Começar no Bruto" }, "to": "rough" }
+      ]
+    },
+    "halden": {
+      "title": { "en": "HALDEN", "pt": "HALDEN" },
+      "text": {
+        "en": "'Why this shift?'\nHalden smiles like a man who has rehearsed. 'Everyone tests metal. Metal is boring. The machine does something to structure, not to matter. Feed it structure and Very Fine will show you what it thinks structure is for.'\n'The list is metal,' you say.\n'The list is metal,' he agrees, and pats the lunchbox under his arm. It is a lunchbox with holes punched in the lid.\nYou decide you did not see that.",
+        "pt": "'Por que este turno?'\nHalden sorri como quem ensaiou. 'Todo mundo testa metal. Metal é chato. A máquina age na estrutura, não na matéria. Dê estrutura a ela e o Muito Fino mostra para que serve estrutura, na opinião dela.'\n'A lista é metal', você diz.\n'A lista é metal', ele concorda, e dá um tapinha na marmita debaixo do braço. Uma marmita com furos na tampa.\nVocê decide que não viu isso."
+      },
+      "set": ["knows_theory"],
+      "goto": "rough"
+    },
+    "rough": {
+      "title": { "en": "ROUGH", "pt": "BRUTO" },
+      "text": {
+        "en": "Rough. A block of steel goes into Intake. You wind the key. The machine ticks, shudders, and something inside it turns over like an engine deciding.\nThe Output booth opens on a heap of steel chunks, edges clean as if laser cut, still warm.\nHalden writes it down without looking. 'Everyone gets this one.'\nYou set the block's twin aside for the next test.",
+        "pt": "Bruto. Um bloco de aço entra na Entrada. Você dá corda. A máquina tiqueia, estremece, e algo lá dentro vira como um motor decidindo.\nA cabine de Saída abre sobre um monte de pedaços de aço, bordas limpas como corte a laser, ainda quentes.\nHalden anota sem olhar. 'Todo mundo tira esse.'\nVocê separa o bloco gêmeo para o próximo teste."
+      },
+      "choices": [
+        { "label": { "en": "Try 1:1 first", "pt": "Testar 1:1 antes" }, "to": "onetoone" },
+        { "label": { "en": "Go to Fine", "pt": "Ir para Fino" }, "to": "fine_steel" }
+      ]
+    },
+    "onetoone": {
+      "title": { "en": "1:1", "pt": "1:1" },
+      "text": {
+        "en": "The wristwatch, on 1:1. A cheap thing with a cracked strap.\nWhat comes out is a wristwatch. A different one. Leather strap, a maker's name you have never read, and it is running.\nIt reads 4:17. The wall clock reads 10:52.\nHalden holds it to his ear. 'It is not wrong,' he says. 'It is just somewhere else.'\nYou put it in a bag and label the bag.",
+        "pt": "O relógio de pulso, no 1:1. Uma coisa barata com a pulseira rachada.\nO que sai é um relógio de pulso. Outro. Pulseira de couro, uma marca que você nunca leu, e está funcionando.\nMarca 4:17. O relógio da parede marca 10:52.\nHalden encosta no ouvido. 'Não está errado', diz. 'Só está em outro lugar.'\nVocê guarda num saco e etiqueta o saco."
+      },
+      "set": ["wrong_time"],
+      "goto": "fine_steel"
+    },
+    "fine_steel": {
+      "title": { "en": "FINE", "pt": "FINO" },
+      "text": {
+        "en": "Fine. The steel block. You wind the key and the ticking climbs in pitch, a sound like rain on a tin roof getting closer.\nThe Output booth stays shut a moment longer than it should.",
+        "pt": "Fino. O bloco de aço. Você dá corda e o tique sobe de tom, um som como chuva num telhado de zinco chegando mais perto.\nA cabine de Saída fica fechada um instante a mais do que devia."
+      },
+      "roll": { "dice": "1d6", "dc": 4, "pass": "fine_tacks", "fail": "fine_key" }
+    },
+    "fine_tacks": {
+      "title": { "en": "FINE", "pt": "FINO" },
+      "text": {
+        "en": "Carpet tacks. Hundreds of them, in neat rows, every head polished, every point the same length to the micron. The whole block, accounted for, not a gram lost.\nIt is the most boring miracle you have ever seen. You write 'as expected' and feel the machine tick behind the glass as if it agreed.",
+        "pt": "Tachas de carpete. Centenas, em fileiras certinhas, cada cabeça polida, cada ponta do mesmo comprimento ao mícron. O bloco inteiro, contabilizado, nem um grama perdido.\nÉ o milagre mais chato que você já viu. Você escreve 'conforme esperado' e sente a máquina tiquear atrás do vidro como se concordasse."
+      },
+      "goto": "halden_box"
+    },
+    "fine_key": {
+      "title": { "en": "FINE", "pt": "FINO" },
+      "text": {
+        "en": "Not tacks. One object, on the floor of the booth, small enough to close your hand around.\nA copper key. The same shape as the winding key on the panel, worn the same way at the grip, warm as a pocket.\nThere is nothing about keys in the test list. There is nothing about the machine making parts of itself.\nYou should log it and hand it to a guard. You put it in your coat instead, to think about later.",
+        "pt": "Não são tachas. Um objeto só, no chão da cabine, pequeno o bastante para fechar a mão em volta.\nUma chave de cobre. O mesmo formato da chave de corda do painel, gasta do mesmo jeito no cabo, morna como um bolso.\nNão há nada sobre chaves na lista de testes. Não há nada sobre a máquina fazer partes de si mesma.\nVocê devia registrar e entregar a um guarda. Em vez disso, guarda no casaco, para pensar depois."
+      },
+      "set": ["has_key"],
+      "goto": "halden_box"
+    },
+    "halden_box": {
+      "title": { "en": "THE LUNCHBOX", "pt": "A MARMITA" },
+      "text": {
+        "en": "While you write, the lunchbox on Halden's chair moves. A small sound, claws on tin.\nHalden is looking at the Intake booth. He has the look of a man doing arithmetic with someone else's rules.\n'One mouse,' he says quietly, not to you. 'Fine setting. We would learn more in four minutes than in ten years of tacks.'\nThe guards have not noticed. The machine ticks, patient, wound and waiting.",
+        "pt": "Enquanto você escreve, a marmita na cadeira de Halden se mexe. Um som pequeno, unhas em lata.\nHalden está olhando para a cabine de Entrada. Tem a cara de quem faz contas com as regras dos outros.\n'Um camundongo', ele diz baixo, não para você. 'Ajuste Fino. A gente aprenderia mais em quatro minutos do que em dez anos de tachas.'\nOs guardas não perceberam. A máquina tiqueia, paciente, com corda e à espera."
+      },
+      "choices": [
+        { "label": { "en": "Confront him", "pt": "Confrontar" }, "to": "confront" },
+        { "label": { "en": "Ignore it, go on", "pt": "Ignorar, seguir" }, "to": "vf_steel", "set": ["ignored"] },
+        { "label": { "en": "Call the guards", "pt": "Chamar os guardas" }, "to": "vf_steel", "set": ["alone"] }
+      ]
+    },
+    "confront": {
+      "title": { "en": "THE RULE", "pt": "A REGRA" },
+      "text": {
+        "en": "'No biological matter,' you say. 'It is the first line of the protocol. It is the only line in bold.'\n'Because of what came out,' Halden says. 'Not because of what went in. They wrote the rule after. Nobody knows what Fine does to something that can look back at you.'\nHe opens the lunchbox. A white mouse looks up, whiskers going.\n'Four minutes,' he says. 'And it is my name on the form if it goes wrong.'\nIt would be your name too. You both know that.",
+        "pt": "'Nada de matéria biológica', você diz. 'É a primeira linha do protocolo. É a única em negrito.'\n'Por causa do que saiu', diz Halden. 'Não do que entrou. Escreveram a regra depois. Ninguém sabe o que o Fino faz com algo que consegue olhar de volta.'\nEle abre a marmita. Um camundongo branco olha para cima, bigodes mexendo.\n'Quatro minutos', ele diz. 'E é o meu nome no formulário se der errado.'\nSeria o seu também. Vocês dois sabem disso."
+      },
+      "choices": [
+        { "label": { "en": "Forbid it", "pt": "Proibir" }, "to": "vf_steel", "set": ["forbade"] },
+        { "label": { "en": "Let him try", "pt": "Deixar tentar" }, "to": "mouse_fine" },
+        { "label": { "en": "Call the guards", "pt": "Chamar os guardas" }, "to": "vf_steel", "set": ["alone"] }
+      ]
+    },
+    "vf_steel": {
+      "title": { "en": "VERY FINE", "pt": "MUITO FINO" },
+      "text": {
+        "en": "Very Fine. The last of the steel goes in. You turn the knob all the way and it clicks into place with more weight than a knob should have.\nYou wind the key. The ticking does not get faster. It gets deeper, a sound you feel in your teeth, and the copper tube between the booths sweats and then frosts.\nThe guards step back without deciding to.\nSomewhere inside eight million parts, one of them stops, and every other part notices.",
+        "pt": "Muito Fino. O resto do aço entra. Você gira o botão até o fim e ele encaixa com mais peso do que um botão deveria ter.\nVocê dá corda. O tique não fica mais rápido. Fica mais fundo, um som que você sente nos dentes, e o tubo de cobre entre as cabines sua e depois congela.\nOs guardas recuam sem ter decidido.\nEm algum lugar dentro de oito milhões de peças, uma delas para, e todas as outras percebem."
+      },
+      "roll": { "dice": "1d6", "dc": 3, "pass": "vf_material", "fail": "vf_empty" }
+    },
+    "vf_material": {
+      "title": { "en": "THE ROD", "pt": "A HASTE" },
+      "text": {
+        "en": "A rod. Grey, the length of your forearm, and cold in a way that does not spread to your hand.\nYou score it with a diamond tip: nothing. You heat it: the readout climbs and the rod does not care. You drop it: it makes no sound.\nThis is what people whisper 914 can do. Materials that should not be. Careers are made of this.\nYou weigh it. It weighs exactly what the steel weighed. Nothing was lost. Something was found.",
+        "pt": "Uma haste. Cinza, do tamanho do seu antebraço, e fria de um jeito que não passa para a sua mão.\nVocê risca com ponta de diamante: nada. Esquenta: o medidor sobe e a haste não liga. Deixa cair: não faz som.\nÉ disso que cochicham sobre a 914. Materiais que não deviam existir. Carreiras são feitas disso.\nVocê pesa. Pesa exatamente o que o aço pesava. Nada se perdeu. Algo foi encontrado."
+      },
+      "set": ["discovery"],
+      "choices": [
+        { "label": { "en": "Log it, end shift", "pt": "Registrar e sair" }, "to": "end_discovery", "require": ["alone"] },
+        { "label": { "en": "Log it, end shift", "pt": "Registrar e sair" }, "to": "sneak", "require": ["!alone"] },
+        { "label": { "en": "Stay a while", "pt": "Ficar um pouco" }, "to": "tempt" }
+      ]
+    },
+    "vf_empty": {
+      "title": { "en": "EMPTY", "pt": "VAZIA" },
+      "text": {
+        "en": "The Output booth opens on nothing.\nNo rod, no dust, no smell of hot metal. The floor of the booth is clean and a little too cold. The scale under it reads zero.\nBut the machine has not stopped. It is still ticking, deep and slow, and inside the copper tube something hums like a wire in wind.\n'It kept it,' Halden says, if he is still here. If he is not, you say it yourself, and wish you had not.",
+        "pt": "A cabine de Saída abre sobre nada.\nSem haste, sem pó, sem cheiro de metal quente. O chão da cabine está limpo e um pouco frio demais. A balança embaixo marca zero.\nMas a máquina não parou. Continua tiqueando, fundo e devagar, e dentro do tubo de cobre algo zune como um fio ao vento.\n'Ela ficou com ele', diz Halden, se ainda estiver aqui. Se não estiver, você mesmo diz, e queria não ter dito."
+      },
+      "choices": [
+        { "label": { "en": "Look in the booth", "pt": "Olhar na cabine" }, "to": "tempt" },
+        { "label": { "en": "End the shift", "pt": "Encerrar o turno" }, "to": "sneak", "require": ["!alone"] },
+        { "label": { "en": "End the shift", "pt": "Encerrar o turno" }, "to": "end_honest", "require": ["alone"] }
+      ]
+    },
+    "sneak": {
+      "title": { "en": "FOUR MINUTES", "pt": "QUATRO MINUTOS" },
+      "text": {
+        "en": "You turn to the clipboard for thirty seconds. That is all it takes.\nWhen you look up, the Intake booth is closed, the knob is on Fine, and Halden's hand is on the key. The lunchbox on the chair is open and empty.\n'It is already wound,' he says. He is not apologising. 'Thirty seconds. Then you can write whatever you want about me.'\nThe guards are moving. They will not be fast enough. Nobody ever is, with this machine.",
+        "pt": "Você se vira para a prancheta por trinta segundos. É tudo que precisa.\nQuando levanta os olhos, a cabine de Entrada está fechada, o botão está no Fino, e a mão de Halden está na chave. A marmita na cadeira está aberta e vazia.\n'Já tem corda', ele diz. Não está pedindo desculpa. 'Trinta segundos. Depois você escreve o que quiser sobre mim.'\nOs guardas estão vindo. Não vão chegar a tempo. Ninguém chega, com esta máquina."
+      },
+      "goto": "mouse_fine"
+    },
+    "mouse_fine": {
+      "title": { "en": "FINE", "pt": "FINO" },
+      "text": {
+        "en": "The mouse goes in on Fine.\nThe ticking is different this time. Softer. You would call it careful, if a machine could be careful.\nHalden's lips move, counting. The guards are at the panel now, one hand on him each, too late to matter.\nThe Output booth clicks.",
+        "pt": "O camundongo entra no Fino.\nO tique é diferente desta vez. Mais suave. Você chamaria de cuidadoso, se uma máquina pudesse ser cuidadosa.\nOs lábios de Halden se mexem, contando. Os guardas estão no painel agora, uma mão em cada braço dele, tarde demais para importar.\nA cabine de Saída faz um clique."
+      },
+      "roll": { "dice": "1d6", "dc": 4, "pass": "mouse_smart", "fail": "brass_mouse" }
+    },
+    "mouse_smart": {
+      "title": { "en": "THE MOUSE", "pt": "O CAMUNDONGO" },
+      "text": {
+        "en": "A white mouse sits in the middle of the booth. Cleaner. Stiller. It does not sniff, it does not run. It looks at you.\nThen it lifts one paw and taps the glass. Tap. Tap-tap. Tap. The same rhythm the machine makes when it is wound.\nHalden makes a sound that is almost a laugh. 'It is not smarter,' he whispers. 'It is finished. Like the tacks. It is what a mouse was for.'\nThe mouse waits for you to understand.",
+        "pt": "Um camundongo branco está sentado no meio da cabine. Mais limpo. Mais parado. Não fareja, não corre. Olha para você.\nDepois levanta uma pata e bate no vidro. Toc. Toc-toc. Toc. O mesmo ritmo que a máquina faz quando tem corda.\nHalden faz um som que é quase uma risada. 'Não está mais esperto', sussurra. 'Está pronto. Como as tachas. É para isso que um camundongo servia.'\nO camundongo espera você entender."
+      },
+      "choices": [
+        { "label": { "en": "Contain it, log it", "pt": "Conter e registrar" }, "to": "end_honest" },
+        { "label": { "en": "Destroy it, no log", "pt": "Destruir, sem log" }, "to": "end_coverup" },
+        { "label": { "en": "Put it on Very Fine", "pt": "Pôr no Muito Fino" }, "to": "mouse_vf" }
+      ]
+    },
+    "brass_mouse": {
+      "title": { "en": "THE OUTPUT", "pt": "A SAÍDA" },
+      "text": {
+        "en": "It is the size of a mouse. It is not a mouse.\nBrass, jointed, warm, with a mainspring where a spine would be. It breathes, which it should not need to. Its eyes are two tiny gears turning at different speeds.\nIt sees you. It sees the machine. It chooses the machine.\nBefore anyone can move it is out of the booth, up the copper tube, and gone into the works. The ticking stumbles, then picks up again, faster, with one extra beat in it.",
+        "pt": "Tem o tamanho de um camundongo. Não é um camundongo.\nLatão, articulado, morno, com uma mola mestra onde seria a espinha. Respira, o que não deveria precisar. Os olhos são duas engrenagens minúsculas girando em velocidades diferentes.\nEle vê você. Vê a máquina. Escolhe a máquina.\nAntes que alguém se mexa, está fora da cabine, tubo de cobre acima, e some dentro do mecanismo. O tique tropeça, depois retoma, mais rápido, com uma batida a mais."
+      },
+      "choices": [
+        { "label": { "en": "Reach in after it", "pt": "Enfiar a mão" }, "roll": { "dice": "1d6", "dc": 4, "pass": "end_honest", "fail": "end_reach" } },
+        { "label": { "en": "Let it go", "pt": "Deixar" }, "to": "end_coverup" }
+      ]
+    },
+    "mouse_vf": {
+      "title": { "en": "VERY FINE", "pt": "MUITO FINO" },
+      "text": {
+        "en": "You do it yourself. That is the part you will remember: your hand on the knob, all the way to the right, and the mouse walking into Intake on its own, as if it had been waiting for the invitation.\nThe guards shout. Halden does not. Halden is smiling the way people smile at the end of a long argument.\nThe deep tick. The frost on the tube. A pause.",
+        "pt": "Você mesmo faz. É a parte que vai lembrar: sua mão no botão, até a direita, e o camundongo entrando na cabine sozinho, como se esperasse o convite.\nOs guardas gritam. Halden não. Halden sorri do jeito que as pessoas sorriem no fim de uma discussão longa.\nO tique fundo. A geada no tubo. Uma pausa."
+      },
+      "roll": { "dice": "1d6", "dc": 5, "pass": "vf_voice", "fail": "end_ash" }
+    },
+    "vf_voice": {
+      "title": { "en": "THE VOICE", "pt": "A VOZ" },
+      "text": {
+        "en": "The Output booth is empty. Not even cold.\nThe intercom on the wall clicks on by itself. It says your name. Your full name, badge number, the way the site announces you. The voice has no lungs behind it, only ticking.\n'Intake,' it says. That is all. Then the ticking again, slow, like something drumming its fingers.\nEveryone in the room is looking at you. Halden most of all.",
+        "pt": "A cabine de Saída está vazia. Nem fria.\nO interfone da parede liga sozinho. Diz o seu nome. Nome completo, número do crachá, do jeito que o site anuncia você. A voz não tem pulmão por trás, só tique.\n'Entrada', diz. Só isso. Depois o tique de novo, devagar, como algo tamborilando os dedos.\nTodos na sala olham para você. Halden mais que todos."
+      },
+      "choices": [
+        { "label": { "en": "Answer, step in", "pt": "Responder, entrar" }, "to": "self_vf" },
+        { "label": { "en": "Leave and report", "pt": "Sair e reportar" }, "to": "end_honest" }
+      ]
+    },
+    "tempt": {
+      "title": { "en": "INTAKE", "pt": "ENTRADA" },
+      "text": {
+        "en": "You stand at the open Intake booth. It is exactly the size of a person. Somebody measured that once.\nYou think about the watch that runs somewhere else. About tacks with no flaw in them. About what a researcher is for, finished, with nothing lost.\nThe Foundation has thick files on people who stood here. Most of the files end in a single line.\nThe machine ticks. It has all the time there is.",
+        "pt": "Você está diante da cabine de Entrada aberta. Tem exatamente o tamanho de uma pessoa. Alguém mediu isso um dia.\nVocê pensa no relógio que funciona em outro lugar. Em tachas sem nenhum defeito. No que um pesquisador serve, pronto, sem perder nada.\nA Fundação tem pastas grossas sobre gente que parou aqui. A maioria termina numa linha só.\nA máquina tiqueia. Tem todo o tempo que existe."
+      },
+      "choices": [
+        { "label": { "en": "1:1, Halden turns", "pt": "1:1, Halden gira" }, "to": "self_11", "require": ["!alone"] },
+        { "label": { "en": "Very Fine, Halden", "pt": "Muito Fino, Halden" }, "to": "self_vf", "require": ["!alone"] },
+        { "label": { "en": "Very Fine, the key", "pt": "Muito Fino, chave" }, "to": "self_vf", "require": ["has_key"] },
+        { "label": { "en": "Close it, walk away", "pt": "Fechar e ir embora" }, "to": "end_discovery", "require": ["discovery"] },
+        { "label": { "en": "Close it, walk away", "pt": "Fechar e ir embora" }, "to": "end_honest", "require": ["!discovery"] }
+      ]
+    },
+    "self_11": {
+      "title": { "en": "1:1", "pt": "1:1" },
+      "text": {
+        "en": "'Just 1:1,' you tell Halden. 'Same in, same out. Turn the key, count to ten, open the booth.'\nHe nods too fast. The guards are shouting something from very far away.\nThe door closes. It is dark and it smells of copper and rain. The ticking is not outside any more. It is in your chest, keeping time with something, and you cannot tell if it is your heart or the other way round.",
+        "pt": "'Só 1:1', você diz a Halden. 'Entra igual, sai igual. Gira a chave, conta até dez, abre a cabine.'\nEle assente rápido demais. Os guardas gritam alguma coisa de muito longe.\nA porta fecha. Está escuro e cheira a cobre e chuva. O tique não está mais lá fora. Está no seu peito, marcando compasso com alguma coisa, e você não sabe se é o seu coração ou o contrário."
+      },
+      "roll": { "dice": "1d6", "dc": 4, "pass": "end_changed", "fail": "end_gone" }
+    },
+    "self_vf": {
+      "title": { "en": "VERY FINE", "pt": "MUITO FINO" },
+      "text": {
+        "en": "Very Fine. The knob goes all the way right. Either Halden turns the key or you fit the small copper one into the panel yourself and feel it wind as if it had been waiting for your hand.\nThe door closes. Frost climbs the inside of the glass.\nYou think: I am structure. Feed it structure. You think: what is a researcher for.\nThe deep tick. Then no tick at all.",
+        "pt": "Muito Fino. O botão vai até a direita. Ou Halden gira a chave, ou você mesmo encaixa a pequena chave de cobre no painel e sente a corda subir como se esperasse a sua mão.\nA porta fecha. A geada sobe por dentro do vidro.\nVocê pensa: eu sou estrutura. Dê estrutura a ela. Você pensa: para que serve um pesquisador.\nO tique fundo. Depois tique nenhum."
+      },
+      "roll": { "dice": "1d6", "dc": 5, "pass": "end_very_fine", "fail": "end_gone" }
+    },
+    "end_discovery": {
+      "title": { "en": "COMMENDED", "pt": "ELOGIADO" },
+      "text": {
+        "en": "The rod goes to Materials with your name on the tag. Within a month there are three teams working on it and a sentence in the site report that begins with 'Notably'.\nYou are put on the 914 rotation permanently. It is meant as a reward.\nEvery shift you walk past the open Intake booth. Every shift it is exactly the size of a person. You keep walking. So far.",
+        "pt": "A haste vai para Materiais com o seu nome na etiqueta. Em um mês há três equipes trabalhando nela e uma frase no relatório do site que começa com 'Notavelmente'.\nVocê entra na escala da 914 em caráter permanente. É para ser uma recompensa.\nTodo turno você passa pela cabine de Entrada aberta. Todo turno ela tem exatamente o tamanho de uma pessoa. Você continua andando. Por enquanto."
+      },
+      "ending": "good"
+    },
+    "end_honest": {
+      "title": { "en": "THE REPORT", "pt": "O RELATÓRIO" },
+      "text": {
+        "en": "You write all of it. The lunchbox. The rhythm. What was said and by whom, including the intercom. You do not soften it.\nHalden is gone from the site by morning, and nobody says where. Your report gets one reply, from a level you did not know read reports: 'Confirmed. Thank you.'\nThe protocol is reprinted. The bold line is bolder now, and there is a second one under it. It is about you, in a way. It is about anyone who stands at the booth too long.",
+        "pt": "Você escreve tudo. A marmita. O ritmo. O que foi dito e por quem, inclusive o interfone. Não suaviza nada.\nHalden some do site antes do amanhecer, e ninguém diz para onde. Seu relatório recebe uma resposta, de um nível que você não sabia que lia relatórios: 'Confirmado. Obrigado.'\nO protocolo é reimpresso. A linha em negrito está mais negra agora, e há uma segunda embaixo. É sobre você, de certo modo. É sobre qualquer um que fique diante da cabine tempo demais."
+      },
+      "ending": "good"
+    },
+    "end_very_fine": {
+      "title": { "en": "REFINED", "pt": "REFINADO" },
+      "text": {
+        "en": "The Output booth opens and you step out.\nYou are you. Same badge, same face, the guards check twice. But the room is very clear now. You can hear which of the eight million parts is worn. You know what the knob is really for, and why there are only five settings, and what the sixth would be.\nSix months later you head the 914 program. Your reports are short and always right.\nAt night, alone, you tick. Nobody has noticed yet.",
+        "pt": "A cabine de Saída abre e você sai.\nVocê é você. Mesmo crachá, mesmo rosto, os guardas conferem duas vezes. Mas a sala está muito nítida agora. Você ouve qual das oito milhões de peças está gasta. Sabe para que serve o botão de verdade, e por que só há cinco ajustes, e qual seria o sexto.\nSeis meses depois você chefia o programa 914. Seus relatórios são curtos e sempre certos.\nÀ noite, sozinho, você tiqueia. Ninguém reparou ainda."
+      },
+      "ending": "good"
+    },
+    "end_changed": {
+      "title": { "en": "1:1", "pt": "1:1" },
+      "text": {
+        "en": "Ten seconds. The Output booth opens on a researcher.\nThe guards do not recognise you. Your badge photo does not match. Your handwriting on the clipboard does, exactly.\nYou remember your life. You remember it the way you remember a film. The face in the mirror is a stranger's and it answers to your name.\nThe Foundation reassigns you. Same in, same out, the file says. It is not wrong. It is just somewhere else.",
+        "pt": "Dez segundos. A cabine de Saída abre sobre um pesquisador.\nOs guardas não reconhecem você. A foto do crachá não bate. Sua letra na prancheta bate, exatamente.\nVocê lembra da sua vida. Lembra do jeito que se lembra de um filme. O rosto no espelho é de um estranho e atende pelo seu nome.\nA Fundação realoca você. Entra igual, sai igual, diz a pasta. Não está errado. Só está em outro lugar."
+      },
+      "ending": "neutral"
+    },
+    "end_coverup": {
+      "title": { "en": "NO RECORD", "pt": "SEM REGISTRO" },
+      "text": {
+        "en": "It never happened. The log says steel, watch, flashlight. The guards agree, because the guards do not want to explain the thirty seconds either.\nHalden thanks you. You do not answer.\nThe machine still ticks with one extra beat in it. Every output since has come with one small part nobody asked for. A brass gear. A copper pin. A whisker.\nSomeone will notice. You hope it is not you.",
+        "pt": "Nunca aconteceu. O log diz aço, relógio, lanterna. Os guardas concordam, porque os guardas também não querem explicar os trinta segundos.\nHalden agradece. Você não responde.\nA máquina ainda tiqueia com uma batida a mais. Toda saída desde então vem com uma peça pequena que ninguém pediu. Uma engrenagem de latão. Um pino de cobre. Um bigode.\nAlguém vai perceber. Você torce para que não seja você."
+      },
+      "ending": "neutral"
+    },
+    "end_ash": {
+      "title": { "en": "BLUE ASH", "pt": "CINZA AZUL" },
+      "text": {
+        "en": "The Output booth opens on a fine blue dust, no more than a spoonful. It is very still. Then it is not.\nIt moves toward the nearest warmth, which is Halden's hand on the glass, and Halden does not scream, he just goes quiet, and then the guards go quiet, and the ventilation carries the rest of it into the corridor.\nYou reach the door. You do not reach the corridor.\nThe site lists Cell 109-B as sealed. The machine, inside, is still wound.",
+        "pt": "A cabine de Saída abre sobre um pó azul fino, não mais que uma colher. Está muito parado. Depois não está.\nEle vai na direção do calor mais próximo, que é a mão de Halden no vidro, e Halden não grita, só fica quieto, e depois os guardas ficam quietos, e a ventilação leva o resto para o corredor.\nVocê chega à porta. Não chega ao corredor.\nO site registra a Cela 109-B como lacrada. A máquina, lá dentro, ainda tem corda."
+      },
+      "ending": "bad"
+    },
+    "end_reach": {
+      "title": { "en": "THE WORKS", "pt": "O MECANISMO" },
+      "text": {
+        "en": "Your arm goes into the copper tube up to the shoulder. The brass thing is right there, warm, almost in your fingers.\nThen the machine decides you are Intake.\nIt is not violent. That is the worst of it. It is careful, the way it was with the mouse. The guards pull, and there is less of you to pull each second, and the ticking is very calm about the whole thing.\nThe Output booth opens later that night, for no one. What is in it is filed under 'expunged'.",
+        "pt": "Seu braço entra no tubo de cobre até o ombro. A coisa de latão está bem ali, morna, quase nos seus dedos.\nEntão a máquina decide que você é Entrada.\nNão é violento. Isso é o pior. É cuidadoso, como foi com o camundongo. Os guardas puxam, e a cada segundo há menos de você para puxar, e o tique está muito calmo com tudo isso.\nA cabine de Saída abre mais tarde naquela noite, para ninguém. O que há nela é arquivado como 'expurgado'."
+      },
+      "ending": "bad"
+    },
+    "end_gone": {
+      "title": { "en": "OUTPUT", "pt": "SAÍDA" },
+      "text": {
+        "en": "The Output booth opens on nothing.\nClean floor, a little too cold, scale at zero. The machine ticks on, deep and slow, and the tube hums like a wire in wind.\nHalden waits an hour. The guards wait longer, because they have to. The booth stays empty.\nYour file is closed with one line, the same line as all the others. No one writes down what the machine kept. No one knows what it was for.",
+        "pt": "A cabine de Saída abre sobre nada.\nChão limpo, um pouco frio demais, balança no zero. A máquina segue tiqueando, fundo e devagar, e o tubo zune como um fio ao vento.\nHalden espera uma hora. Os guardas esperam mais, porque precisam. A cabine continua vazia.\nSua pasta é fechada com uma linha, a mesma linha de todas as outras. Ninguém escreve o que a máquina guardou. Ninguém sabe para que servia."
+      },
+      "ending": "bad"
+    }
+  }
+}

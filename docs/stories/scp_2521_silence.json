@@ -1,0 +1,300 @@
+{
+  "meta": {
+    "title": { "en": "2521: Hush", "pt": "2521: Silêncio" },
+    "author": "Marcelo Souza / Kumodot.art (adaptation)",
+    "version": 1,
+    "tier": 1,
+    "category": "SCP",
+    "start": "office",
+    "blurb": {
+      "en": "It takes anything that says what it is. Words, voices, the people who use them. Pictures are safe. Foundation Files, no. 10.",
+      "pt": "Ele leva tudo o que diz o que ele é. Palavras, vozes, quem as usa. Desenhos são seguros. Arquivos da Fundação, n. 10."
+    },
+    "langs": ["en", "pt"],
+    "license": "CC BY-SA 3.0",
+    "based_on": "SCP-2521 by LurkD, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-2521 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+    "series": "Foundation Files"
+  },
+  "flags": ["knows_rule", "drew", "scared", "heard_voice", "child_safe", "child_scared", "dots"],
+  "nodes": {
+    "office": {
+      "title": { "en": "THE OFFICE", "pt": "A SALA" },
+      "text": {
+        "en": "You are the new researcher on file 2521. The old one is Dr. Adair, and Dr. Adair is not here anymore. Nobody says where he went. Nobody says anything, in fact, and you have started to notice that.\nHis office is yours now. A desk. A phone. A thick folder with no label, only a drawing of a closed mouth on the cover. Next to it, a fresh logbook, blank, with a good pen on top.\nThe pen is right there.",
+        "pt": "Você é o novo pesquisador do arquivo 2521. O anterior é o Dr. Adair, e o Dr. Adair não está mais aqui. Ninguém diz para onde ele foi. Ninguém diz nada, na verdade, e você começou a reparar nisso.\nA sala dele é sua agora. Uma mesa. Um telefone. Uma pasta grossa sem etiqueta, só o desenho de uma boca fechada na capa. Ao lado, um diário de bordo novo, em branco, com uma caneta boa em cima.\nA caneta está bem ali."
+      },
+      "choices": [
+        { "label": { "en": "Open the folder", "pt": "Abrir a pasta" }, "to": "folder" },
+        { "label": { "en": "Start the logbook", "pt": "Começar o diário" }, "to": "write_summary" },
+        { "label": { "en": "Go to the briefing", "pt": "Ir ao briefing" }, "to": "briefing" }
+      ]
+    },
+    "folder": {
+      "title": { "en": "THE FOLDER", "pt": "A PASTA" },
+      "text": {
+        "en": "No words. Not one. Page after page of drawings in Adair's careful hand.\nA tall black figure, thin as a crack in a wall, arms too long. A sheet of paper with writing on it, and the figure taking the paper. A man with an open mouth, and the figure taking the man. A photograph: a check mark. A drawing: a check mark. A pen: crossed out. A mouth: crossed out.\nThe last page is a drawing of this desk, this chair, and you. Adair drew you before you arrived. Under the chair, a small circle with a line through it. Hush.",
+        "pt": "Nenhuma palavra. Nem uma. Página após página de desenhos na letra cuidadosa de Adair.\nUma figura negra e alta, fina como uma rachadura na parede, braços longos demais. Uma folha com escrita, e a figura levando a folha. Um homem de boca aberta, e a figura levando o homem. Uma fotografia: um sinal de certo. Um desenho: um sinal de certo. Uma caneta: riscada. Uma boca: riscada.\nA última página é um desenho desta mesa, desta cadeira e de você. Adair desenhou você antes de você chegar. Embaixo da cadeira, um círculo pequeno com um traço. Silêncio."
+      },
+      "set": ["knows_rule"],
+      "choices": [
+        { "label": { "en": "Copy the drawings", "pt": "Copiar os desenhos" }, "to": "draw_copy" },
+        { "label": { "en": "Write a summary", "pt": "Escrever um resumo" }, "to": "write_summary" },
+        { "label": { "en": "Go to the briefing", "pt": "Ir ao briefing" }, "to": "briefing" }
+      ]
+    },
+    "write_summary": {
+      "title": { "en": "THE PEN", "pt": "A CANETA" },
+      "text": {
+        "en": "It is only a logbook. Every file has one. You uncap the pen and write the date, and your name, and 'Subject:'.\nThe room gets cold in the way a room gets cold when a door opens somewhere. There is no door open. The shadow under the desk is longer than the desk.\nYour hand is already forming the first digit. A two. It is such a small thing, a two.",
+        "pt": "É só um diário de bordo. Todo arquivo tem um. Você destampa a caneta e escreve a data, seu nome, e 'Assunto:'.\nA sala esfria do jeito que uma sala esfria quando uma porta abre em algum lugar. Não há porta aberta. A sombra debaixo da mesa é mais comprida que a mesa.\nSua mão já está formando o primeiro algarismo. Um dois. É uma coisa tão pequena, um dois."
+      },
+      "choices": [
+        { "label": { "en": "Finish the number", "pt": "Terminar o número" }, "to": "end_taken_writing" },
+        { "label": { "en": "Drop the pen", "pt": "Largar a caneta" }, "to": "stop_writing" }
+      ]
+    },
+    "stop_writing": {
+      "title": { "en": "THE PEN", "pt": "A CANETA" },
+      "text": {
+        "en": "You drop the pen. It rolls off the desk and does not make a sound when it lands.\nThe page with the half-made two is not on the desk anymore. It was not torn out. It is just not there, and the logbook is one page thinner, and the cold goes back to wherever it came from.\nYou sit for a long time with your hands flat on the wood. You understand the folder now, even if you have not opened it. Nothing written. Nothing said.",
+        "pt": "Você larga a caneta. Ela rola da mesa e não faz som ao cair.\nA página com o dois pela metade não está mais na mesa. Não foi arrancada. Simplesmente não está lá, e o diário tem uma página a menos, e o frio volta para onde quer que tenha vindo.\nVocê fica muito tempo sentado com as mãos espalmadas na madeira. Agora você entende a pasta, mesmo sem ter aberto. Nada escrito. Nada dito."
+      },
+      "set": ["scared", "knows_rule"],
+      "goto": "briefing"
+    },
+    "draw_copy": {
+      "title": { "en": "DRAWING", "pt": "DESENHANDO" },
+      "text": {
+        "en": "You take a pencil, not the pen, and copy Adair's figure onto a clean sheet. The long arms. The head that is only a darker place in the dark.\nYou wait. Nothing. The room stays warm. The drawing stays on the desk, a little clumsy, entirely yours.\nA picture says what it is without saying anything. That is the whole trick, and Adair found it, and it kept him alive for as long as he kept to it.",
+        "pt": "Você pega um lápis, não a caneta, e copia a figura de Adair numa folha limpa. Os braços longos. A cabeça que é só um ponto mais escuro no escuro.\nVocê espera. Nada. A sala continua quente. O desenho continua na mesa, um pouco torto, inteiramente seu.\nUm desenho diz o que é sem dizer nada. Esse é o truque todo, e Adair descobriu, e isso o manteve vivo enquanto ele se manteve fiel a isso."
+      },
+      "set": ["drew"],
+      "goto": "briefing"
+    },
+    "briefing": {
+      "title": { "en": "BRIEFING", "pt": "BRIEFING" },
+      "text": {
+        "en": "Dr. Okafor runs the section. She has a notepad, a marker, and a face that has not relaxed in years.\nShe does not greet you. She draws: a figure, a folder, a chair, an arrow to you. She taps the arrow twice. Yours now.\nThen she draws a man, a speech bubble, and a black shape reaching into the bubble. She looks at you until you nod. That is what happened to Adair.\nShe holds the marker out to you, cap first, and waits for your answer.",
+        "pt": "A Dra. Okafor comanda a seção. Ela tem um bloco, um marcador e um rosto que não relaxa há anos.\nEla não te cumprimenta. Ela desenha: uma figura, uma pasta, uma cadeira, uma seta até você. Bate na seta duas vezes. É seu agora.\nDepois desenha um homem, um balão de fala, e uma forma negra entrando no balão. Ela olha para você até você assentir. Foi isso que aconteceu com Adair.\nEla estende o marcador para você, tampa primeiro, e espera sua resposta."
+      },
+      "choices": [
+        { "label": { "en": "Nod. Accept.", "pt": "Assentir. Aceitar." }, "to": "phone_night" },
+        { "label": { "en": "Draw a question", "pt": "Desenhar pergunta" }, "to": "draw_question" },
+        { "label": { "en": "Ask out loud", "pt": "Perguntar em voz" }, "to": "end_taken_speaking" },
+        { "label": { "en": "Refuse the file", "pt": "Recusar o arquivo" }, "to": "end_walk" }
+      ]
+    },
+    "draw_question": {
+      "title": { "en": "BRIEFING", "pt": "BRIEFING" },
+      "text": {
+        "en": "You take the marker and draw a question mark, then a pen, then a mouth, then a camera.\nOkafor crosses out the pen. Crosses out the mouth. Draws a check by the camera, and another by a small sketch of a hand holding a pencil. Then she draws a head with a thought bubble, and the thought bubble is empty, and she draws a check by that too.\nYou may think it. You may draw it. You may not write it or say it.\nShe caps the marker. The briefing is over.",
+        "pt": "Você pega o marcador e desenha um ponto de interrogação, depois uma caneta, uma boca, uma câmera.\nOkafor risca a caneta. Risca a boca. Faz um certo ao lado da câmera, e outro ao lado de uma mão segurando um lápis. Depois desenha uma cabeça com um balão de pensamento, e o balão está vazio, e ela faz um certo nele também.\nVocê pode pensar. Pode desenhar. Não pode escrever nem dizer.\nEla tampa o marcador. O briefing acabou."
+      },
+      "set": ["knows_rule"],
+      "goto": "phone_night"
+    },
+    "phone_night": {
+      "title": { "en": "NIGHT SHIFT", "pt": "TURNO DA NOITE" },
+      "text": {
+        "en": "The site goes quiet after ten. You stay in the office because the folder is here and because going home means admitting you have nothing to say about your day.\nAt 11:40 the desk phone rings.\nIt is an internal line. The display shows no extension. It rings the way phones rang before you were born, a real bell, patient, and the shadow of the receiver on the wall is not the shape of a receiver.",
+        "pt": "O site fica em silêncio depois das dez. Você fica na sala porque a pasta está aqui e porque ir para casa significa admitir que não tem nada a dizer sobre o seu dia.\nÀs 23h40 o telefone da mesa toca.\nÉ uma linha interna. O visor não mostra ramal. Ele toca como os telefones tocavam antes de você nascer, uma campainha de verdade, paciente, e a sombra do fone na parede não tem a forma de um fone."
+      },
+      "choices": [
+        { "label": { "en": "Answer it", "pt": "Atender" }, "to": "phone_answer" },
+        { "label": { "en": "Let it ring", "pt": "Deixar tocar" }, "to": "phone_ring" },
+        { "label": { "en": "Pull the cord", "pt": "Puxar o fio" }, "to": "phone_unplug" }
+      ]
+    },
+    "phone_answer": {
+      "title": { "en": "THE CALL", "pt": "A LIGAÇÃO" },
+      "text": {
+        "en": "You lift the receiver and say nothing, because you have learned that much.\nBreathing. Then a voice you know from the training videos. Adair. Tired, close, as if he were under the desk.\n'It is all right,' he says. 'You just have to know what to call it. Listen. It is two... five...'\nThe line is very cold against your ear.",
+        "pt": "Você levanta o fone e não diz nada, porque isso você já aprendeu.\nRespiração. Depois uma voz que você conhece dos vídeos de treinamento. Adair. Cansado, perto, como se estivesse debaixo da mesa.\n'Está tudo bem', ele diz. 'Você só precisa saber como chamar. Escuta. É dois... cinco...'\nA linha está muito fria contra a sua orelha."
+      },
+      "choices": [
+        { "label": { "en": "Hang up", "pt": "Desligar" }, "to": "hang_up" },
+        { "label": { "en": "Keep listening", "pt": "Continuar ouvindo" }, "to": "phone_taken" }
+      ]
+    },
+    "hang_up": {
+      "title": { "en": "THE CALL", "pt": "A LIGAÇÃO" },
+      "text": {
+        "en": "You slam it down. The bell gives one bright note, cut off.\nThe office is warm again. The receiver is where you put it. Your ear aches like it does after cold water.\nYou do not know if that was Adair. You do not think it matters. Whatever is left of him only knows one thing to say, and it wanted to say it to you.",
+        "pt": "Você bate o fone no gancho. A campainha dá uma nota clara, cortada.\nA sala está quente de novo. O fone está onde você deixou. Sua orelha dói como depois de água gelada.\nVocê não sabe se aquilo era Adair. Acha que não importa. O que sobrou dele só sabe dizer uma coisa, e queria dizer para você."
+      },
+      "goto": "hallway"
+    },
+    "phone_taken": {
+      "title": { "en": "THE CALL", "pt": "A LIGAÇÃO" },
+      "text": {
+        "en": "'... two...' the voice says, and then there is no voice, and no receiver. Your hand is closed around nothing. The cord hangs from the phone base and ends in the air, cleanly, the way a road ends at a cliff.\nThe number is in your head now. Two digits of it, in Adair's voice. You can feel it there like a stone in a shoe.\nThinking is allowed. You hold onto that. Thinking is allowed.",
+        "pt": "'... dois...', diz a voz, e depois não há voz, nem fone. Sua mão está fechada em volta de nada. O fio pende da base do telefone e termina no ar, limpo, como uma estrada termina num penhasco.\nO número está na sua cabeça agora. Dois algarismos dele, na voz de Adair. Você sente ali como uma pedra no sapato.\nPensar é permitido. Você se agarra a isso. Pensar é permitido."
+      },
+      "set": ["heard_voice"],
+      "goto": "hallway"
+    },
+    "phone_ring": {
+      "title": { "en": "NIGHT SHIFT", "pt": "TURNO DA NOITE" },
+      "text": {
+        "en": "You count the rings. Twelve. Thirteen. On the fourteenth it stops, mid-bell, like a hand closing over it.\nThe message pad beside the phone is blank. It was blank before. But the top sheet has a dent in it now, the pressure of a pen that wrote something on a page that is no longer there.\nYou do not touch the pad. You go and stand in the corridor until the lights feel normal.",
+        "pt": "Você conta os toques. Doze. Treze. No décimo quarto ele para, no meio da campainha, como uma mão fechando em cima.\nO bloco de recados ao lado do telefone está em branco. Já estava. Mas a folha de cima tem uma marca agora, a pressão de uma caneta que escreveu algo numa página que não existe mais.\nVocê não toca no bloco. Vai ficar em pé no corredor até as luzes parecerem normais."
+      },
+      "goto": "hallway"
+    },
+    "phone_unplug": {
+      "title": { "en": "NIGHT SHIFT", "pt": "TURNO DA NOITE" },
+      "text": {
+        "en": "You pull the cord out of the wall. The bell stops halfway through a ring and the silence it leaves is thick, like a room full of people not talking.\nIn the morning the phone is gone from the desk. Not the cord, only the phone. Facilities has no record of removing it. Facilities has no record of it at all.\nYou are beginning to see how Adair's office got so empty.",
+        "pt": "Você arranca o fio da parede. A campainha para no meio de um toque e o silêncio que fica é espesso, como uma sala cheia de gente sem falar.\nDe manhã o telefone sumiu da mesa. Não o fio, só o telefone. A manutenção não tem registro de ter tirado. A manutenção não tem registro nenhum dele.\nVocê começa a entender como a sala de Adair ficou tão vazia."
+      },
+      "goto": "hallway"
+    },
+    "hallway": {
+      "title": { "en": "FAMILY DAY", "pt": "DIA DA FAMÍLIA" },
+      "text": {
+        "en": "Someone approved a family day on a Keter wing. Someone will be reassigned.\nIn the corridor outside your office a girl of about seven is sitting on the floor with a sheet of paper. One of Adair's drawings. It must have slipped from the folder. The tall black figure, the long arms.\nShe looks up at you, delighted, and takes a breath to ask what it is. You can see the question arriving. Her mouth is already open.",
+        "pt": "Alguém aprovou um dia da família numa ala Keter. Alguém vai ser realocado.\nNo corredor em frente à sua sala uma menina de uns sete anos está sentada no chão com uma folha de papel. Um dos desenhos de Adair. Deve ter escapado da pasta. A figura negra e alta, os braços longos.\nEla olha para você, encantada, e puxa o ar para perguntar o que é aquilo. Você vê a pergunta chegando. A boca dela já está aberta."
+      },
+      "choices": [
+        { "label": { "en": "Finger to lips", "pt": "Dedo nos lábios" }, "to": "shush" },
+        { "label": { "en": "Draw her the rule", "pt": "Desenhar a regra" }, "to": "draw_child", "require": ["knows_rule"] },
+        { "label": { "en": "Explain in words", "pt": "Explicar falando" }, "to": "end_taken_speaking" },
+        { "label": { "en": "Grab the drawing", "pt": "Pegar o desenho" }, "to": "take_drawing" }
+      ]
+    },
+    "draw_child": {
+      "title": { "en": "FAMILY DAY", "pt": "DIA DA FAMÍLIA" },
+      "text": {
+        "en": "You sit on the floor before she can speak and put your finger to your lips, and then, before she can decide you are boring, you take a crayon from her pocket.\nYou draw the figure. You draw a mouth with a line across it. You draw a pencil with a big check mark. You point at her, at the crayon, at the check.\nShe gets it faster than you did. She draws the figure herself, then draws a house around it with a locked door and a heart on the roof. She holds it up, silent, proud.\nThe corridor stays warm.",
+        "pt": "Você senta no chão antes que ela fale e põe o dedo nos lábios, e então, antes que ela decida que você é chato, tira um giz de cera do bolso dela.\nVocê desenha a figura. Desenha uma boca com um traço em cima. Desenha um lápis com um certo bem grande. Aponta para ela, para o giz, para o certo.\nEla entende mais rápido do que você entendeu. Desenha a figura ela mesma, depois desenha uma casa em volta com a porta trancada e um coração no telhado. Levanta o desenho, muda, orgulhosa.\nO corredor continua quente."
+      },
+      "set": ["child_safe"],
+      "goto": "containment"
+    },
+    "shush": {
+      "title": { "en": "FAMILY DAY", "pt": "DIA DA FAMÍLIA" },
+      "text": {
+        "en": "Finger to your lips, hard, the way adults do it when they mean it. She closes her mouth. Her eyes go wide and wet.\nYou do not explain, because you cannot, and she does not understand, because nobody drew it for her. She just knows the tall thing on the paper is something grown-ups are afraid of.\nHer mother collects her ten minutes later. The girl holds the drawing against her chest and does not say a word all the way to the elevator. She will not say a word about it for years. That is not the same as being safe.",
+        "pt": "Dedo nos lábios, firme, do jeito que adultos fazem quando é sério. Ela fecha a boca. Os olhos ficam grandes e molhados.\nVocê não explica, porque não pode, e ela não entende, porque ninguém desenhou para ela. Ela só sabe que a coisa alta no papel é algo que os adultos temem.\nA mãe vem buscá-la dez minutos depois. A menina segura o desenho contra o peito e não diz uma palavra até o elevador. Não vai dizer uma palavra sobre isso por anos. Isso não é a mesma coisa que estar segura."
+      },
+      "set": ["child_scared"],
+      "goto": "containment"
+    },
+    "take_drawing": {
+      "title": { "en": "FAMILY DAY", "pt": "DIA DA FAMÍLIA" },
+      "text": {
+        "en": "You snatch the paper. She yelps, then starts to cry, and between sobs she says the thing children say: 'The tall man! I want the tall man!'\nThe corridor lights dip. The air goes cold enough to see. The drawing in your hand is not in your hand.\nShe stops crying, because she is looking past you, at something the height of the ceiling. Then it is not there and she is only a child in a corridor, and she asks you, very quietly, if she can go find her mom.\nYou nod. You do a lot of nodding now.",
+        "pt": "Você arranca o papel. Ela dá um grito, depois começa a chorar, e entre soluços diz o que crianças dizem: 'O homem alto! Eu quero o homem alto!'\nAs luzes do corredor baixam. O ar esfria a ponto de dar para ver. O desenho na sua mão não está na sua mão.\nEla para de chorar, porque está olhando por cima do seu ombro, para algo da altura do teto. Depois não está mais lá e ela é só uma criança num corredor, e ela pergunta, bem baixinho, se pode ir procurar a mãe.\nVocê assente. Você assente muito ultimamente."
+      },
+      "set": ["child_scared"],
+      "goto": "containment"
+    },
+    "containment": {
+      "title": { "en": "THE CHAMBER", "pt": "A CÂMARA" },
+      "text": {
+        "en": "The containment chamber is a joke, and everyone knows it. A room with nothing in it. Cameras with the microphones pulled out. Walls covered in drawings, hundreds, a paper skin of tall black figures so that whatever comes here finds only pictures.\nAdair's last drawing is pinned by the door: himself, at this desk, with a phone.\nOn the desk is the monthly report form. Printed. Blank. Under the line that says DESCRIPTION there are twelve empty lines, and a memo from the Director, in pictograms, that says: today.",
+        "pt": "A câmara de contenção é uma piada, e todo mundo sabe. Uma sala sem nada dentro. Câmeras com os microfones arrancados. Paredes cobertas de desenhos, centenas, uma pele de papel de figuras negras e altas para que o que vier aqui encontre só imagens.\nO último desenho de Adair está pregado junto à porta: ele mesmo, nesta mesa, com um telefone.\nSobre a mesa está o formulário do relatório mensal. Impresso. Em branco. Sob a linha que diz DESCRIÇÃO há doze linhas vazias, e um memorando da Diretora, em pictogramas, que diz: hoje."
+      },
+      "choices": [
+        { "label": { "en": "Draw the report", "pt": "Desenhar relatório" }, "to": "report_pictos", "require": ["knows_rule"] },
+        { "label": { "en": "Write the report", "pt": "Escrever relatório" }, "to": "end_taken_writing" },
+        { "label": { "en": "Record a voice memo", "pt": "Gravar um áudio" }, "to": "end_taken_speaking" },
+        { "label": { "en": "Walk away", "pt": "Ir embora" }, "to": "end_walk" }
+      ]
+    },
+    "report_pictos": {
+      "title": { "en": "THE REPORT", "pt": "O RELATÓRIO" },
+      "text": {
+        "en": "It takes four hours to say nothing. You draw the figure. You draw the phone with an X. You draw the folder, the girl in the corridor, the pen crossed out, the pencil with its check. You draw an eye, then a hand over it, then the hand lifted: seen, and let go.\nThe walls watch you. Every figure on every sheet faces the desk. You do not remember them facing the desk when you came in.\nThe form has one box left. ITEM NUMBER. Four small squares, waiting for four small digits.",
+        "pt": "Leva quatro horas para não dizer nada. Você desenha a figura. Desenha o telefone com um X. Desenha a pasta, a menina no corredor, a caneta riscada, o lápis com seu certo. Desenha um olho, depois uma mão sobre ele, depois a mão levantada: visto, e solto.\nAs paredes te observam. Toda figura em toda folha está virada para a mesa. Você não lembra delas viradas para a mesa quando entrou.\nO formulário tem um campo sobrando. NÚMERO DO ITEM. Quatro quadradinhos, esperando quatro algarismos pequenos."
+      },
+      "choices": [
+        { "label": { "en": "Fill the number box", "pt": "Preencher o número" }, "to": "digits" },
+        { "label": { "en": "Leave the box empty", "pt": "Deixar em branco" }, "to": "report_done" }
+      ]
+    },
+    "digits": {
+      "title": { "en": "FOUR SQUARES", "pt": "QUATRO CAIXAS" },
+      "text": {
+        "en": "A number is text. You know this the way you know a stove is hot. And still the pen is in your hand, because the form wants it, because forms always get what they want in this place.\nThe cold arrives before you write. It is standing behind the chair. You can see it in the gloss of the desk, tall, patient, its arms hanging past the floor.\nIt is not angry. It is only waiting to see what you do with the pen.",
+        "pt": "Um número é texto. Você sabe disso como sabe que o fogão está quente. E mesmo assim a caneta está na sua mão, porque o formulário quer, porque formulários sempre conseguem o que querem neste lugar.\nO frio chega antes de você escrever. Está em pé atrás da cadeira. Você vê no brilho da mesa, alto, paciente, os braços pendendo além do chão.\nEle não está bravo. Só espera para ver o que você faz com a caneta."
+      },
+      "choices": [
+        { "label": { "en": "Write the digits", "pt": "Escrever os dígitos" }, "to": "end_taken_writing" },
+        { "label": { "en": "Draw dots instead", "pt": "Desenhar pontos" }, "to": "report_done", "set": ["dots"] }
+      ]
+    },
+    "report_done": {
+      "title": { "en": "THE REPORT", "pt": "O RELATÓRIO" },
+      "text": {
+        "en": "Okafor reads the report standing up. She turns each page toward the camera without a microphone so the record will have it. She nods once. It is the first thing she has ever done that looks like approval.\nThen she puts something on the desk. Adair's notebook. Personal, not Foundation issue. She opens it to the last page and steps back.\nHalf a word, in his handwriting, the pen stroke ending in the middle of a letter. The last thing he wrote. The rest of the page is empty in a way that paper is not usually empty.",
+        "pt": "Okafor lê o relatório em pé. Vira cada página para a câmera sem microfone para que fique registrado. Assente uma vez. É a primeira coisa que ela faz que parece aprovação.\nDepois põe algo na mesa. O caderno de Adair. Pessoal, não da Fundação. Ela abre na última página e dá um passo atrás.\nMeia palavra, na letra dele, o traço da caneta acabando no meio de uma letra. A última coisa que ele escreveu. O resto da página está vazio de um jeito que papel normalmente não fica."
+      },
+      "choices": [
+        { "label": { "en": "Burn the notebook", "pt": "Queimar o caderno" }, "to": "burn" },
+        { "label": { "en": "Keep the notebook", "pt": "Guardar o caderno" }, "to": "end_kept" },
+        { "label": { "en": "Read the word aloud", "pt": "Ler em voz alta" }, "to": "end_taken_speaking" },
+        { "label": { "en": "Say what you heard", "pt": "Dizer o que ouviu" }, "to": "end_taken_speaking", "require": ["heard_voice"] }
+      ]
+    },
+    "burn": {
+      "title": { "en": "THE NOTEBOOK", "pt": "O CADERNO" },
+      "text": {
+        "en": "There is a steel bin in the corner for exactly this. You tear out the last page first, so you never read it, and you burn it without looking. Then the rest.\nOkafor watches the smoke go up. When it is done she draws something on her pad and turns it to you: a figure, a house around it, a heart on the roof.\nYou do not know where she got that. Then you do.",
+        "pt": "Há uma lixeira de aço no canto exatamente para isso. Você arranca a última página primeiro, para nunca ler, e queima sem olhar. Depois o resto.\nOkafor observa a fumaça subir. Quando acaba, ela desenha algo no bloco e vira para você: uma figura, uma casa em volta, um coração no telhado.\nVocê não sabe de onde ela tirou aquilo. Depois sabe."
+      },
+      "choices": [
+        { "label": { "en": "Go home", "pt": "Ir para casa" }, "to": "end_teacher", "require": ["child_safe"] },
+        { "label": { "en": "Go home", "pt": "Ir para casa" }, "to": "end_contain", "require": ["!child_safe"] }
+      ]
+    },
+    "end_contain": {
+      "title": { "en": "HUSH", "pt": "SILÊNCIO" },
+      "text": {
+        "en": "The file stays open. It will always stay open. There is nothing to close it with.\nYou keep the office. You keep the folder and you add to it, page by page, a pencil and a check mark, and nothing is ever taken from your desk again. When new staff arrive you sit them down and draw the rule before they can ask a single thing.\nAt home you have a wall of drawings you do not explain to anyone. Your friends think it is art. It is the only thing you have ever contained.",
+        "pt": "O arquivo fica aberto. Vai ficar aberto para sempre. Não há com o que fechá-lo.\nVocê fica com a sala. Fica com a pasta e acrescenta a ela, página por página, um lápis e um certo, e nada mais é levado da sua mesa. Quando chegam novos funcionários você os senta e desenha a regra antes que possam perguntar qualquer coisa.\nEm casa você tem uma parede de desenhos que não explica a ninguém. Seus amigos acham que é arte. É a única coisa que você já conteve."
+      },
+      "ending": "good"
+    },
+    "end_teacher": {
+      "title": { "en": "THE HEART", "pt": "O CORAÇÃO" },
+      "text": {
+        "en": "Years later there is a new researcher on file 2521, and she does not need the briefing.\nShe has been drawing the figure since she was seven. A house around it, a locked door, a heart on the roof. She never asked what it was. Someone sat on a corridor floor and showed her that you do not have to.\nShe finds your last folder in the desk. The final page is a drawing of the desk, the chair, and her. You drew her before she arrived. Under the chair, a small circle with a line through it.\nShe smiles, and says nothing, and picks up a pencil.",
+        "pt": "Anos depois há uma nova pesquisadora no arquivo 2521, e ela não precisa do briefing.\nEla desenha a figura desde os sete anos. Uma casa em volta, a porta trancada, um coração no telhado. Nunca perguntou o que era. Alguém sentou no chão de um corredor e mostrou a ela que não precisa perguntar.\nEla encontra sua última pasta na mesa. A página final é um desenho da mesa, da cadeira e dela. Você a desenhou antes de ela chegar. Embaixo da cadeira, um círculo pequeno com um traço.\nEla sorri, não diz nada, e pega um lápis."
+      },
+      "ending": "good"
+    },
+    "end_taken_writing": {
+      "title": { "en": "INK", "pt": "TINTA" },
+      "text": {
+        "en": "The pen finishes the number. It looks so ordinary on the page. Four digits, a little uneven, the way numbers look when your hand is cold.\nThe room is very cold.\nThe page is gone, and then the pen, and then the hand that held the pen is not in your sleeve. It does not hurt. It is like being edited.\nOkafor finds the chair pushed back and the logbook open to a page that is missing. She draws the chair, the logbook, and a small circle with a line through it, and pins it in the folder with the others.",
+        "pt": "A caneta termina o número. Parece tão comum na página. Quatro algarismos, um pouco tortos, como números ficam quando a mão está fria.\nA sala está muito fria.\nA página some, depois a caneta, depois a mão que segurava a caneta não está na sua manga. Não dói. É como ser editado.\nOkafor encontra a cadeira afastada e o diário aberto numa página que não existe. Ela desenha a cadeira, o diário e um círculo pequeno com um traço, e prende na pasta com os outros."
+      },
+      "ending": "bad"
+    },
+    "end_taken_speaking": {
+      "title": { "en": "OUT LOUD", "pt": "EM VOZ ALTA" },
+      "text": {
+        "en": "It is only a number. It is only four syllables. You have said harder things.\nYou say them.\nThe last thing you see is the drawings on the wall, all of them, turning their heads. The last thing you feel is your voice going somewhere ahead of you, and you following it, because it has always been yours and you cannot let it go alone.\nThe recording, if there was one, is a hiss. The room is warm again in under a minute. Somebody will need to be assigned to the file.",
+        "pt": "É só um número. São só quatro sílabas. Você já disse coisas mais difíceis.\nVocê diz.\nA última coisa que vê são os desenhos na parede, todos eles, virando a cabeça. A última coisa que sente é a sua voz indo para algum lugar à sua frente, e você indo atrás, porque ela sempre foi sua e você não pode deixá-la ir sozinha.\nA gravação, se houve, é um chiado. A sala esquenta de novo em menos de um minuto. Alguém vai precisar ser designado para o arquivo."
+      },
+      "ending": "bad"
+    },
+    "end_walk": {
+      "title": { "en": "TRANSFER", "pt": "TRANSFERÊNCIA" },
+      "text": {
+        "en": "You draw a door on the notepad, and an arrow through it, and you slide it across the desk. Okafor looks at it for a long time. Then she nods, which is the only kindness the section has left.\nYou are transferred to a file with words in it. Lots of words. You write reports until your hand cramps and you love every letter.\nSome nights you wake up certain that your desk phone is ringing in an office you no longer have. You lie still. You do not say anything. You are very good at that now.",
+        "pt": "Você desenha uma porta no bloco, uma seta atravessando, e empurra pela mesa. Okafor olha por um longo tempo. Depois assente, que é a única gentileza que sobrou na seção.\nVocê é transferido para um arquivo com palavras. Muitas palavras. Escreve relatórios até a mão dar cãibra e ama cada letra.\nAlgumas noites você acorda com a certeza de que o telefone da sua mesa está tocando numa sala que você não tem mais. Fica imóvel. Não diz nada. Você é muito bom nisso agora."
+      },
+      "ending": "neutral"
+    },
+    "end_kept": {
+      "title": { "en": "HALF A WORD", "pt": "MEIA PALAVRA" },
+      "text": {
+        "en": "You close the notebook without reading the page and put it in the desk drawer. Okafor watches you do it and says nothing, which is her whole vocabulary.\nIt is still there in the morning. And the next. You check every day, the way you would check a lock.\nYou know the half word is not for you. You know that one night the drawer will be empty, cleanly, without a sound, and you know that if you are sitting at the desk when it happens you will want very badly to say something.\nSo you sit a little further away each year.",
+        "pt": "Você fecha o caderno sem ler a página e guarda na gaveta da mesa. Okafor observa e não diz nada, que é todo o vocabulário dela.\nEle ainda está lá de manhã. E no dia seguinte. Você confere todo dia, como conferiria uma fechadura.\nVocê sabe que a meia palavra não é para você. Sabe que uma noite a gaveta vai estar vazia, limpa, sem som, e sabe que se estiver sentado à mesa quando acontecer vai querer muito dizer alguma coisa.\nEntão você senta um pouco mais longe a cada ano."
+      },
+      "ending": "neutral"
+    }
+  }
+}

@@ -125,6 +125,11 @@ Hand-written books are better than generated ones. Three references, one per tie
 
 The validator proves every ending is reachable by walking every node + flag combination.
 
+**Foundation Files** is the SCP series: eleven books adapted from SCP Foundation articles
+(087, 173, 096, 049, 106, 914, 682, 3008, 1730, 2521, 1471), each under CC BY-SA 3.0 with the
+original author credited in `meta.based_on`. Every SCP's rule is a mechanic: blink rolls in
+173, never writing the number in 2521, days that cost food in 3008.
+
 ## Book tiers (see STORY_FORMAT.md)
 
 Tier 1 = choices only. Tier 2 = choices + dice. Tier 3 = choices + dice + stats that

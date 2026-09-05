@@ -1,0 +1,297 @@
+{
+  "meta": {
+    "title": { "en": "049: The Cure", "pt": "049: A Cura" },
+    "author": "Marcelo Souza / Kumodot.art (adaptation)",
+    "version": 1,
+    "tier": 3,
+    "category": "SCP",
+    "start": "briefing",
+    "blurb": {
+      "en": "A polite doctor in a beaked mask. A disease only he can see. Keep calm, keep your distance. Foundation Files, no. 4.",
+      "pt": "Um médico educado com máscara de bico. Uma doença que só ele vê. Mantenha a calma e a distância. Arquivos da Fundação, n. 4."
+    },
+    "langs": ["en", "pt"],
+    "license": "CC BY-SA 3.0",
+    "based_on": "SCP-049 by Gabriel Jade and djkaktus, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-049 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+    "series": "Foundation Files",
+    "stats": { "calm": 4, "grit": 4 }
+  },
+  "flags": ["read_file", "has_lavender", "trusted", "hamm_alive", "has_recording"],
+  "nodes": {
+    "briefing": {
+      "title": { "en": "WEEK THREE", "pt": "TERCEIRA SEMANA" },
+      "text": {
+        "en": "You are a junior researcher, third week at Site-19, and today you sit in on the interviews.\nDr. Hamm meets you outside the cell block with two coffees. 'He is polite,' Hamm says. 'Old-fashioned. Calls himself a doctor. Do not shake his hand. That is the whole briefing, really.'\nBehind the glass, a tall figure in black robes stands very still. The mask has a long, pale beak.",
+        "pt": "Você é pesquisador júnior, terceira semana no Sítio-19, e hoje acompanha as entrevistas.\nO Dr. Hamm te encontra na entrada do bloco de celas com dois cafés. 'Ele é educado', diz Hamm. 'Antiquado. Diz que é médico. Não aperte a mão dele. No fundo, esse é o briefing inteiro.'\nAtrás do vidro, uma figura alta de manto preto está imóvel. A máscara tem um bico longo e pálido."
+      },
+      "choices": [
+        { "label": { "en": "Read the file first", "pt": "Ler o arquivo antes" }, "to": "file", "set": ["read_file"] },
+        { "label": { "en": "Go straight in", "pt": "Entrar direto" }, "to": "prep" }
+      ]
+    },
+    "file": {
+      "title": { "en": "THE FILE", "pt": "O ARQUIVO" },
+      "text": {
+        "en": "The file is thin on facts and thick on warnings. Skin contact is fatal. Cause unknown. The body does not stay down: within minutes it walks again, empty, and the file has a number for that too, 049-2.\nIt talks about a disease it calls the Pestilence. Nobody has found the disease. Nobody has found a way to make it stop looking.\nA note in the margin, in Hamm's hand: 'Lavender helps. Don't ask me why.'",
+        "pt": "O arquivo é pobre em fatos e rico em avisos. Contato com a pele é fatal. Causa desconhecida. O corpo não fica no chão: em minutos, anda de novo, vazio, e o arquivo tem um número para isso também, 049-2.\nEle fala de uma doença que chama de Pestilência. Ninguém achou a doença. Ninguém achou um jeito de fazer ele parar de procurar.\nUma nota na margem, com a letra de Hamm: 'Lavanda ajuda. Não me pergunte por quê.'"
+      },
+      "goto": "prep"
+    },
+    "prep": {
+      "title": { "en": "THE DOOR", "pt": "A PORTA" },
+      "text": {
+        "en": "The interview room is a table, three chairs, a recorder and a line of yellow tape on the floor that nobody explains. Hamm takes a small cloth sachet from his pocket and holds it out.\n'Lavender. He likes the smell. Keeps him even.' He shrugs. 'Or keep your hands free. Your call.'\nThe guard at the door checks his rifle twice. He does not look at the tall figure at all.",
+        "pt": "A sala de entrevista é uma mesa, três cadeiras, um gravador e uma linha de fita amarela no chão que ninguém explica. Hamm tira do bolso um saquinho de pano e estende.\n'Lavanda. Ele gosta do cheiro. Mantém ele sereno.' Dá de ombros. 'Ou fique com as mãos livres. Você decide.'\nO guarda na porta confere o fuzil duas vezes. Não olha para a figura alta em momento algum."
+      },
+      "choices": [
+        { "label": { "en": "Take the sachet", "pt": "Pegar o saquinho" }, "to": "interview", "set": ["has_lavender"] },
+        { "label": { "en": "Hands free", "pt": "Mãos livres" }, "to": "interview" }
+      ]
+    },
+    "interview": {
+      "title": { "en": "INTERVIEW", "pt": "ENTREVISTA" },
+      "text": {
+        "en": "'Good morning, doctor. And a new face.' The voice is soft and old, with a French edge. It bows, a small, correct bow. 'You must forgive my appearance. The work does not permit rest.'\nHamm starts the recorder. The figure folds its long hands on the table. The gloves are not gloves. They are the same grey as the mask, and they do not end.\n'Ask,' it says. 'I have nothing to hide from colleagues.'",
+        "pt": "'Bom dia, doutor. E um rosto novo.' A voz é macia e velha, com um sotaque francês. Ele faz uma reverência pequena e correta. 'Perdoem minha aparência. O trabalho não permite descanso.'\nHamm liga o gravador. A figura cruza as mãos longas sobre a mesa. As luvas não são luvas. Têm o mesmo cinza da máscara, e não terminam.\n'Perguntem', diz ele. 'Não tenho nada a esconder de colegas.'"
+      },
+      "choices": [
+        { "label": { "en": "Ask about the cure", "pt": "Perguntar da cura" }, "to": "talk_cure", "mod": { "calm": 1 } },
+        { "label": { "en": "Say it kills people", "pt": "Dizer que ele mata" }, "roll": { "dice": "1d6", "stat": "calm", "dc": 7, "pass": "talk_cure", "fail": "agitated" } },
+        { "label": { "en": "Listen quietly", "pt": "Só escutar" }, "to": "talk_observe" }
+      ]
+    },
+    "talk_cure": {
+      "title": { "en": "THE PESTILENCE", "pt": "A PESTILÊNCIA" },
+      "text": {
+        "en": "'The cure,' it says, and something in the voice warms. 'Yes. You are the first to ask properly.'\nIt describes the Pestilence the way a sailor describes weather: a thing everywhere, a thing you learn to read. In the eyes. In the breath. In the way a man sits.\n'It hides. But I have studied it a very long time, and I have never once been wrong.'\nHamm writes. You notice that the beak has turned, very slightly, toward him.",
+        "pt": "'A cura', diz ele, e algo na voz se aquece. 'Sim. Você é o primeiro a perguntar direito.'\nEle descreve a Pestilência como um marinheiro descreve o tempo: uma coisa em todo lugar, uma coisa que se aprende a ler. Nos olhos. Na respiração. No jeito de sentar.\n'Ela se esconde. Mas eu a estudo há muito tempo, e nunca errei uma vez sequer.'\nHamm anota. Você repara que o bico virou, bem de leve, na direção dele."
+      },
+      "goto": "turn"
+    },
+    "talk_observe": {
+      "title": { "en": "INTERVIEW", "pt": "ENTREVISTA" },
+      "text": {
+        "en": "You let Hamm lead. The questions are the same ones the file already holds, and the answers are the same, patient, courteous, useless.\nThen the figure stops mid-sentence and looks at you. 'You are quiet. That is good. The loud ones never see it.'\nIt looks at Hamm for a long time. It does not finish the sentence.",
+        "pt": "Você deixa Hamm conduzir. As perguntas são as mesmas que o arquivo já traz, e as respostas são as mesmas: pacientes, corteses, inúteis.\nEntão a figura para no meio da frase e olha para você. 'Você é quieto. Isso é bom. Os barulhentos nunca enxergam.'\nEle olha para Hamm por um longo tempo. Não termina a frase."
+      },
+      "goto": "turn"
+    },
+    "agitated": {
+      "title": { "en": "INTERVIEW", "pt": "ENTREVISTA" },
+      "text": {
+        "en": "'Kills.' The word sits on the table between you. 'Doctor, I have never killed anyone. I have cured. That you cannot tell the difference is not a fault of the cure.'\nThe long hands come apart. The guard shifts his weight. Hamm gives you a look that means: stop.\nYour mouth is dry. The figure turns its beak, slowly, from you to Hamm.",
+        "pt": "'Mata.' A palavra fica na mesa entre vocês. 'Doutor, eu nunca matei ninguém. Eu curei. Se você não vê a diferença, a culpa não é da cura.'\nAs mãos longas se separam. O guarda muda o peso do corpo. Hamm te lança um olhar que significa: pare.\nSua boca está seca. A figura vira o bico, devagar, de você para Hamm."
+      },
+      "mod": { "calm": -1 },
+      "goto": "turn"
+    },
+    "turn": {
+      "title": { "en": "THE TURN", "pt": "A VIRADA" },
+      "text": {
+        "en": "The figure stands. Not fast. It stands the way a man stands when he has finally made up his mind.\n'Doctor Hamm. I am sorry. I did not see it until now.' The voice is kind. That is the worst part. 'You are very sick. But it is not too late.'\nHamm laughs once, short. 'Sit down, 049.' He does not move back. He has done a hundred of these.\nThe hand is already across the table.",
+        "pt": "A figura se levanta. Não é rápido. Levanta como um homem que enfim se decidiu.\n'Doutor Hamm. Sinto muito. Eu não tinha visto até agora.' A voz é gentil. Essa é a pior parte. 'O senhor está muito doente. Mas ainda não é tarde.'\nHamm ri uma vez, curto. 'Sente-se, 049.' Ele não recua. Já fez uma centena dessas.\nA mão já está do outro lado da mesa."
+      },
+      "choices": [
+        { "label": { "en": "Yank Hamm back", "pt": "Puxar Hamm" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 8, "pass": "breach_start", "fail": "hamm_touched" } },
+        { "label": { "en": "Talk it down", "pt": "Acalmar com fala" }, "roll": { "dice": "1d6", "stat": "calm", "dc": 8, "pass": "talked_down", "fail": "hamm_touched" } },
+        { "label": { "en": "Freeze", "pt": "Congelar" }, "to": "hamm_touched" }
+      ]
+    },
+    "talked_down": {
+      "title": { "en": "THE TURN", "pt": "A VIRADA" },
+      "text": {
+        "en": "'Doctor.' You say it the way it says it. Level. Collegial. 'Not like this. Not in front of a student.'\nThe hand stops an inch from Hamm's wrist. The beak tilts toward you. A long breath behind the mask.\n'You are right. Forgive me. It is very hard to see it and do nothing.' It sits. It folds its hands. Hamm's face has gone the colour of the wall.\nIt remembers your voice now. You are not sure that is good.",
+        "pt": "'Doutor.' Você diz do jeito que ele diz. Firme. Entre colegas. 'Assim não. Não na frente de um aluno.'\nA mão para a um dedo do pulso de Hamm. O bico se inclina para você. Uma respiração longa atrás da máscara.\n'Tem razão. Perdoe-me. É muito difícil ver e não fazer nada.' Ele senta. Cruza as mãos. O rosto de Hamm ficou da cor da parede.\nAgora ele guarda a sua voz. Você não sabe se isso é bom."
+      },
+      "set": ["trusted"],
+      "goto": "breach_start"
+    },
+    "breach_start": {
+      "title": { "en": "BREACH", "pt": "CONTENÇÃO" },
+      "text": {
+        "en": "Hamm is on the floor behind you, alive, breathing too fast. The guard makes the mistake. He opens the door and comes in to end the session, rifle up, shouting, and he steps over the yellow line.\nThe figure turns to him with something like relief. 'Ah. You too.' One touch on the neck. The guard folds like a coat.\nThe alarm begins. The figure kneels, opens a black bag that should not hold that much, and starts to work.\n'Please stay,' it says, not looking up. 'You may learn something.'",
+        "pt": "Hamm está no chão atrás de você, vivo, respirando rápido demais. O guarda comete o erro. Abre a porta e entra para encerrar a sessão, fuzil erguido, gritando, e pisa além da linha amarela.\nA figura se vira para ele com algo parecido com alívio. 'Ah. Você também.' Um toque no pescoço. O guarda dobra como um casaco.\nO alarme começa. A figura se ajoelha, abre uma maleta preta que não deveria caber tanta coisa, e começa a trabalhar.\n'Fiquem, por favor', diz, sem levantar a cabeça. 'Podem aprender algo.'"
+      },
+      "set": ["hamm_alive"],
+      "choices": [
+        { "label": { "en": "Grab the recorder", "pt": "Pegar o gravador" }, "to": "corridor", "set": ["has_recording"] },
+        { "label": { "en": "Get Hamm out", "pt": "Tirar Hamm dali" }, "to": "corridor" }
+      ]
+    },
+    "hamm_touched": {
+      "title": { "en": "BREACH", "pt": "CONTENÇÃO" },
+      "text": {
+        "en": "The hand closes on Hamm's wrist. Hamm says 'Oh' in a small, surprised voice, and sits down on the floor, and does not get up.\nThe guard fires. The rounds do something to the robe and nothing to what is under it. The figure touches him too, almost gently, in passing.\nThe alarm begins. The figure kneels by Hamm and opens a black bag. 'I have him,' it says to you, reassuring. 'I have him now.'\nThe recorder is still running on the table. Between you and the beak.",
+        "pt": "A mão fecha no pulso de Hamm. Hamm diz 'Ah' numa voz pequena e surpresa, senta no chão, e não levanta mais.\nO guarda atira. As balas fazem algo ao manto e nada ao que há por baixo. A figura toca nele também, quase com delicadeza, de passagem.\nO alarme começa. A figura se ajoelha ao lado de Hamm e abre uma maleta preta. 'Eu o tenho', diz para você, tranquilizando. 'Agora eu o tenho.'\nO gravador ainda roda na mesa. Entre você e o bico."
+      },
+      "mod": { "calm": -1 },
+      "choices": [
+        { "label": { "en": "Grab the recorder", "pt": "Pegar o gravador" }, "set": ["has_recording"], "roll": { "dice": "1d6", "stat": "grit", "dc": 6, "pass": "corridor", "fail": "end_touched" } },
+        { "label": { "en": "Run", "pt": "Correr" }, "to": "corridor" }
+      ]
+    },
+    "corridor": {
+      "title": { "en": "CORRIDOR B", "pt": "CORREDOR B" },
+      "text": {
+        "en": "Red light. The cell block doors have sealed behind you and ahead of you. The corridor between is forty metres of grey and one thing that should not be walking.\nThe D-class from this morning's session. They gave the figure a body to study. It studied. Now the body stands under a strobe with its head at the wrong angle, and it turns toward the sound of your shoes.\nIt does not hurry. They never hurry.",
+        "pt": "Luz vermelha. As portas do bloco se fecharam atrás de você e à frente. O corredor entre elas são quarenta metros de cinza e uma coisa que não deveria estar andando.\nO Classe D da sessão da manhã. Deram um corpo para a figura estudar. Ela estudou. Agora o corpo está de pé sob uma luz piscante com a cabeça num ângulo errado, e se vira para o som dos seus sapatos.\nNão tem pressa. Eles nunca têm pressa."
+      },
+      "choices": [
+        { "label": { "en": "Slip past it", "pt": "Passar por ele" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 7, "pass": "checkpoint", "fail": "hurt" } },
+        { "label": { "en": "Hide in the office", "pt": "Esconder na sala" }, "to": "end_office" },
+        { "label": { "en": "Back to the doctor", "pt": "Voltar ao doutor" }, "to": "cell_door" }
+      ]
+    },
+    "hurt": {
+      "title": { "en": "CORRIDOR B", "pt": "CORREDOR B" },
+      "text": {
+        "en": "It is faster than it looks, or you are slower than you thought. A cold hand closes on your arm and the strobe shows you the face for one white frame: stitches, no eyes to speak of, a mouth working.\nYou tear free. Something tears with you. You are on the floor and it is bending down, patient, to try again.",
+        "pt": "É mais rápido do que parece, ou você é mais lento do que pensava. Uma mão fria fecha no seu braço e a luz piscante mostra o rosto por um quadro branco: pontos, olhos que nem se pode chamar assim, uma boca trabalhando.\nVocê se arranca. Algo rasga junto. Você está no chão e ele se abaixa, paciente, para tentar de novo."
+      },
+      "mod": { "grit": -1 },
+      "choices": [
+        { "label": { "en": "Get up, go again", "pt": "Levantar, de novo" }, "to": "corridor", "require": ["grit>0"] },
+        { "label": { "en": "Cannot get up", "pt": "Não consegue" }, "to": "end_operated", "require": ["grit<=0"] }
+      ]
+    },
+    "checkpoint": {
+      "title": { "en": "CHECKPOINT", "pt": "POSTO" },
+      "text": {
+        "en": "You are through. The thing behind you walks into a wall, turns, walks into it again.\nThe checkpoint door is steel and shut. The intercom above it crackles: 'Lockdown holds until the subject is back in its cell or the response team lands. Forty minutes. Stay where you are.'\nForty minutes. Behind you, the corridor. Behind the corridor, the doctor, working.\nThe door has a manual release behind a glass panel. The glass is thick.",
+        "pt": "Você passou. A coisa atrás de você anda contra uma parede, vira, anda contra ela de novo.\nA porta do posto é de aço e está fechada. O interfone acima chia: 'O bloqueio segue até o sujeito voltar para a cela ou a equipe de resposta chegar. Quarenta minutos. Fiquem onde estão.'\nQuarenta minutos. Atrás de você, o corredor. Atrás do corredor, o doutor, trabalhando.\nA porta tem um acionador manual atrás de um painel de vidro. O vidro é grosso."
+      },
+      "choices": [
+        { "label": { "en": "Break the panel", "pt": "Quebrar o painel" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 7, "pass": "outside", "fail": "forced_fail" } },
+        { "label": { "en": "Go back and talk", "pt": "Voltar e falar" }, "to": "cell_door" },
+        { "label": { "en": "Wait for the team", "pt": "Esperar a equipe" }, "to": "end_office" }
+      ]
+    },
+    "forced_fail": {
+      "title": { "en": "CHECKPOINT", "pt": "POSTO" },
+      "text": {
+        "en": "You hit the glass with the fire extinguisher until your hands sing. It stars. It does not break. Something in your wrist gives instead.\nDown the corridor, a second shape has joined the first. It wears a guard's uniform. It walks the same slow, wrong walk.",
+        "pt": "Você bate no vidro com o extintor até as mãos zumbirem. O vidro estrela. Não quebra. Algo no seu pulso cede no lugar.\nNo fim do corredor, uma segunda silhueta se juntou à primeira. Veste o uniforme de guarda. Anda o mesmo andar lento e errado."
+      },
+      "mod": { "grit": -1 },
+      "choices": [
+        { "label": { "en": "Hit it again", "pt": "Bater de novo" }, "to": "checkpoint", "require": ["grit>0"] },
+        { "label": { "en": "No strength left", "pt": "Sem forças" }, "to": "end_operated", "require": ["grit<=0"] }
+      ]
+    },
+    "outside": {
+      "title": { "en": "OUTSIDE", "pt": "LÁ FORA" },
+      "text": {
+        "en": "The panel gives. The release is a red handle and it is the best thing you have ever held. The steel door rolls up on white light and six rifles pointed at your chest.\n'Hands. Hands where I can see them.'\nYou show them your hands. You show them what is in your hands.",
+        "pt": "O painel cede. O acionador é uma alavanca vermelha e é a melhor coisa que você já segurou. A porta de aço sobe para uma luz branca e seis fuzis apontados para o seu peito.\n'Mãos. Mãos onde eu possa ver.'\nVocê mostra as mãos. Mostra o que há nelas."
+      },
+      "choices": [
+        { "label": { "en": "Hand over the tape", "pt": "Entregar a fita" }, "to": "end_recording", "require": ["has_recording"] },
+        { "label": { "en": "Nothing. Just hands", "pt": "Nada. Só as mãos" }, "to": "end_empty", "require": ["!has_recording"] }
+      ]
+    },
+    "cell_door": {
+      "title": { "en": "THE DOCTOR", "pt": "O DOUTOR" },
+      "text": {
+        "en": "You go back. Nobody in the history of the Site has gone back.\nThe figure is where you left it, on its knees in the interview room, sewing. It does not look up. 'I wondered if you would return. Most of you run. It is the Pestilence that makes you run, you understand. Not cowardice. I do not blame you.'\nIt ties off a thread with the care of a tailor. 'Have you come to help?'\nThe yellow line is between you. Two metres. Its arms are long.",
+        "pt": "Você volta. Ninguém na história do Sítio voltou.\nA figura está onde você a deixou, de joelhos na sala de entrevista, costurando. Não levanta a cabeça. 'Fiquei pensando se você voltaria. A maioria de vocês corre. É a Pestilência que faz correr, entenda. Não é covardia. Eu não culpo vocês.'\nEla dá o nó num fio com o cuidado de um alfaiate. 'Veio ajudar?'\nA linha amarela está entre vocês. Dois metros. Os braços dela são longos."
+      },
+      "choices": [
+        { "label": { "en": "Offer the lavender", "pt": "Oferecer a lavanda" }, "to": "lavender", "require": ["has_lavender"] },
+        { "label": { "en": "Let Hamm speak", "pt": "Deixar Hamm falar" }, "to": "hamm_speaks", "require": ["hamm_alive"] },
+        { "label": { "en": "Talk as a colleague", "pt": "Falar como colega" }, "to": "negotiate" },
+        { "label": { "en": "Order it back", "pt": "Mandar para a cela" }, "roll": { "dice": "1d6", "stat": "calm", "dc": 9, "pass": "negotiate", "fail": "end_touched" } }
+      ]
+    },
+    "lavender": {
+      "title": { "en": "LAVENDER", "pt": "LAVANDA" },
+      "text": {
+        "en": "You hold out the sachet at arm's length, over the line. The beak lifts. It breathes in, a long, shuddering breath, like a man coming up from cold water.\n'Montauban,' it says, very quietly. 'There was a field behind the church.' The needle stops. The hands settle.\nFor a moment it is only tired. For a moment you could almost believe it is a doctor.",
+        "pt": "Você estende o saquinho com o braço todo, por cima da linha. O bico sobe. Ele inspira, uma respiração longa e trêmula, como um homem saindo de água gelada.\n'Montauban', diz, bem baixo. 'Havia um campo atrás da igreja.' A agulha para. As mãos se aquietam.\nPor um instante ele é só cansaço. Por um instante você quase acredita que é um médico."
+      },
+      "mod": { "calm": 1 },
+      "goto": "negotiate"
+    },
+    "hamm_speaks": {
+      "title": { "en": "THE INTERCOM", "pt": "O INTERFONE" },
+      "text": {
+        "en": "Hamm's voice comes through the wall speaker, cracked and steady. 'Doctor. It's Hamm. You spared me. You were right to.'\nThe needle stops. 'Doctor Hamm.' There is real feeling in it. 'I have thought about your case. I was hasty. I would like to examine you again, properly, when there is time.'\n'When there is time,' Hamm agrees. 'Listen to my colleague. Please.'\nThe beak turns to you.",
+        "pt": "A voz de Hamm sai pelo alto-falante da parede, rachada e firme. 'Doutor. É o Hamm. O senhor me poupou. Fez bem.'\nA agulha para. 'Doutor Hamm.' Há sentimento de verdade ali. 'Pensei no seu caso. Fui precipitado. Gostaria de examiná-lo de novo, com calma, quando houver tempo.'\n'Quando houver tempo', concorda Hamm. 'Escute meu colega. Por favor.'\nO bico se vira para você."
+      },
+      "mod": { "calm": 1 },
+      "goto": "negotiate"
+    },
+    "negotiate": {
+      "title": { "en": "THE DOCTOR", "pt": "O DOUTOR" },
+      "text": {
+        "en": "You talk. You do not argue about the cure. You argue about the clinic.\nThe room is bad light, bad tools, soldiers coming with fire. A doctor does not operate in a burning house. Its cell is quiet. Its bag will not be taken. The work can wait an hour.\nIt listens with its whole body, the way it listened to Hamm. The needle is still in its hand.\n'You speak,' it says, 'like one who has seen a great deal of sickness.'",
+        "pt": "Você fala. Não discute a cura. Discute a clínica.\nA sala é luz ruim, ferramentas ruins, soldados chegando com fogo. Um médico não opera numa casa em chamas. A cela dele é silenciosa. A maleta não será tomada. O trabalho pode esperar uma hora.\nEle escuta com o corpo inteiro, como escutou Hamm. A agulha ainda está na mão.\n'Você fala', diz ele, 'como quem já viu muita doença.'"
+      },
+      "choices": [
+        { "label": { "en": "Keep talking, even", "pt": "Manter a voz firme" }, "require": ["trusted"], "roll": { "dice": "1d6", "stat": "calm", "dc": 7, "pass": "end_cell", "fail": "resist" } },
+        { "label": { "en": "Keep talking, even", "pt": "Manter a voz firme" }, "require": ["!trusted"], "roll": { "dice": "1d6", "stat": "calm", "dc": 9, "pass": "end_cell", "fail": "resist" } },
+        { "label": { "en": "Back off, run", "pt": "Recuar, correr" }, "to": "corridor" }
+      ]
+    },
+    "resist": {
+      "title": { "en": "THE DOCTOR", "pt": "O DOUTOR" },
+      "text": {
+        "en": "Your voice catches. Only once. It hears it.\nThe figure rises and takes one step, and the yellow line is under its robe now. 'Forgive me. I should have looked at you sooner.' The beak comes close enough that you can hear the breath inside it. 'There. In the eyes. Do you not feel it?'\nYou feel your pulse in your teeth. The hands are at its sides, for now.",
+        "pt": "Sua voz falha. Só uma vez. Ele ouve.\nA figura se ergue e dá um passo, e a linha amarela agora está sob o manto. 'Perdoe-me. Eu devia ter olhado para você antes.' O bico chega perto o bastante para você ouvir a respiração dentro dele. 'Ali. Nos olhos. Você não sente?'\nVocê sente o pulso nos dentes. As mãos estão ao lado do corpo, por enquanto."
+      },
+      "mod": { "calm": -1 },
+      "choices": [
+        { "label": { "en": "Keep talking", "pt": "Continuar falando" }, "to": "negotiate", "require": ["calm>0"] },
+        { "label": { "en": "Run for the door", "pt": "Correr para a porta" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 6, "pass": "corridor", "fail": "end_touched" } },
+        { "label": { "en": "No words left", "pt": "Sem palavras" }, "to": "end_touched", "require": ["calm<=0"] }
+      ]
+    },
+    "end_cell": {
+      "title": { "en": "THE CELL", "pt": "A CELA" },
+      "text": {
+        "en": "'Very well.' It closes the bag. It stands, and bows to the room, and to the bodies, and to you.\nIt walks itself down the corridor to its cell. The 049-2 instances stand aside for it like patients for a ward doctor. At the door it stops. 'Thank you for your counsel, colleague. We will speak again. I will look at you then.'\nThe cell locks. The alarm stops. You sit down on the floor of Corridor B and do not get up for a while.\nThe report calls it 'de-escalation through dialogue'. You call it nothing. You do not go back to the interviews.",
+        "pt": "'Muito bem.' Ele fecha a maleta. Levanta, faz uma reverência para a sala, para os corpos, e para você.\nVai sozinho pelo corredor até a cela. Os 049-2 abrem caminho como pacientes para o médico da ala. Na porta, ele para. 'Obrigado pelo conselho, colega. Voltaremos a conversar. Nessa hora eu vou examinar você.'\nA cela tranca. O alarme para. Você senta no chão do Corredor B e demora para levantar.\nO relatório chama isso de 'desescalada por diálogo'. Você não chama de nada. Você não volta para as entrevistas."
+      },
+      "ending": "good"
+    },
+    "end_recording": {
+      "title": { "en": "THE TAPE", "pt": "A FITA" },
+      "text": {
+        "en": "The recorder has run the whole time. Every word: the courtesy, the diagnosis, the 'I have him now', the sound of a black bag opening.\nThe response team goes in at minute forty with gas and lavender and comes out with the doctor sedated between them, bowing even asleep.\nThey play the tape in a room with no windows. Someone says 'It doesn't know.' Someone else says 'It knows exactly.' Nobody agrees, and that is the whole file.\nYou keep your post. You keep your hands to yourself.",
+        "pt": "O gravador rodou o tempo todo. Cada palavra: a cortesia, o diagnóstico, o 'agora eu o tenho', o som de uma maleta preta abrindo.\nA equipe de resposta entra no minuto quarenta com gás e lavanda e sai com o doutor sedado entre eles, fazendo reverência até dormindo.\nTocam a fita numa sala sem janelas. Alguém diz 'Ele não sabe.' Outro diz 'Ele sabe exatamente.' Ninguém concorda, e o arquivo é isso.\nVocê fica no posto. E fica com as mãos para si."
+      },
+      "ending": "good"
+    },
+    "end_empty": {
+      "title": { "en": "DEBRIEF", "pt": "RELATÓRIO" },
+      "text": {
+        "en": "You are alive, and you have nothing. The recorder stayed on the table, and the table is in a room nobody will enter until the gas has done its work.\nThe response team brings the doctor back an hour later. It asks after you by name. They do not tell you that until much later.\nThe file gets one line from you: 'Subject was courteous throughout.' It is true. It is the only true thing anyone has written about it.",
+        "pt": "Você está vivo, e não tem nada. O gravador ficou na mesa, e a mesa está numa sala onde ninguém entra até o gás fazer efeito.\nA equipe de resposta traz o doutor de volta uma hora depois. Ele pergunta por você pelo nome. Só contam isso para você muito depois.\nO arquivo ganha uma linha sua: 'O sujeito foi cortês o tempo todo.' É verdade. É a única coisa verdadeira que alguém já escreveu sobre ele."
+      },
+      "ending": "neutral"
+    },
+    "end_office": {
+      "title": { "en": "THE OFFICE", "pt": "A SALA" },
+      "text": {
+        "en": "You lock yourself in the observation office and turn off the light. Through the wall you hear the slow feet in the corridor, and beyond them, very faintly, a voice humming while it works.\nAt minute forty the shooting starts. It does not last long. When they open the door you have chewed your thumbnail to the blood.\nHamm's chair is empty at the next briefing. Nobody says why. The interviews are suspended indefinitely. You are grateful, and ashamed of being grateful, and both feelings stay.",
+        "pt": "Você se tranca na sala de observação e apaga a luz. Pela parede ouve os pés lentos no corredor, e além deles, bem fraco, uma voz cantarolando enquanto trabalha.\nNo minuto quarenta começam os tiros. Não duram muito. Quando abrem a porta, você roeu a unha do polegar até o sangue.\nA cadeira de Hamm está vazia no briefing seguinte. Ninguém diz por quê. As entrevistas são suspensas por tempo indeterminado. Você fica grato, e com vergonha de estar grato, e as duas coisas ficam."
+      },
+      "ending": "neutral"
+    },
+    "end_touched": {
+      "title": { "en": "THE TOUCH", "pt": "O TOQUE" },
+      "text": {
+        "en": "The hand is cool and dry and very light on your cheek, like a parent checking for fever.\n'There,' it says. 'It is done. You were braver than the others.'\nThere is no pain. There is a great deal of quiet, and then the quiet is you.\nSomewhere above the quiet, a needle begins to move.",
+        "pt": "A mão é fria, seca e muito leve no seu rosto, como um pai vendo se há febre.\n'Pronto', diz ele. 'Está feito. Você foi mais corajoso que os outros.'\nNão há dor. Há muito silêncio, e depois o silêncio é você.\nEm algum lugar acima do silêncio, uma agulha começa a se mover."
+      },
+      "ending": "bad"
+    },
+    "end_operated": {
+      "title": { "en": "THE WORK", "pt": "O TRABALHO" },
+      "text": {
+        "en": "You are on the floor and cannot get up, and the slow feet find you, and then the other feet, the unhurried ones.\nThe figure kneels. It moves the instance aside like a curtain. 'Gently. Gently. This one is a colleague.'\nIt opens the bag. It explains every step as it goes, courteous to the last, because a good doctor always tells the patient what comes next.\nYou would give anything for it to stop talking. It does not. You do.",
+        "pt": "Você está no chão e não consegue levantar, e os pés lentos te encontram, e depois os outros pés, os que não têm pressa.\nA figura se ajoelha. Afasta o 049-2 como uma cortina. 'Devagar. Devagar. Este é um colega.'\nEla abre a maleta. Explica cada passo enquanto avança, cortês até o fim, porque um bom médico sempre diz ao paciente o que vem a seguir.\nVocê daria tudo para ela parar de falar. Ela não para. Você para."
+      },
+      "ending": "bad"
+    }
+  }
+}

@@ -1,0 +1,322 @@
+{
+  "meta": {
+    "title": { "en": "3008: Closing", "pt": "3008: Fechando" },
+    "author": "Marcelo Souza / Kumodot.art (adaptation)",
+    "version": 1,
+    "tier": 3,
+    "category": "SCP",
+    "start": "entry",
+    "blurb": {
+      "en": "A furniture store with no far wall. When the lights go out, the Staff ask you to leave. Foundation Files, no. 8.",
+      "pt": "Uma loja de móveis sem parede do fundo. Quando as luzes apagam, os Funcionários pedem que você saia. Arquivos da Fundação, n. 8."
+    },
+    "langs": ["en", "pt"],
+    "license": "CC BY-SA 3.0",
+    "based_on": "SCP-3008 by Mortos, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-3008 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+    "series": "Foundation Files",
+    "stats": { "food": 5, "grit": 4, "luck": 3 }
+  },
+  "flags": ["has_rangefinder", "saw_smoke", "has_shelter", "has_map", "exit_clue", "told_truth"],
+  "nodes": {
+    "entry": {
+      "title": { "en": "THE CUSTOMER", "pt": "O CLIENTE" },
+      "text": {
+        "en": "You are Agent Vail. Your cover is a shopping list with one item on it: a lamp.\nThe store looks like any furniture warehouse in any retail park. The Foundation owns the parking lot, the road and the two cafes across it. Nobody owns what is behind the entrance.\n'Walk in. Keep the entrance in sight as long as you can. Find the people who live in there. Come back.'\nThe handler offers you a case. Inside: a laser rangefinder, or a week of ration bars. The case only holds one.",
+        "pt": "Você é a Agente Vail. Seu disfarce é uma lista de compras com um item só: uma luminária.\nA loja parece qualquer depósito de móveis de qualquer centro comercial. A Fundação é dona do estacionamento, da rua e dos dois cafés do outro lado. Ninguém é dono do que está atrás da entrada.\n'Entre. Mantenha a entrada à vista o quanto puder. Encontre as pessoas que moram lá dentro. Volte.'\nO supervisor oferece uma maleta. Dentro: um telêmetro a laser, ou uma semana de barras de ração. Só cabe um."
+      },
+      "choices": [
+        { "label": { "en": "Take rangefinder", "pt": "Pegar o telêmetro" }, "to": "lost", "set": ["has_rangefinder"] },
+        { "label": { "en": "Take the rations", "pt": "Pegar as rações" }, "to": "lost", "mod": { "food": 2 } }
+      ]
+    },
+    "lost": {
+      "title": { "en": "LAMPS", "pt": "LUMINÁRIAS" },
+      "text": {
+        "en": "The lamp aisle is where it happens. You bend to read a price tag, you straighten up, and the entrance is not behind you anymore. There is only more aisle, and past it more aisle, and the ceiling lights running away in straight lines until they blur.\nThe radio gives you nothing. The rangefinder, if you have it, gives you a number too large to be a wall.\nA Staff member passes the end of the aisle. Tall, too tall, yellow polo, no face. It pushes a trolley and does not look at you, because it has nothing to look with.",
+        "pt": "É no corredor das luminárias que acontece. Você se abaixa para ler uma etiqueta, se levanta, e a entrada não está mais atrás de você. Só há mais corredor, e depois dele mais corredor, e as luzes do teto fugindo em linhas retas até borrar.\nO rádio não dá nada. O telêmetro, se você o tem, dá um número grande demais para ser parede.\nUm Funcionário passa no fim do corredor. Alto, alto demais, polo amarela, sem rosto. Empurra um carrinho e não olha para você, porque não tem com que olhar."
+      },
+      "choices": [
+        { "label": { "en": "Climb a shelf", "pt": "Subir na estante" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 7, "pass": "overview", "fail": "fall" } },
+        { "label": { "en": "Pick a direction", "pt": "Escolher um rumo" }, "roll": { "dice": "1d6", "stat": "luck", "dc": 6, "pass": "overview", "fail": "aisles" } }
+      ]
+    },
+    "overview": {
+      "title": { "en": "THE VIEW", "pt": "A VISTA" },
+      "text": {
+        "en": "From the top of a wardrobe display you see the store the way a bird would see a city. Aisles to every horizon. Islands of showroom kitchens. Somewhere very far off, a thin line of smoke rising from a square of stacked bookcases, and under it, small, moving, people.\nYou memorize the direction the way you memorize a face at a funeral.",
+        "pt": "Do alto de um mostruário de guarda-roupas você vê a loja como um pássaro veria uma cidade. Corredores até todo horizonte. Ilhas de cozinhas de exposição. Em algum lugar muito longe, uma linha fina de fumaça subindo de um quadrado de estantes empilhadas, e embaixo dela, pequenas, se movendo, pessoas.\nVocê decora a direção do jeito que se decora um rosto num velório."
+      },
+      "set": ["saw_smoke"],
+      "goto": "day1"
+    },
+    "fall": {
+      "title": { "en": "THE FALL", "pt": "A QUEDA" },
+      "text": {
+        "en": "The shelf is flat pack and so is your landing. You lie on the floor and count what still bends. Everything, but one shoulder counts slower than the rest.\nAbove you the lights hum. A Staff member steps around you the way you would step around a spill.",
+        "pt": "A estante é de montar e a sua aterrissagem também. Você fica no chão contando o que ainda dobra. Tudo, mas um ombro conta mais devagar que o resto.\nAcima, as luzes zumbem. Um Funcionário contorna você do jeito que você contornaria algo derramado."
+      },
+      "mod": { "grit": -1 },
+      "goto": "aisles"
+    },
+    "aisles": {
+      "title": { "en": "AISLES", "pt": "CORREDORES" },
+      "text": {
+        "en": "You walk. Sofas, then beds, then sofas again. The same rug, the same sign, a different price. After three hours your feet tell you what your watch will not: it is late.\nYou find a kitchen display with a working tap and drink from it like an animal. You eat one bar. You do not find the entrance, and you stop pretending you are looking for it.",
+        "pt": "Você anda. Sofás, depois camas, depois sofás de novo. O mesmo tapete, a mesma placa, um preço diferente. Depois de três horas seus pés dizem o que o relógio não diz: está tarde.\nVocê acha uma cozinha de exposição com uma torneira que funciona e bebe como um bicho. Come uma barra. Não acha a entrada, e para de fingir que está procurando."
+      },
+      "mod": { "food": -1 },
+      "goto": "day1"
+    },
+    "day1": {
+      "title": { "en": "DAY ONE", "pt": "DIA UM" },
+      "text": {
+        "en": "There is no window, so there is no sunset. There is a sign over a checkout that says CLOSING SOON and did not say it before.\nThe Staff are gathering at the ends of the aisles. They stand still. They stand the way furniture stands.\nYou eat. You have maybe an hour. Wardrobes, mattresses, a roll of packing tape: you could make something with walls. Or you could keep moving and hope the dark is only dark.",
+        "pt": "Não há janela, então não há pôr do sol. Há uma placa acima de um caixa que diz FECHANDO EM BREVE e antes não dizia.\nOs Funcionários estão se juntando nas pontas dos corredores. Ficam parados. Ficam parados como móveis ficam.\nVocê come. Tem talvez uma hora. Guarda-roupas, colchões, um rolo de fita de embalar: dá para fazer algo com paredes. Ou pode continuar andando e torcer para o escuro ser só escuro."
+      },
+      "mod": { "food": -1 },
+      "choices": [
+        { "label": { "en": "Build a shelter", "pt": "Montar um abrigo" }, "to": "night1", "set": ["has_shelter"] },
+        { "label": { "en": "Walk to the smoke", "pt": "Ir para a fumaça" }, "to": "settlement_road", "require": ["saw_smoke"] },
+        { "label": { "en": "Keep moving", "pt": "Continuar andando" }, "to": "night1" }
+      ]
+    },
+    "night1": {
+      "title": { "en": "CLOSING", "pt": "FECHANDO" },
+      "text": {
+        "en": "The lights go out all at once, kilometers of them, with a sound like a breath held.\nThen the voices. Flat, polite, from every direction and from very close: 'The store is now closed. Please exit the building.'\nFootsteps. Not running. They do not need to run. Something long and pale drags its hand along the shelf beside you, and the hand does not stop where a hand should end.",
+        "pt": "As luzes apagam todas de uma vez, quilômetros delas, com um som de respiração presa.\nDepois as vozes. Planas, educadas, de todas as direções e de muito perto: 'A loja está fechada. Por favor, saiam do prédio.'\nPassos. Não correm. Não precisam correr. Algo comprido e pálido arrasta a mão pela prateleira ao seu lado, e a mão não termina onde uma mão deveria terminar."
+      },
+      "choices": [
+        { "label": { "en": "Hide in shelter", "pt": "Ficar no abrigo" }, "require": ["has_shelter"], "roll": { "dice": "1d6", "stat": "luck", "dc": 5, "pass": "morning1", "fail": "raid" } },
+        { "label": { "en": "Run in the dark", "pt": "Correr no escuro" }, "roll": { "dice": "1d6", "stat": "luck", "dc": 7, "pass": "morning1", "fail": "raid" } },
+        { "label": { "en": "Stand and fight", "pt": "Ficar e lutar" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 8, "pass": "morning1", "fail": "raid" } }
+      ]
+    },
+    "raid": {
+      "title": { "en": "THE STAFF", "pt": "FUNCIONÁRIOS" },
+      "text": {
+        "en": "It finds you. A hand like a rolled towel closes on your arm and pulls, not hard, the way you pull a drawer that sticks. The voice comes from where a mouth is not: 'Please exit the building.'\nYou hit it. It is skin all the way through. It does not bleed and it does not let go until you make it, and making it costs you.\nYou are on the floor between two mattresses, and the footsteps are still out there, patient, closing.",
+        "pt": "Ele te acha. Uma mão como toalha enrolada fecha no seu braço e puxa, sem força, do jeito que se puxa uma gaveta emperrada. A voz vem de onde não há boca: 'Por favor, saia do prédio.'\nVocê bate nele. É pele até o fundo. Não sangra e não solta até você obrigar, e obrigar custa.\nVocê está no chão entre dois colchões, e os passos continuam lá fora, pacientes, fechando."
+      },
+      "mod": { "grit": -1 },
+      "choices": [
+        { "label": { "en": "Hold on till dawn", "pt": "Aguentar até o dia" }, "require": ["grit>0"], "roll": { "dice": "1d6", "stat": "grit", "dc": 5, "pass": "morning1", "fail": "raid" } },
+        { "label": { "en": "Cannot get up", "pt": "Não consegue subir" }, "require": ["grit<=0"], "to": "end_taken" }
+      ]
+    },
+    "morning1": {
+      "title": { "en": "OPENING", "pt": "ABRINDO" },
+      "text": {
+        "en": "The lights come back the way they went: all at once. The voices stop mid word.\nThe Staff are at the ends of the aisles again, pushing trolleys, restocking shelves that were full. One of them straightens a rug you slept on. It steps over you to do it.\nYou are alive. You are hungry. The lamp aisle is nowhere, but a Staff member is walking away in a straight line, and nothing in here walks in straight lines.",
+        "pt": "As luzes voltam do jeito que foram: todas de uma vez. As vozes param no meio da palavra.\nOs Funcionários estão nas pontas dos corredores de novo, empurrando carrinhos, repondo prateleiras que estavam cheias. Um deles alinha um tapete em que você dormiu. Passa por cima de você para fazer isso.\nVocê está viva. Está com fome. O corredor das luminárias não está em lugar nenhum, mas um Funcionário caminha em linha reta, e nada aqui anda em linha reta."
+      },
+      "mod": { "food": -1 },
+      "choices": [
+        { "label": { "en": "Follow the Staff", "pt": "Seguir o carrinho" }, "to": "staff_follow" },
+        { "label": { "en": "Head for the smoke", "pt": "Rumo à fumaça" }, "to": "settlement_road", "require": ["saw_smoke"] },
+        { "label": { "en": "Wander", "pt": "Vagar" }, "to": "wander" }
+      ]
+    },
+    "wander": {
+      "title": { "en": "DAYS", "pt": "DIAS" },
+      "text": {
+        "en": "Two days. Three. You learn things. The taps work. The hot dogs in the cafe display are real and they are always the same number, no matter how many you take. Then one day they are not there, and the shelf is not there, and you walk a long way on nothing.\nYou learn to close the wardrobe doors at night and breathe through your sleeve.\nOn the fourth day you find arrows drawn on the floor in marker. Someone was here. Someone was going somewhere.",
+        "pt": "Dois dias. Três. Você aprende coisas. As torneiras funcionam. Os cachorros-quentes da vitrine do café são de verdade e são sempre o mesmo número, não importa quantos você pegue. Aí um dia não estão lá, nem a prateleira, e você anda muito sem nada.\nAprende a fechar as portas do guarda-roupa à noite e respirar pela manga.\nNo quarto dia acha setas desenhadas no chão com caneta. Alguém esteve aqui. Alguém estava indo para algum lugar."
+      },
+      "mod": { "food": -2 },
+      "roll": { "dice": "1d6", "stat": "luck", "dc": 5, "pass": "settlement_road", "fail": "hungry" }
+    },
+    "hungry": {
+      "title": { "en": "EMPTY", "pt": "VAZIO" },
+      "text": {
+        "en": "The arrows stop at a wall of flat pack boxes and do not continue on the other side. You sit down.\nYou count your food. You count it again, in case the store restocked your pockets. It did not.\nThe lights are going to go out soon. They always do. You have to decide what you have left to spend.",
+        "pt": "As setas param numa parede de caixas de montar e não continuam do outro lado. Você senta.\nConta a comida. Conta de novo, caso a loja tenha reposto seus bolsos. Não repôs.\nAs luzes vão apagar logo. Sempre apagam. Você tem que decidir o que ainda tem para gastar."
+      },
+      "choices": [
+        { "label": { "en": "Get up, go on", "pt": "Levantar, seguir" }, "require": ["food>0"], "to": "settlement_road" },
+        { "label": { "en": "Nothing left", "pt": "Não sobrou nada" }, "require": ["food<=0"], "to": "end_starve" }
+      ]
+    },
+    "staff_follow": {
+      "title": { "en": "THE TROLLEY", "pt": "O CARRINHO" },
+      "text": {
+        "en": "You follow at a distance. It walks for an hour without turning. Its trolley is empty and then, between one aisle and the next, it is full: bread, jars, bottled water. It stacks them on a shelf that was already stacked.\nYou take what you can carry while its back is turned. It has no back, exactly. It has a side that is not facing you.\nThen it stops. It turns. The blank of its face points at you like a plate.",
+        "pt": "Você segue de longe. Ele anda uma hora sem virar. O carrinho está vazio e depois, entre um corredor e o próximo, está cheio: pão, potes, água em garrafa. Ele empilha tudo numa prateleira que já estava cheia.\nVocê pega o que dá para carregar enquanto ele está de costas. Ele não tem costas, exatamente. Tem um lado que não está virado para você.\nAí ele para. Vira. O vazio do rosto aponta para você como um prato."
+      },
+      "mod": { "food": 2 },
+      "choices": [
+        { "label": { "en": "Ask for the exit", "pt": "Perguntar a saída" }, "to": "staff_question" },
+        { "label": { "en": "Back away slowly", "pt": "Recuar devagar" }, "to": "settlement_road" }
+      ]
+    },
+    "staff_question": {
+      "title": { "en": "THE QUESTION", "pt": "A PERGUNTA" },
+      "text": {
+        "en": "'Where is the exit?'\nIt tilts its head. The lights hum. For a long moment you think it will answer in that flat voice, and you are not sure you want it to.\nInstead it raises one arm and points. Down the aisle, past where the aisle ends, at nothing. Then it goes back to stacking bread.\nYou look where it pointed. There is a light there that is a different color from the others. Or there is not, and you need there to be.",
+        "pt": "'Onde é a saída?'\nEle inclina a cabeça. As luzes zumbem. Por um longo momento você acha que vai responder naquela voz plana, e não tem certeza se quer isso.\nEm vez disso ele levanta um braço e aponta. Corredor abaixo, além de onde o corredor acaba, para nada. Depois volta a empilhar pão.\nVocê olha para onde ele apontou. Há uma luz ali de cor diferente das outras. Ou não há, e você precisa que haja."
+      },
+      "roll": { "dice": "1d6", "stat": "luck", "dc": 6, "pass": "exit_clue", "fail": "night1" }
+    },
+    "exit_clue": {
+      "title": { "en": "THE CLUE", "pt": "A PISTA" },
+      "text": {
+        "en": "You walk toward the different light with your eyes on it and nothing else, and it stays. It does not get closer, but it stays. That is more than the entrance ever did.\nYou write the direction on your arm in marker. Then the arrows on the floor cross your path, fresh ones, and the smell of cooking comes down the aisle.",
+        "pt": "Você anda em direção à luz diferente com os olhos nela e em mais nada, e ela fica. Não chega mais perto, mas fica. Isso é mais do que a entrada jamais fez.\nVocê escreve a direção no braço com caneta. Aí as setas do chão cruzam o seu caminho, setas novas, e o cheiro de comida desce pelo corredor."
+      },
+      "set": ["exit_clue"],
+      "goto": "settlement_road"
+    },
+    "settlement_road": {
+      "title": { "en": "THE ROAD", "pt": "A ESTRADA" },
+      "text": {
+        "en": "The arrows are on the floor every twenty meters now, and beside them, in careful capitals: EXCHANGE AND RETURNS, 2 DAYS. KEEP WALKING. DO NOT STOP AT NIGHT.\nYou walk two days. You eat little. The nights you spend inside wardrobes pushed against each other, listening to the polite voices ask you to leave.\nOn the second evening the aisle opens onto a plaza of stacked bookcases three high, with a gate of bed frames, and behind it, a bell.",
+        "pt": "As setas estão no chão a cada vinte metros agora, e ao lado delas, em maiúsculas caprichadas: TROCAS E DEVOLUÇÕES, 2 DIAS. CONTINUE ANDANDO. NÃO PARE À NOITE.\nVocê anda dois dias. Come pouco. As noites passa dentro de guarda-roupas encostados uns nos outros, ouvindo as vozes educadas pedirem que saia.\nNa segunda tarde o corredor abre numa praça de estantes empilhadas em três, com um portão de armações de cama, e atrás dele, um sino."
+      },
+      "mod": { "food": -1 },
+      "goto": "settlement"
+    },
+    "settlement": {
+      "title": { "en": "RETURNS", "pt": "DEVOLUÇÕES" },
+      "text": {
+        "en": "Forty people. Maybe fifty. A woman called Ilse runs the gate and hands you soup before she asks your name. The bowls are from aisle nine, everything is from some aisle.\nThey have rules painted on a headboard. WALLS UP BY DUSK. NO ONE ALONE. STAFF ARE NOT PEOPLE. Someone has added, in smaller letters: NEITHER ARE WE, SOME DAYS.\n'You came from the front,' Ilse says. It is not a question. 'How long ago?'\nYou could tell her who sent you. Or you could pick up a hammer.",
+        "pt": "Quarenta pessoas. Talvez cinquenta. Uma mulher chamada Ilse cuida do portão e te dá sopa antes de perguntar seu nome. As tigelas são do corredor nove, tudo é de algum corredor.\nTêm regras pintadas numa cabeceira. PAREDES DE PÉ ATÉ O ANOITECER. NINGUÉM SOZINHO. FUNCIONÁRIOS NÃO SÃO GENTE. Alguém acrescentou, em letras menores: NEM NÓS, EM ALGUNS DIAS.\n'Você veio da frente', diz Ilse. Não é pergunta. 'Faz quanto tempo?'\nVocê pode contar quem te mandou. Ou pegar um martelo."
+      },
+      "mod": { "food": 2 },
+      "choices": [
+        { "label": { "en": "Tell the truth", "pt": "Contar a verdade" }, "to": "truth", "set": ["told_truth"] },
+        { "label": { "en": "Pick up a hammer", "pt": "Pegar o martelo" }, "to": "work" }
+      ]
+    },
+    "truth": {
+      "title": { "en": "THE TRUTH", "pt": "A VERDADE" },
+      "text": {
+        "en": "'Foundation,' Ilse says, and the word goes around the fire like a cold draft. Two of them were here before the Foundation bought the parking lot. One of them got out once. He was detained, questioned, and woke up the next week with no memory and a coupon.\n'He came back in for a lamp,' Ilse says. 'He does not remember why.'\nShe gives you a folded sheet anyway. A map, in pencil, of every place someone has seen the entrance and lived. The marks make a line.",
+        "pt": "'Fundação', diz Ilse, e a palavra corre a fogueira como um vento frio. Dois deles estavam aqui antes de a Fundação comprar o estacionamento. Um deles saiu uma vez. Foi detido, interrogado, e acordou na semana seguinte sem memória e com um cupom.\n'Ele voltou por uma luminária', diz Ilse. 'Não lembra por quê.'\nMesmo assim ela te dá uma folha dobrada. Um mapa, a lápis, de todo lugar onde alguém viu a entrada e sobreviveu. As marcas formam uma linha."
+      },
+      "set": ["has_map"],
+      "goto": "settle_hub"
+    },
+    "work": {
+      "title": { "en": "WALLS", "pt": "PAREDES" },
+      "text": {
+        "en": "You build. Bookcases screwed back to back, mattresses on top for a roof, bed slats sharpened where the Staff put their hands at night. You learn that they hate the tape measure. Nobody knows why. Ilse thinks it is the sound.\nAt night you stand a watch with a man who has been here two years. When the voices start he says, 'The store is now closed,' along with them, softly, so they are not the only ones saying it.\nYour hands get harder. So does the rest of you.",
+        "pt": "Você constrói. Estantes parafusadas costas com costas, colchões em cima como teto, ripas de cama afiadas onde os Funcionários põem as mãos à noite. Aprende que eles odeiam a trena. Ninguém sabe por quê. Ilse acha que é o som.\nÀ noite você faz vigia com um homem que está aqui há dois anos. Quando as vozes começam ele diz 'A loja está fechada' junto com elas, baixinho, para não serem só elas dizendo.\nSuas mãos ficam mais duras. O resto de você também."
+      },
+      "mod": { "grit": 1 },
+      "goto": "settle_hub"
+    },
+    "settle_hub": {
+      "title": { "en": "DAY NINE", "pt": "DIA NOVE" },
+      "text": {
+        "en": "Nine days. The soup is the same every night and you have stopped minding. Ilse says people who stay past two weeks mostly stay.\nThere is a party leaving at first light to try for the front. Three of them, with tape measures and a week of bread. They will take you if you want.\nOr you could stay. Or you could do what the handler wanted, and go further in, where the settlements have not, and count what is there.",
+        "pt": "Nove dias. A sopa é a mesma toda noite e você parou de se importar. Ilse diz que quem fica mais de duas semanas em geral fica.\nUm grupo sai ao primeiro clarão para tentar a frente. Três pessoas, com trenas e uma semana de pão. Levam você se quiser.\nOu você pode ficar. Ou pode fazer o que o supervisor queria, e ir mais fundo, onde os assentamentos não foram, e contar o que há lá."
+      },
+      "choices": [
+        { "label": { "en": "Go with the party", "pt": "Ir com o grupo" }, "to": "expedition", "require": ["has_map"] },
+        { "label": { "en": "Go with the party", "pt": "Ir com o grupo" }, "to": "expedition", "require": ["!has_map", "exit_clue"] },
+        { "label": { "en": "Go with the party", "pt": "Ir com o grupo" }, "roll": { "dice": "1d6", "stat": "luck", "dc": 6, "pass": "expedition", "fail": "wander_deep" }, "require": ["!has_map", "!exit_clue"] },
+        { "label": { "en": "Map the deep store", "pt": "Mapear o fundo" }, "to": "end_found", "require": ["has_rangefinder"] },
+        { "label": { "en": "Go deeper alone", "pt": "Ir fundo sozinha" }, "to": "wander_deep", "require": ["!has_rangefinder"] },
+        { "label": { "en": "Stay", "pt": "Ficar" }, "to": "end_stay" }
+      ]
+    },
+    "expedition": {
+      "title": { "en": "THE PARTY", "pt": "O GRUPO" },
+      "text": {
+        "en": "Four of you walk in a line, tape measures clicking. The store gets stranger toward the front, not less strange: a bathroom display with water running uphill, a mirror that is a second late.\nOn the second night the walls are not up in time. The voices come from inside the aisle you are in.\n'The store is now closed.'",
+        "pt": "Vocês quatro andam em fila, trenas clicando. A loja fica mais estranha perto da frente, não menos: um banheiro de exposição com água subindo, um espelho um segundo atrasado.\nNa segunda noite as paredes não ficam de pé a tempo. As vozes vêm de dentro do corredor onde vocês estão.\n'A loja está fechada.'"
+      },
+      "roll": { "dice": "1d6", "stat": "luck", "dc": 5, "pass": "exit_sight", "fail": "night_road" }
+    },
+    "night_road": {
+      "title": { "en": "ON THE ROAD", "pt": "NA ESTRADA" },
+      "text": {
+        "en": "They take one of the three. Not fast. He is asking them to stop, and they are asking him to exit the building, and both of you know neither request will be honored.\nA hand finds your ankle. You kick until it is not a hand anymore, and something in you goes with it.\nThe other two are gone into the dark. You can still hear their tape measures.",
+        "pt": "Levam um dos três. Não rápido. Ele pede que parem, e eles pedem que ele saia do prédio, e vocês dois sabem que nenhum dos pedidos vai ser atendido.\nUma mão acha seu tornozelo. Você chuta até não ser mais mão, e algo em você vai junto.\nOs outros dois sumiram no escuro. Você ainda ouve as trenas deles."
+      },
+      "mod": { "grit": -1 },
+      "choices": [
+        { "label": { "en": "Follow the sound", "pt": "Seguir o som" }, "require": ["grit>0"], "to": "exit_sight" },
+        { "label": { "en": "Let them take you", "pt": "Deixar te levarem" }, "require": ["grit<=0"], "to": "end_taken" }
+      ]
+    },
+    "exit_sight": {
+      "title": { "en": "THE FRONT", "pt": "A FRENTE" },
+      "text": {
+        "en": "Morning. Lamps. The same aisle, the same price tag you bent to read, and at the far end of it, small as a coin, a square of grey daylight with a parking lot in it.\nThe rule is the one the handler gave you and you finally understand it: it exists while you are looking at it. Blink and it is a wall.\nThe others start walking. One of them looks down at his feet. When he looks up he is already asking where it went.",
+        "pt": "Manhã. Luminárias. O mesmo corredor, a mesma etiqueta que você se abaixou para ler, e no fim dele, pequeno como moeda, um quadrado de luz cinza do dia com um estacionamento dentro.\nA regra é a que o supervisor te deu e você enfim entende: ela existe enquanto você está olhando. Pisque e é parede.\nOs outros começam a andar. Um deles olha para os pés. Quando levanta a cabeça já está perguntando aonde foi."
+      },
+      "choices": [
+        { "label": { "en": "Follow the map line", "pt": "Seguir o mapa" }, "to": "end_exit", "require": ["has_map"] },
+        { "label": { "en": "Walk, do not blink", "pt": "Andar sem piscar" }, "roll": { "dice": "1d6", "stat": "luck", "dc": 6, "pass": "end_exit", "fail": "loop_back" } },
+        { "label": { "en": "Turn back", "pt": "Voltar" }, "to": "loop_back" }
+      ]
+    },
+    "loop_back": {
+      "title": { "en": "GONE", "pt": "SUMIU" },
+      "text": {
+        "en": "A trolley crosses the aisle. Your eyes follow it, half a second, less. When they come back the square of daylight is a shelf of lamps.\nYou stand there a long time. Then you turn around, because the arrows go both ways and the soup is the same every night.\nIt is a long walk. You eat the last of the bread on the way.",
+        "pt": "Um carrinho cruza o corredor. Seus olhos vão atrás, meio segundo, menos. Quando voltam, o quadrado de luz é uma prateleira de luminárias.\nVocê fica ali muito tempo. Depois dá meia-volta, porque as setas vão nos dois sentidos e a sopa é a mesma toda noite.\nÉ uma caminhada longa. Você come o resto do pão no caminho."
+      },
+      "mod": { "food": -2 },
+      "goto": "settle_hub"
+    },
+    "wander_deep": {
+      "title": { "en": "DEEP STORE", "pt": "LOJA FUNDA" },
+      "text": {
+        "en": "Past the last arrow the store changes. The aisles are wider and the ceiling is higher and the lights are further apart, so that between them there is a dusk even at noon.\nThe Staff here are taller. They do not restock. They stand at the ends of aisles and face the way you are going, all of them, like signs.\nThe rangefinder, if you had it, would give up here. Your feet nearly do.",
+        "pt": "Depois da última seta a loja muda. Os corredores são mais largos, o teto mais alto e as luzes mais espaçadas, de modo que entre elas há um crepúsculo mesmo ao meio-dia.\nOs Funcionários aqui são mais altos. Não repõem nada. Ficam nas pontas dos corredores virados para onde você vai, todos, como placas.\nO telêmetro, se você o tivesse, desistiria aqui. Seus pés quase desistem."
+      },
+      "mod": { "food": -1 },
+      "roll": { "dice": "1d6", "stat": "luck", "dc": 7, "pass": "exit_sight", "fail": "end_lost_deep" }
+    },
+    "end_exit": {
+      "title": { "en": "DAYLIGHT", "pt": "LUZ DO DIA" },
+      "text": {
+        "en": "You do not blink. Your eyes burn and water and you walk into the grey square with them open, and the air changes, and the parking lot is real and smells of rain.\nTwo agents in cafe aprons take your arms. Behind you, the entrance is just a door.\nIn the debrief you draw the map from memory before they can take it. You write EXCHANGE AND RETURNS at the end of the line, and forty, maybe fifty, and Ilse. You underline it twice so that whoever reads it after the amnestics knows it mattered.",
+        "pt": "Você não pisca. Os olhos ardem e lacrimejam e você entra no quadrado cinza com eles abertos, e o ar muda, e o estacionamento é real e cheira a chuva.\nDois agentes de avental de café seguram seus braços. Atrás de você, a entrada é só uma porta.\nNo relatório você desenha o mapa de memória antes que possam tirá-lo. Escreve TROCAS E DEVOLUÇÕES no fim da linha, e quarenta, talvez cinquenta, e Ilse. Sublinha duas vezes para que quem ler depois dos amnésticos saiba que importava."
+      },
+      "ending": "good"
+    },
+    "end_found": {
+      "title": { "en": "AISLE ZERO", "pt": "CORREDOR ZERO" },
+      "text": {
+        "en": "You go in with the rangefinder and six volunteers, and you go in the way the handler wanted: measuring. Two hundred meters. Two thousand. A number with too many digits, and beyond it a kitchen display nobody has ever cooked in.\nYou stop there. You put up walls. You paint an arrow on the floor pointing back the way you came, and beside it: AISLE ZERO. FOUNDATION OUTPOST. SOUP AT DUSK.\nThe report will not reach the surface. The people will reach you. That was always the better half of the mission.",
+        "pt": "Você entra com o telêmetro e seis voluntários, e entra do jeito que o supervisor queria: medindo. Duzentos metros. Dois mil. Um número com dígitos demais, e depois dele uma cozinha de exposição em que ninguém nunca cozinhou.\nVocê para ali. Levanta paredes. Pinta uma seta no chão apontando para onde veio, e ao lado: CORREDOR ZERO. POSTO DA FUNDAÇÃO. SOPA AO ANOITECER.\nO relatório não vai chegar à superfície. As pessoas vão chegar até você. Essa sempre foi a melhor metade da missão."
+      },
+      "ending": "good"
+    },
+    "end_stay": {
+      "title": { "en": "TWO WEEKS", "pt": "DUAS SEMANAS" },
+      "text": {
+        "en": "The party leaves without you. You wave. You do not think they will make it and you do not say so.\nTwo weeks, Ilse said. On the fifteenth day you catch yourself telling a new arrival, a kid with a shopping list, that the soup is at dusk and the walls go up before.\nYou were sent in to find the people who live here. You did. You put down the hammer only to eat.",
+        "pt": "O grupo parte sem você. Você acena. Não acha que vão conseguir e não diz.\nDuas semanas, Ilse disse. No décimo quinto dia você se pega dizendo a um recém-chegado, um garoto com lista de compras, que a sopa é ao anoitecer e as paredes sobem antes.\nVocê foi mandada para encontrar as pessoas que moram aqui. Encontrou. Só larga o martelo para comer."
+      },
+      "ending": "neutral"
+    },
+    "end_taken": {
+      "title": { "en": "CLOSED", "pt": "FECHADO" },
+      "text": {
+        "en": "There is nothing left to push with. The hands close, one, then several, soft and cool and wrong. They lift you the way they lift a box. They are very careful. It is worse that they are careful.\n'The store is now closed,' they say, and carry you toward the dark, and past it. 'Please exit the building.'\nYou would like to.",
+        "pt": "Não sobrou com que empurrar. As mãos fecham, uma, depois várias, macias e frias e erradas. Levantam você como levantam uma caixa. São muito cuidadosas. É pior que sejam cuidadosas.\n'A loja está fechada', dizem, e te carregam para o escuro, e além dele. 'Por favor, saia do prédio.'\nVocê bem que gostaria."
+      },
+      "ending": "bad"
+    },
+    "end_starve": {
+      "title": { "en": "RESTOCK", "pt": "REPOSIÇÃO" },
+      "text": {
+        "en": "You lie down between the boxes. It is nearly closing time. You are too tired to mind.\nThe lights go out. The voices are polite as always, and further away than usual, as if they know they do not need to come.\nIn the morning a Staff member restocks the shelf beside you. Bread. Water. Jars. It stacks them within reach, one at a time, all day. It never once looks down.",
+        "pt": "Você deita entre as caixas. Está quase na hora de fechar. Está cansada demais para se importar.\nAs luzes apagam. As vozes são educadas como sempre, e mais longe do que o normal, como se soubessem que não precisam vir.\nDe manhã um Funcionário repõe a prateleira ao seu lado. Pão. Água. Potes. Empilha tudo ao alcance da mão, um de cada vez, o dia inteiro. Nunca olha para baixo."
+      },
+      "ending": "bad"
+    },
+    "end_lost_deep": {
+      "title": { "en": "THE ENDS", "pt": "OS FINS" },
+      "text": {
+        "en": "The lights go out and here they do not come back. Not the next morning. Not the one after, if there is one.\nYou walk by touch, shelf to shelf. The Staff do not chase you. They do not need to. At the end of every aisle a tall shape faces the way you are going, and the aisles do not end.\nMonths later, at Exchange and Returns, a new arrival mentions arrows drawn on the floor very far in, pointing nowhere anyone has been. Nobody follows them.",
+        "pt": "As luzes apagam e aqui não voltam. Nem na manhã seguinte. Nem na outra, se houver.\nVocê anda pelo tato, prateleira a prateleira. Os Funcionários não te perseguem. Não precisam. No fim de cada corredor um vulto alto encara para onde você vai, e os corredores não terminam.\nMeses depois, em Trocas e Devoluções, um recém-chegado menciona setas desenhadas no chão muito lá no fundo, apontando para onde ninguém foi. Ninguém as segue."
+      },
+      "ending": "bad"
+    }
+  }
+}

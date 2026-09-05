@@ -6,6 +6,13 @@ browser tab, the page header, the device bezel, the boot screen and the About sc
 `run_sim.bat` always opens the newest file. Old versions can be kept or deleted, they are
 self-contained (they only share `stories.js`).
 
+## Books - 2026-09-05 (Foundation Files no. 2-11)
+- Ten new SCP gamebooks, EN + PT-BR, 27-30 nodes and 6-8 endings each, all CC BY-SA 3.0 with
+  `based_on` credits: 173: Blink (T2), 096: The Face (T2), 049: The Cure (T3), 106: Pocket (T3),
+  914: Very Fine (T2), 682: The Acid (T3), 3008: Closing (T3), 1730: Site-13 (T3),
+  2521: Hush (T1), 1471: MalO (T2). The catalog now has 14 books.
+- `build_catalog.py` orders series books by their number ("Foundation Files, no. N").
+
 ## 0.7.0 / Studio 0.4.0 - 2026-09-05 (your own books)
 - **Load a book**: button in player mode (and in the sim header), or drag a `.json` onto the page.
   The book goes to the browser's own library and opens on its cover. Works online and in the

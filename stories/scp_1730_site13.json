@@ -1,0 +1,305 @@
+{
+  "meta": {
+    "title": { "en": "1730: Site-13", "pt": "1730: Sítio-13" },
+    "author": "Marcelo Souza / Kumodot.art (adaptation)",
+    "version": 1,
+    "tier": 3,
+    "category": "SCP",
+    "start": "briefing",
+    "blurb": {
+      "en": "A Foundation site that was never built appeared in the desert overnight. Something inside is still on. Foundation Files, no. 9.",
+      "pt": "Um sítio da Fundação que nunca foi construído surgiu no deserto da noite para o dia. Algo lá dentro ainda está ligado. Arquivos da Fundação, n. 9."
+    },
+    "langs": ["en", "pt"],
+    "license": "CC BY-SA 3.0",
+    "based_on": "SCP-1730 by djkaktus, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-1730 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+    "series": "Foundation Files",
+    "stats": { "grit": 5, "sanity": 5 }
+  },
+  "flags": ["has_filter", "has_charge", "tape1", "tape2", "tape3", "data", "heard1", "heard2", "heard3", "has_map", "infected"],
+  "nodes": {
+    "briefing": {
+      "title": { "en": "PERIMETER", "pt": "PERÍMETRO" },
+      "text": {
+        "en": "You are point for Mobile Task Force Zeta-9. Two kilometers of fence around a hole in the Texas desert, and in the hole, a building that should not exist.\nSite-13 was cancelled on paper in 1962. Nobody built it. Last week it was here, fifteen floors deep, lights still on, doors open.\nTwo teams went in before you. The recordings they sent up stop in the middle of sentences.\nThe quartermaster holds out two crates. You can carry one.",
+        "pt": "Você é a ponta da Força-Tarefa Móvel Zeta-9. Dois quilômetros de cerca em volta de um buraco no deserto do Texas, e no buraco, um prédio que não deveria existir.\nO Sítio-13 foi cancelado no papel em 1962. Ninguém construiu. Semana passada ele estava aqui, quinze andares de profundidade, luzes acesas, portas abertas.\nDuas equipes entraram antes de você. As gravações que mandaram para cima param no meio das frases.\nO intendente estende duas caixas. Você só pode levar uma."
+      },
+      "choices": [
+        { "label": { "en": "Take spare filters", "pt": "Levar filtros" }, "to": "entry", "set": ["has_filter"] },
+        { "label": { "en": "Take demo charges", "pt": "Levar explosivos" }, "to": "entry", "set": ["has_charge"] }
+      ]
+    },
+    "entry": {
+      "title": { "en": "LOBBY", "pt": "SAGUÃO" },
+      "text": {
+        "en": "The suit hisses in your ears. The lobby is a Foundation lobby, the same badge readers, the same grey paint, and every surface is coated in a black sludge that moves a little when your light touches it.\nThe elevator doors are open on an empty shaft. Far below, something in the shaft breathes in and out, slow, like a machine that learned to.\nThe stairwell door is propped open with a chair.",
+        "pt": "O traje chia nos seus ouvidos. O saguão é um saguão da Fundação, os mesmos leitores de crachá, a mesma tinta cinza, e cada superfície está coberta por uma lama preta que se mexe um pouco quando a sua luz encosta.\nAs portas do elevador estão abertas para um poço vazio. Muito abaixo, algo no poço respira, devagar, como uma máquina que aprendeu a respirar.\nA porta da escada está escorada com uma cadeira."
+      },
+      "choices": [
+        { "label": { "en": "Take the stairs", "pt": "Descer a escada" }, "to": "level2" },
+        { "label": { "en": "Listen at the shaft", "pt": "Escutar o poço" }, "to": "level2", "mod": { "sanity": -1 } }
+      ]
+    },
+    "level2": {
+      "title": { "en": "LEVEL 2", "pt": "NÍVEL 2" },
+      "text": {
+        "en": "Offices. Desks pushed against the doors from the inside, which did not help. The nameplates are Foundation nameplates but you know none of the names.\nOne office is clean. A cot, a hot plate, a tape recorder on the desk with a label in careful handwriting: CORBIN, 1 of 3. The chair is still warm. That is not possible, so you decide it is the suit.",
+        "pt": "Escritórios. Mesas empurradas contra as portas pelo lado de dentro, o que não adiantou. As placas são placas da Fundação, mas você não conhece nenhum dos nomes.\nUma sala está limpa. Um catre, um fogareiro, um gravador de fita sobre a mesa com uma etiqueta em letra caprichada: CORBIN, 1 de 3. A cadeira ainda está morna. Isso não é possível, então você decide que é o traje."
+      },
+      "choices": [
+        { "label": { "en": "Play the tape", "pt": "Tocar a fita" }, "to": "tape1", "set": ["tape1", "heard1"], "mod": { "sanity": -1 } },
+        { "label": { "en": "Pocket it, move on", "pt": "Guardar e seguir" }, "to": "stairs5", "set": ["tape1"] },
+        { "label": { "en": "Leave it", "pt": "Deixar" }, "to": "stairs5" }
+      ]
+    },
+    "tape1": {
+      "title": { "en": "CORBIN 1", "pt": "CORBIN 1" },
+      "text": {
+        "en": "A woman's voice, tired, close to the microphone.\n'Dr. Corbin, Research Lead. Day nine since the drains failed. The runoff from the lower containment is coming up through the floors now. The Director says it is an engineering problem.\nIt is not an engineering problem. The things we kept down there are in it. I can hear them in the pipes at night.\nIf anyone finds this: we did things in this building. Write that down before you write anything else.'",
+        "pt": "Uma voz de mulher, cansada, perto do microfone.\n'Dra. Corbin, Chefe de Pesquisa. Nono dia desde que os drenos falharam. O escoamento da contenção inferior está subindo pelos andares agora. O Diretor diz que é um problema de engenharia.\nNão é um problema de engenharia. As coisas que mantínhamos lá embaixo estão nele. Eu as ouço nos canos à noite.\nSe alguém encontrar isto: nós fizemos coisas neste prédio. Anote isso antes de anotar qualquer outra coisa.'"
+      },
+      "goto": "stairs5"
+    },
+    "stairs5": {
+      "title": { "en": "STAIRWELL", "pt": "ESCADARIA" },
+      "text": {
+        "en": "The stairs are painted with floor numbers. 3. 4. Then a landing with a door and the number 5 stencilled on it, fresh, and your map has no level 5. Level 4 sits directly on level 6. There is no room for this door.\nBehind it, a corridor runs away from your light much further than the building is wide. The walls are covered in writing. Below, the stairs continue to 6, 7, 8, and the smell of standing water.",
+        "pt": "As escadas trazem os números dos andares pintados. 3. 4. Depois um patamar com uma porta e o número 5 estampado nela, tinta fresca, e o seu mapa não tem nível 5. O nível 4 fica em cima do nível 6. Não há espaço para esta porta.\nAtrás dela, um corredor foge da sua luz muito além da largura do prédio. As paredes estão cobertas de escrita. Abaixo, a escada continua para 6, 7, 8, e o cheiro de água parada."
+      },
+      "choices": [
+        { "label": { "en": "Enter level 5", "pt": "Entrar no nível 5" }, "to": "level5", "mod": { "sanity": -1 } },
+        { "label": { "en": "Keep going down", "pt": "Continuar descendo" }, "to": "stairs9" }
+      ]
+    },
+    "level5": {
+      "title": { "en": "LEVEL 5", "pt": "NÍVEL 5" },
+      "text": {
+        "en": "The writing is not in any alphabet. It is in something that wants to be read. You keep your eyes on the floor and your light on your boots and the letters still pull at the edge of your vision like a hook in water.\nHalfway down the corridor the writing gets fresher. Wet. At the end of it, something tall is standing with its back to you, and it is still writing, with too many arms.",
+        "pt": "A escrita não é de alfabeto nenhum. É de algo que quer ser lido. Você mantém os olhos no chão e a luz nas botas e mesmo assim as letras puxam a borda da sua visão como um anzol na água.\nNo meio do corredor a escrita fica mais fresca. Molhada. No fim dele, algo alto está de costas para você, e ainda está escrevendo, com braços demais."
+      },
+      "goto": "writer"
+    },
+    "writer": {
+      "title": { "en": "THE WRITER", "pt": "O ESCRIVÃO" },
+      "text": {
+        "en": "It has six legs and more arms than you count before you stop counting. On its head, where a hat would be, it carries a burned human body like a trophy. There is a name tag on the body. DIRECTOR.\nIt does not turn around. It does not need to. The writing on the wall next to your hand is starting to spell your name.",
+        "pt": "Tem seis pernas e mais braços do que você conta antes de parar de contar. Na cabeça, onde ficaria um chapéu, carrega um corpo humano queimado como um troféu. Há um crachá no corpo. DIRETOR.\nEle não se vira. Não precisa. A escrita na parede ao lado da sua mão está começando a soletrar o seu nome."
+      },
+      "choices": [
+        { "label": { "en": "Eyes down, back off", "pt": "Olhos no chão" }, "roll": { "dice": "1d6", "stat": "sanity", "dc": 7, "pass": "cells", "fail": "end_glyph" } },
+        { "label": { "en": "Run for the stairs", "pt": "Correr pra escada" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 7, "pass": "stairs9", "fail": "end_glyph" } }
+      ]
+    },
+    "cells": {
+      "title": { "en": "THE CELLS", "pt": "AS CELAS" },
+      "text": {
+        "en": "You back into a side door and it closes on the corridor and the writing stops pulling.\nContainment cells. Twenty of them. Bunks, drains, restraints bolted to the walls. In every cell, someone very thin who died a long time ago sitting up, facing the door.\nOn the wall, scratched into the paint with fingernails, in English, over and over: WE DID NOT GO QUIETLY.\nTaped inside the last cell door is a maintenance map, with a route to the lower levels drawn in red.",
+        "pt": "Você recua para uma porta lateral e ela se fecha sobre o corredor e a escrita para de puxar.\nCelas de contenção. Vinte. Beliches, ralos, correias parafusadas nas paredes. Em cada cela, alguém muito magro que morreu há muito tempo sentado, de frente para a porta.\nNa parede, arranhado na tinta com unhas, de novo e de novo: NÓS NÃO FOMOS EM SILÊNCIO.\nColado por dentro da última porta há um mapa de manutenção, com uma rota para os níveis inferiores traçada em vermelho."
+      },
+      "set": ["has_map"],
+      "mod": { "sanity": -1 },
+      "goto": "stairs9"
+    },
+    "stairs9": {
+      "title": { "en": "LEVEL 9", "pt": "NÍVEL 9" },
+      "text": {
+        "en": "The stairs go into the water at level 9 and do not come out. Black water, thick, with a skin on it. Things move under the skin. Small things, many of them, patient.\nAcross the flooded hall, on a raised platform, a door with a light behind it: RESEARCH LEAD.\nA line of pipes runs along the ceiling above the water. They look old. They look like the only other way.",
+        "pt": "A escada entra na água no nível 9 e não sai mais. Água preta, grossa, com uma película por cima. Coisas se mexem debaixo da película. Coisas pequenas, muitas, pacientes.\nDo outro lado do salão inundado, numa plataforma elevada, uma porta com luz atrás: CHEFE DE PESQUISA.\nUma fileira de canos corre pelo teto por cima da água. Parecem velhos. Parecem o único outro caminho."
+      },
+      "choices": [
+        { "label": { "en": "Seal suit, wade", "pt": "Selar traje, vadear" }, "to": "lab9", "require": ["has_filter"], "clear": ["has_filter"] },
+        { "label": { "en": "Wade across", "pt": "Atravessar a pé" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 8, "pass": "lab9", "fail": "leech" } },
+        { "label": { "en": "Climb the pipes", "pt": "Subir pelos canos" }, "roll": { "dice": "1d6", "dc": 4, "pass": "lab9", "fail": "leech" } }
+      ]
+    },
+    "leech": {
+      "title": { "en": "IN THE WATER", "pt": "NA ÁGUA" },
+      "text": {
+        "en": "You go under. The water is warm, which is the worst thing about it. Something the size of a finger finds the seam at your wrist and gets in, and it is under the skin of your forearm before you reach the platform.\nYou cut it out with the suit knife. It comes out in pieces and every piece keeps moving. You do not know if you got all of it.",
+        "pt": "Você afunda. A água é morna, e isso é o pior dela. Algo do tamanho de um dedo acha a costura do seu punho e entra, e já está debaixo da pele do seu antebraço antes de você chegar à plataforma.\nVocê corta com a faca do traje. Sai em pedaços e cada pedaço continua se mexendo. Você não sabe se tirou tudo."
+      },
+      "set": ["infected"],
+      "mod": { "grit": -1 },
+      "choices": [
+        { "label": { "en": "Push on to the lab", "pt": "Seguir pro lab" }, "to": "lab9", "require": ["grit>0"] },
+        { "label": { "en": "Back to the stairs", "pt": "Voltar à escada" }, "to": "stairs9", "require": ["grit>0"] },
+        { "label": { "en": "Lie down", "pt": "Deitar" }, "to": "end_leech", "require": ["grit<=0"] }
+      ]
+    },
+    "lab9": {
+      "title": { "en": "THE LAB", "pt": "O LABORATÓRIO" },
+      "text": {
+        "en": "Corbin's lab is dry, up on its platform, and the light is a single desk lamp on a battery that should have died years ago.\nThe walls are pinned with drawings: the leeches, the tall thing with the arms, a machine like a turbine drawn from every angle and labelled THRESHER. Beside the lamp, a second tape. CORBIN, 2 of 3.\nAt the back, a hatch and a ladder down. Someone has painted a red arrow on it, and under the arrow: MINES. FOLLOW THE ARROWS.",
+        "pt": "O laboratório da Corbin está seco, no alto da plataforma, e a luz é um único abajur de mesa numa bateria que deveria ter morrido anos atrás.\nAs paredes estão cheias de desenhos presos com alfinetes: as sanguessugas, a coisa alta com os braços, uma máquina como uma turbina desenhada de todos os ângulos e rotulada DEBULHADORA. Ao lado do abajur, uma segunda fita. CORBIN, 2 de 3.\nNo fundo, uma escotilha e uma escada para baixo. Alguém pintou uma seta vermelha nela, e sob a seta: MINAS. SIGA AS SETAS."
+      },
+      "choices": [
+        { "label": { "en": "Play the tape", "pt": "Tocar a fita" }, "to": "tape2", "require": ["tape1"], "set": ["tape2", "heard2", "data"], "mod": { "sanity": -1 } },
+        { "label": { "en": "Play the tape", "pt": "Tocar a fita" }, "to": "tape2", "require": ["!tape1"], "set": ["tape2", "heard2"], "mod": { "sanity": -1 } },
+        { "label": { "en": "Pocket it, go down", "pt": "Guardar e descer" }, "to": "corridor12", "require": ["tape1"], "set": ["tape2", "data"] },
+        { "label": { "en": "Pocket it, go down", "pt": "Guardar e descer" }, "to": "corridor12", "require": ["!tape1"], "set": ["tape2"] },
+        { "label": { "en": "Go down the ladder", "pt": "Descer a escada" }, "to": "corridor12" }
+      ]
+    },
+    "tape2": {
+      "title": { "en": "CORBIN 2", "pt": "CORBIN 2" },
+      "text": {
+        "en": "'Day twenty. The water is at nine. The Director has stopped answering the phone.\nI need to say this plainly. Site-13 held two hundred humanoid anomalies. They were people. They could talk. The Director classified them as objects so the Ethics Committee would not have to be told, and we tested on them until they were used up.\nWhen the drains failed they got out. They did not go quietly. I do not think they should have.\nThe Thresher is on twelve. It cuts a place loose from everything. He built it as a way out. I think it should be a way to close the door.'",
+        "pt": "'Dia vinte. A água está no nove. O Diretor parou de atender o telefone.\nPreciso dizer isto sem rodeios. O Sítio-13 mantinha duzentas anomalias humanoides. Eram pessoas. Falavam. O Diretor as classificou como objetos para não precisar avisar o Comitê de Ética, e testamos nelas até acabarem.\nQuando os drenos falharam, elas saíram. Não foram em silêncio. Acho que não deveriam ter ido.\nA Debulhadora está no doze. Ela solta um lugar de tudo. Ele a construiu como saída. Eu acho que ela deveria ser um jeito de fechar a porta.'"
+      },
+      "goto": "corridor12"
+    },
+    "corridor12": {
+      "title": { "en": "LEVEL 12", "pt": "NÍVEL 12" },
+      "text": {
+        "en": "The ladder ends in a service corridor on twelve, dry, low, and mined. Someone with training laid them. Tripwires at ankle height, pressure plates under cardboard, and a fresh red arrow on the wall every few meters that turns where the wires are.\nFrom the far end, faint, a man's voice on a loop: 'This is Captain Hollis, Zeta-9. Twelve of us. We are still here. We are still here.'\nZeta-9 is your team. Hollis went in eleven months ago.",
+        "pt": "A escada termina num corredor de serviço no doze, seco, baixo, e minado. Quem armou isso tinha treinamento. Fios de tropeço na altura do tornozelo, placas de pressão sob papelão, e uma seta vermelha fresca na parede a cada poucos metros que vira onde os fios estão.\nDo fundo, fraca, a voz de um homem repetida em loop: 'Aqui é o Capitão Hollis, Zeta-9. Somos doze. Ainda estamos aqui. Ainda estamos aqui.'\nZeta-9 é a sua equipe. Hollis entrou há onze meses."
+      },
+      "choices": [
+        { "label": { "en": "Follow the map", "pt": "Seguir o mapa" }, "to": "barricade", "require": ["has_map"] },
+        { "label": { "en": "Follow the arrows", "pt": "Seguir as setas" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 7, "pass": "barricade", "fail": "mine" } }
+      ]
+    },
+    "mine": {
+      "title": { "en": "THE MINE", "pt": "A MINA" },
+      "text": {
+        "en": "The arrow turns left. You turn left. The wire was on the left.\nThe blast throws you into the wall and takes the sound out of the world. When it comes back you are on your side, the suit is screaming a breach alarm, and there is blood inside the visor that is yours.\nThe red arrow on the wall above you points on down the corridor, patient as ever.",
+        "pt": "A seta vira à esquerda. Você vira à esquerda. O fio estava à esquerda.\nA explosão te joga contra a parede e tira o som do mundo. Quando ele volta, você está de lado, o traje grita um alarme de ruptura, e há sangue dentro do visor que é seu.\nA seta vermelha na parede acima de você aponta corredor adiante, paciente como sempre."
+      },
+      "mod": { "grit": -2, "sanity": -1 },
+      "choices": [
+        { "label": { "en": "Crawl on", "pt": "Rastejar adiante" }, "to": "barricade", "require": ["grit>0"] },
+        { "label": { "en": "Stay where you are", "pt": "Ficar onde está" }, "to": "end_dark", "require": ["grit<=0"] }
+      ]
+    },
+    "barricade": {
+      "title": { "en": "BARRICADE", "pt": "BARRICADA" },
+      "text": {
+        "en": "Filing cabinets, a welded door, a sandbag wall. Behind it, lamps, cots, and people. Four of them, not twelve. They wear your patch.\nCaptain Hollis has lost weight and one eye and none of his manners. 'Eleven months,' he says. 'Ten days for you, I know. Time is loose down here.'\nHe puts a tape in your hand. CORBIN, 3 of 3. 'She left it for whoever came. She went down the shaft to the machine and did not come back. Something lives in the elevator car. It is the size of a tank and it is made of the staff.'",
+        "pt": "Arquivos de aço, uma porta soldada, uma parede de sacos de areia. Atrás dela, lampiões, catres, e gente. Quatro, não doze. Usam o seu brasão.\nO Capitão Hollis perdeu peso e um olho e nada da educação. 'Onze meses', ele diz. 'Dez dias para você, eu sei. O tempo anda solto aqui embaixo.'\nEle põe uma fita na sua mão. CORBIN, 3 de 3. 'Ela deixou para quem viesse. Desceu o poço até a máquina e não voltou. Algo mora no carro do elevador. É do tamanho de um tanque e é feito dos funcionários.'"
+      },
+      "set": ["tape3"],
+      "choices": [
+        { "label": { "en": "Play the tape", "pt": "Tocar a fita" }, "to": "tape3", "set": ["heard3"], "mod": { "sanity": -1 } },
+        { "label": { "en": "Keep it, decide", "pt": "Guardar, decidir" }, "to": "decision" }
+      ]
+    },
+    "tape3": {
+      "title": { "en": "CORBIN 3", "pt": "CORBIN 3" },
+      "text": {
+        "en": "'Last one. I am going down to the Thresher.\nIt does not run from up here. Someone has to stand at the lever while it cycles, and when it finishes, the site is nowhere. Not in this world. Not in yours, if you are from another one, and I think you are.\nThat is the point. Nobody gets to find this place and learn from it. Nobody gets to keep it.\nIf I did not manage it, and you are hearing this, you already know what it costs. I am sorry. We should have gone quietly. They did not, and they were right.'",
+        "pt": "'Última. Vou descer até a Debulhadora.\nEla não funciona daqui de cima. Alguém precisa ficar na alavanca enquanto ela cicla, e quando termina, o sítio fica em lugar nenhum. Não neste mundo. Não no seu, se você é de outro, e acho que é.\nEsse é o ponto. Ninguém vai encontrar este lugar e aprender com ele. Ninguém vai ficar com ele.\nSe eu não consegui, e você está ouvindo isto, já sabe o que custa. Me desculpe. Nós deveríamos ter ido em silêncio. Eles não foram, e estavam certos.'"
+      },
+      "goto": "decision"
+    },
+    "decision": {
+      "title": { "en": "BARRICADE", "pt": "BARRICADA" },
+      "text": {
+        "en": "Hollis waits. His people wait. Above you, nine flooded levels, a corridor that is longer than the building, and the surface, where Command wants recordings, samples, proof.\nBelow you, the shaft, and the breathing.\nThe radio on your shoulder has one bar. It has had one bar since the lobby. It will carry one call.",
+        "pt": "Hollis espera. A equipe dele espera. Acima de você, nove níveis inundados, um corredor mais longo que o prédio, e a superfície, onde o Comando quer gravações, amostras, provas.\nAbaixo de você, o poço, e a respiração.\nO rádio no seu ombro tem uma barra. Tem uma barra desde o saguão. Vai aguentar uma chamada."
+      },
+      "choices": [
+        { "label": { "en": "Call extraction", "pt": "Chamar extração" }, "to": "extraction" },
+        { "label": { "en": "Go down the shaft", "pt": "Descer o poço" }, "to": "shaft", "require": ["heard3", "sanity>0"] },
+        { "label": { "en": "Sit down with them", "pt": "Sentar com eles" }, "to": "end_dark", "require": ["sanity<=0"] }
+      ]
+    },
+    "extraction": {
+      "title": { "en": "THE CLIMB", "pt": "A SUBIDA" },
+      "text": {
+        "en": "'Zeta-9 actual to Command. Survivors, four. Coming up. Send a line down the elevator shaft to twelve and do not send it any further.'\nStatic. Then, very far away: 'Copy.'\nYou go up the way you came, all of you, Hollis last. The water on nine is higher. The writing on five has spread to the stairwell. On two, the chair in Corbin's office is still warm.",
+        "pt": "'Zeta-9 para o Comando. Sobreviventes, quatro. Subindo. Mandem um cabo pelo poço do elevador até o doze e não mandem mais fundo que isso.'\nEstática. Depois, muito longe: 'Entendido.'\nVocês sobem pelo caminho de volta, todos, Hollis por último. A água no nove está mais alta. A escrita do cinco se espalhou pela escadaria. No dois, a cadeira na sala da Corbin ainda está morna."
+      },
+      "roll": { "dice": "1d6", "stat": "grit", "dc": 6, "pass": "surface", "fail": "end_dark" }
+    },
+    "surface": {
+      "title": { "en": "SURFACE", "pt": "SUPERFÍCIE" },
+      "text": {
+        "en": "Daylight. It hurts. Hands pull you out of the hatch and cut the suit off you and someone is counting survivors out loud, four, five, and stops at five, because you are five.\nA researcher in a clean coat is already asking what you brought back.",
+        "pt": "Luz do dia. Dói. Mãos te puxam pela escotilha e cortam o traje e alguém conta sobreviventes em voz alta, quatro, cinco, e para no cinco, porque o cinco é você.\nUm pesquisador de jaleco limpo já está perguntando o que você trouxe de volta."
+      },
+      "choices": [
+        { "label": { "en": "Hand over the tapes", "pt": "Entregar as fitas" }, "to": "end_data", "require": ["data"] },
+        { "label": { "en": "Give your report", "pt": "Dar seu relatório" }, "to": "end_alone", "require": ["!data"] }
+      ]
+    },
+    "shaft": {
+      "title": { "en": "THE SHAFT", "pt": "O POÇO" },
+      "text": {
+        "en": "Hollis does not try to stop you. He gives you his lamp.\nThe shaft below twelve is dry and warm and the breathing comes from the car, stopped between fourteen and fifteen. The car is open. Inside, filling it, is something the size of a tank that was assembled from the staff of Site-13. Coats. Badges. Faces, arranged in rows, all of them asleep.\nYou have to pass it on the ladder. It will wake if you look at it. Corbin wrote that on the wall in lipstick.",
+        "pt": "Hollis não tenta te impedir. Ele te dá o lampião dele.\nO poço abaixo do doze é seco e morno e a respiração vem do carro, parado entre o catorze e o quinze. O carro está aberto. Dentro, enchendo tudo, há algo do tamanho de um tanque montado com os funcionários do Sítio-13. Jalecos. Crachás. Rostos, em fileiras, todos dormindo.\nVocê tem que passar por ele na escada. Ele acorda se você olhar. A Corbin escreveu isso na parede com batom."
+      },
+      "choices": [
+        { "label": { "en": "Pass, eyes shut", "pt": "Passar sem olhar" }, "roll": { "dice": "1d6", "stat": "sanity", "dc": 7, "pass": "thresher", "fail": "end_elevator" }, "require": ["!has_charge"] },
+        { "label": { "en": "Drop a charge first", "pt": "Soltar uma carga" }, "roll": { "dice": "1d6", "stat": "sanity", "dc": 5, "pass": "thresher", "fail": "end_elevator" }, "require": ["has_charge"] },
+        { "label": { "en": "Climb back up", "pt": "Voltar pra cima" }, "to": "decision" }
+      ]
+    },
+    "thresher": {
+      "title": { "en": "THRESHER", "pt": "DEBULHADORA" },
+      "text": {
+        "en": "Level fifteen is one room and the room is the machine. A turbine the height of a church, still, waiting, with a single lever at its base and a body beside the lever in a research coat. She got this far.\nThe lever is warm. The instructions, in Corbin's hand, are three lines long. Pull. Hold. Do not let go.\nAbove, the breathing has changed. It is coming down the shaft.",
+        "pt": "O nível quinze é uma sala só e a sala é a máquina. Uma turbina da altura de uma igreja, parada, esperando, com uma única alavanca na base e um corpo ao lado da alavanca, de jaleco. Ela chegou até aqui.\nA alavanca está morna. As instruções, na letra da Corbin, têm três linhas. Puxe. Segure. Não solte.\nAcima, a respiração mudou. Está descendo pelo poço."
+      },
+      "choices": [
+        { "label": { "en": "Pull. Hold.", "pt": "Puxar. Segurar." }, "to": "end_seal" },
+        { "label": { "en": "Climb back up", "pt": "Voltar pra cima" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 8, "pass": "decision", "fail": "end_elevator" } }
+      ]
+    },
+    "end_data": {
+      "title": { "en": "DEBRIEF", "pt": "RELATÓRIO" },
+      "text": {
+        "en": "Two tapes and a captain who was gone eleven months in ten days. Command listens to Corbin twice, in silence, and then classifies the recordings above your clearance and thanks you.\nA month later the site is gone from the desert. Not demolished. Gone. Someone below pulled a lever, or something did.\nYou keep a copy of the second tape. You should not have. You play it sometimes, so you remember what a Foundation can become when nobody is watching it.",
+        "pt": "Duas fitas e um capitão que passou onze meses fora em dez dias. O Comando ouve a Corbin duas vezes, em silêncio, e depois classifica as gravações acima da sua credencial e te agradece.\nUm mês depois o sítio sumiu do deserto. Não demolido. Sumiu. Alguém lá embaixo puxou uma alavanca, ou alguma coisa puxou.\nVocê guardou uma cópia da segunda fita. Não devia. Você toca de vez em quando, para lembrar no que uma Fundação pode virar quando ninguém está olhando."
+      },
+      "ending": "good"
+    },
+    "end_alone": {
+      "title": { "en": "DEBRIEF", "pt": "RELATÓRIO" },
+      "text": {
+        "en": "You tell them about the sludge, the writing, the water, the barricade. Four survivors is a good number. It is the best number anyone has brought up.\nBut you have nothing in your hands. No tape, no proof of what the site was. Your report goes into a folder marked INCONCLUSIVE and the folder goes somewhere.\nThe site stays in the desert, lights on, fence around it. Some nights you drive out to the fence and listen. It is still breathing.",
+        "pt": "Você fala da lama, da escrita, da água, da barricada. Quatro sobreviventes é um bom número. É o melhor número que alguém já trouxe para cima.\nMas você não tem nada nas mãos. Nenhuma fita, nenhuma prova do que o sítio era. Seu relatório vai para uma pasta marcada INCONCLUSIVO e a pasta vai para algum lugar.\nO sítio fica no deserto, luzes acesas, cerca em volta. Algumas noites você dirige até a cerca e escuta. Ainda está respirando."
+      },
+      "ending": "neutral"
+    },
+    "end_seal": {
+      "title": { "en": "THE LEVER", "pt": "A ALAVANCA" },
+      "text": {
+        "en": "You pull. The turbine turns over once, like a heart deciding, and then it runs.\nThe room goes quiet. The breathing in the shaft stops in the middle of a breath. Through the floor, through fifteen levels of concrete, you feel the desert let go of the building.\nYou hold on. Hollis is on the surface by now, you tell yourself, giving your name to a researcher in a clean coat.\nSomewhere that is no longer anywhere, Site-13 closes its doors, and you are the one who closed them.",
+        "pt": "Você puxa. A turbina gira uma vez, como um coração decidindo, e então funciona.\nA sala fica em silêncio. A respiração no poço para no meio de um fôlego. Pelo chão, por quinze níveis de concreto, você sente o deserto soltar o prédio.\nVocê segura. Hollis já está na superfície a esta altura, você diz a si mesmo, dando o seu nome a um pesquisador de jaleco limpo.\nEm algum lugar que não é mais lugar nenhum, o Sítio-13 fecha as portas, e foi você quem fechou."
+      },
+      "ending": "good"
+    },
+    "end_dark": {
+      "title": { "en": "THE DARK", "pt": "O ESCURO" },
+      "text": {
+        "en": "You stop. Just for a minute, you tell yourself, on a landing, or a cot, or a floor. The lamp goes out sometime after that and you do not turn it back on.\nMonths later, or days, a new team comes down with a fresh radio and finds a barricade, and behind it, people wearing their patch. One of them has your face. He tells them the time is loose down here. He asks them, politely, what year it is on the surface.",
+        "pt": "Você para. Só um minuto, você diz a si mesmo, num patamar, num catre, no chão. O lampião apaga em algum momento depois disso e você não acende de novo.\nMeses depois, ou dias, uma nova equipe desce com um rádio novo e encontra uma barricada, e atrás dela, gente usando o brasão deles. Um deles tem o seu rosto. Ele diz que o tempo anda solto aqui embaixo. Pergunta, com educação, que ano é lá em cima."
+      },
+      "ending": "bad"
+    },
+    "end_glyph": {
+      "title": { "en": "THE WRITING", "pt": "A ESCRITA" },
+      "text": {
+        "en": "You look. Only for a second, only at the corner of one letter.\nThe letter finishes itself inside your eye. The suit records a rise in temperature, then another, then it stops recording because it is no longer a suit.\nOn the wall of level 5, in fresh wet strokes, there is a new line of writing. It is your name, spelled correctly, in an alphabet that did not exist an hour ago.",
+        "pt": "Você olha. Só por um segundo, só para o canto de uma letra.\nA letra se completa dentro do seu olho. O traje registra uma subida de temperatura, depois outra, depois para de registrar porque não é mais um traje.\nNa parede do nível 5, em traços frescos e molhados, há uma nova linha de escrita. É o seu nome, escrito certo, num alfabeto que não existia uma hora atrás."
+      },
+      "ending": "bad"
+    },
+    "end_leech": {
+      "title": { "en": "THE WATER", "pt": "A ÁGUA" },
+      "text": {
+        "en": "You lie down on the platform, just to stop the bleeding, just for a minute. The arm does not hurt any more. That is how you know you did not get all of it.\nThe water on level 9 is patient. It has had years. When your radio calls you, hours later, something answers in your voice and says it is fine, it is resting, send the next team down.",
+        "pt": "Você se deita na plataforma, só para estancar o sangue, só um minuto. O braço não dói mais. É assim que você sabe que não tirou tudo.\nA água do nível 9 é paciente. Teve anos. Quando o rádio te chama, horas depois, algo responde com a sua voz e diz que está tudo bem, que está descansando, mandem a próxima equipe."
+      },
+      "ending": "bad"
+    },
+    "end_elevator": {
+      "title": { "en": "THE CAR", "pt": "O CARRO" },
+      "text": {
+        "en": "You open your eyes. You did not mean to. It is a reflex, the same as breathing.\nThe faces in the car open theirs at the same time, all of them, in rows, and the breathing stops, because it was never breathing. It was waiting.\nIt is very gentle about it. There is room in the car for one more coat, one more badge, one more face in the front row, looking out at the shaft, waiting for the next lamp to come down.",
+        "pt": "Você abre os olhos. Não queria. É reflexo, como respirar.\nOs rostos no carro abrem os deles ao mesmo tempo, todos, em fileiras, e a respiração para, porque nunca foi respiração. Era espera.\nEle é muito gentil nisso. Há espaço no carro para mais um jaleco, mais um crachá, mais um rosto na primeira fileira, olhando para o poço, esperando o próximo lampião descer."
+      },
+      "ending": "bad"
+    }
+  }
+}

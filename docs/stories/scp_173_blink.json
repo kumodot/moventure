@@ -1,0 +1,299 @@
+{
+  "meta": {
+    "title": { "en": "173: Blink", "pt": "173: Pisque" },
+    "author": "Marcelo Souza / Kumodot.art (adaptation)",
+    "version": 1,
+    "tier": 2,
+    "category": "SCP",
+    "start": "briefing",
+    "blurb": {
+      "en": "A concrete statue that only moves when no one is looking. Three cleaners, one floor, and the sound of scraping. Foundation Files, no. 2.",
+      "pt": "Uma estátua de concreto que só se move quando ninguém olha. Três faxineiros, um chão, e um som de raspar. Arquivos da Fundação, n. 2."
+    },
+    "langs": ["en", "pt"],
+    "license": "CC BY-SA 3.0",
+    "based_on": "SCP-173 by Moto42, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-173 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+    "series": "Foundation Files"
+  },
+  "flags": ["sync", "moved"],
+  "nodes": {
+    "briefing": {
+      "title": { "en": "D-CLASS", "pt": "CLASSE D" },
+      "text": {
+        "en": "You are D-9341. Site-19, sublevel two, a corridor that smells of bleach and something under the bleach.\nThere are three of you. A tall man who has not said a word, a kid who will not stop talking, and you. Three buckets. Three mops.\nThe guard reads from a card. 'Enter. Keep your eyes on the object at all times. At least two of you must be looking at it. Do not blink at the same time. Clean the floor. Leave.'\nHe puts the card away.",
+        "pt": "Você é D-9341. Site-19, subnível dois, um corredor que cheira a água sanitária e a alguma coisa por baixo dela.\nVocês são três. Um homem alto que não disse uma palavra, um garoto que não para de falar, e você. Três baldes. Três esfregões.\nO guarda lê de um cartão. 'Entrem. Mantenham os olhos no objeto o tempo todo. Pelo menos dois de vocês devem estar olhando. Não pisquem ao mesmo tempo. Limpem o chão. Saiam.'\nEle guarda o cartão."
+      },
+      "choices": [
+        { "label": { "en": "Ask what it is", "pt": "Perguntar o que é" }, "to": "ask" },
+        { "label": { "en": "Nod. Go in.", "pt": "Assentir. Entrar." }, "to": "chamber_door" },
+        { "label": { "en": "Refuse", "pt": "Recusar" }, "to": "end_refuse" }
+      ]
+    },
+    "ask": {
+      "title": { "en": "D-CLASS", "pt": "CLASSE D" },
+      "text": {
+        "en": "'A statue,' the guard says. 'Concrete and rebar. Somebody painted a face on it.'\n'So why the eyes?'\nHe looks at you for the first time. 'Because it moves when nobody is looking at it. It is fast. It goes for the neck.'\nThe kid laughs. Nobody else does.\n'The floor,' the guard says, 'is what is left of the last crew that laughed.'",
+        "pt": "'Uma estátua', diz o guarda. 'Concreto e vergalhão. Alguém pintou um rosto nela.'\n'Então por que os olhos?'\nEle olha para você pela primeira vez. 'Porque ela se move quando ninguém está olhando. É rápida. Vai no pescoço.'\nO garoto ri. Mais ninguém ri.\n'O chão', diz o guarda, 'é o que sobrou da última equipe que riu.'"
+      },
+      "goto": "chamber_door"
+    },
+    "chamber_door": {
+      "title": { "en": "THE DOOR", "pt": "A PORTA" },
+      "text": {
+        "en": "The door is steel, with a window the size of a hand. Through it: a bare concrete room, a drain in the middle, and in the far corner a shape about the height of a man.\nIt is not looking at the door. It is not looking at anything. Its face is a smear of green and red paint, and the smear is smiling.\nThe tall man clears his throat. It is the first sound he has made. He wants to know how you are going to do this.",
+        "pt": "A porta é de aço, com uma janela do tamanho de uma mão. Através dela: uma sala de concreto nu, um ralo no meio, e no canto oposto um vulto da altura de um homem.\nEle não olha para a porta. Não olha para nada. O rosto é um borrão de tinta verde e vermelha, e o borrão está sorrindo.\nO homem alto pigarreia. É o primeiro som que ele faz. Ele quer saber como vocês vão fazer isso."
+      },
+      "choices": [
+        { "label": { "en": "Set blink turns", "pt": "Combinar piscadas" }, "to": "enter_sync", "set": ["sync"] },
+        { "label": { "en": "Just go in", "pt": "Entrar de uma vez" }, "to": "enter_nosync" }
+      ]
+    },
+    "enter_sync": {
+      "title": { "en": "THE RULE", "pt": "A REGRA" },
+      "text": {
+        "en": "'One at a time,' you say. 'I say blink, I blink, I say back. Then him. Then you. Nobody blinks without saying it.'\nThe kid says it is stupid. The tall man nods.\nThe door hisses. You go in first, eyes on the thing in the corner. It is uglier up close. The paint has run down the neck like something that dried a long time ago.\n'Blink,' you say, and shut your eyes for as long as it takes to say it. 'Back.'\nIt has not moved. Of course it has not moved. Two people were looking.",
+        "pt": "'Um de cada vez', você diz. 'Eu falo pisca, eu pisco, eu falo voltei. Depois ele. Depois você. Ninguém pisca sem avisar.'\nO garoto diz que é idiotice. O homem alto assente.\nA porta sibila. Você entra primeiro, olhos na coisa do canto. De perto é mais feia. A tinta escorreu pelo pescoço como algo que secou há muito tempo.\n'Pisca', você diz, e fecha os olhos pelo tempo de dizer isso. 'Voltei.'\nEla não se moveu. Claro que não. Duas pessoas estavam olhando."
+      },
+      "choices": [
+        { "label": { "en": "Start mopping", "pt": "Começar a limpar" }, "to": "mop1" },
+        { "label": { "en": "Look at its face", "pt": "Olhar o rosto dela" }, "to": "stare" }
+      ]
+    },
+    "enter_nosync": {
+      "title": { "en": "THE ROOM", "pt": "A SALA" },
+      "text": {
+        "en": "The door hisses and you go in, all three, eyes on the corner. Nobody said anything about turns. Nobody said anything at all.\nThe floor is slick. The drain is clogged with something brown. The smell gets into your teeth.\nThe kid rubs his eyes with the back of his wrist. The tall man, at the same moment, sneezes.\nYou are the only one looking.",
+        "pt": "A porta sibila e vocês entram, os três, olhos no canto. Ninguém falou nada sobre turnos. Ninguém falou nada.\nO chão está escorregadio. O ralo está entupido com alguma coisa marrom. O cheiro entra nos dentes.\nO garoto esfrega os olhos com as costas do pulso. O homem alto, no mesmo instante, espirra.\nVocê é o único olhando."
+      },
+      "roll": { "dice": "1d6", "dc": 4, "pass": "mop1", "fail": "scrape1" }
+    },
+    "stare": {
+      "title": { "en": "THE FACE", "pt": "O ROSTO" },
+      "text": {
+        "en": "You look at the face because you have to look at something.\nIt is worse than you thought. The paint is not a face. It is the idea of a face, done by someone who had heard of faces. Two green rings for eyes. A red gash for a mouth.\nYour own eyes start to sting. The air in here is dry and the bleach is in it and the thing in the corner does not need to blink, ever, and you do.",
+        "pt": "Você olha o rosto porque precisa olhar alguma coisa.\nÉ pior do que imaginava. A tinta não é um rosto. É a ideia de um rosto, feita por alguém que ouviu falar de rostos. Dois anéis verdes como olhos. Um talho vermelho como boca.\nSeus próprios olhos começam a arder. O ar aqui é seco, a água sanitária está nele, e a coisa do canto nunca precisa piscar, e você precisa."
+      },
+      "choices": [
+        { "label": { "en": "Hold your gaze", "pt": "Segurar o olhar" }, "roll": { "dice": "1d6", "dc": 3, "pass": "mop1", "fail": "scrape1" } }
+      ]
+    },
+    "mop1": {
+      "title": { "en": "THE FLOOR", "pt": "O CHÃO" },
+      "text": {
+        "en": "You mop. The others watch it. That is the deal: one works with his back to the corner, two keep their eyes on it.\nThe water in the bucket goes pink, then brown. You do not think about what it was. You think about the drain, the mop, the next square of floor.\nBehind you, the kid says 'blink' in a small voice, and then 'back'.\nYour own eyes are fine. For now they are fine.",
+        "pt": "Você esfrega. Os outros vigiam. O combinado é esse: um trabalha de costas para o canto, dois mantêm os olhos nela.\nA água do balde fica rosa, depois marrom. Você não pensa no que era. Pensa no ralo, no esfregão, no próximo pedaço de chão.\nAtrás de você, o garoto diz 'pisca' com voz pequena, e depois 'voltei'.\nSeus olhos estão bem. Por enquanto estão bem."
+      },
+      "choices": [
+        { "label": { "en": "Take a watch turn", "pt": "Assumir a vigia" }, "to": "watch1" },
+        { "label": { "en": "Keep mopping", "pt": "Continuar limpando" }, "to": "mop2" }
+      ]
+    },
+    "watch1": {
+      "title": { "en": "WATCHING", "pt": "VIGIANDO" },
+      "text": {
+        "en": "You trade with the tall man. Now the mop is his and the corner is yours.\nWatching is worse than working. There is nothing to do with your hands. There is only the thing, and the smile, and the dust settling on it in the still air.\nYour eyes fill up. The room swims. You need to blink, badly, and you cannot remember if anyone else is looking right now.",
+        "pt": "Você troca com o homem alto. Agora o esfregão é dele e o canto é seu.\nVigiar é pior do que trabalhar. Não há o que fazer com as mãos. Só existe a coisa, e o sorriso, e a poeira baixando sobre ela no ar parado.\nSeus olhos enchem d'água. A sala balança. Você precisa piscar, muito, e não lembra se mais alguém está olhando agora."
+      },
+      "choices": [
+        { "label": { "en": "Call your blink", "pt": "Avisar e piscar" }, "to": "watch_ok", "require": ["sync"] },
+        { "label": { "en": "Hold it", "pt": "Segurar" }, "roll": { "dice": "1d6", "dc": 4, "pass": "watch_ok", "fail": "scrape1" } }
+      ]
+    },
+    "watch_ok": {
+      "title": { "en": "WATCHING", "pt": "VIGIANDO" },
+      "text": {
+        "en": "You get through it. Eyes closed for the length of a word, open again, and the corner is the same corner, the smile the same smile.\nThe kid lets out a breath you did not know he was holding.\nHalf the floor is done. The other half is the half near the thing.",
+        "pt": "Você aguenta. Olhos fechados pelo tempo de uma palavra, abertos de novo, e o canto é o mesmo canto, o sorriso o mesmo sorriso.\nO garoto solta um ar que você não sabia que ele estava segurando.\nMetade do chão está feita. A outra metade é a metade perto da coisa."
+      },
+      "goto": "mop2"
+    },
+    "scrape1": {
+      "title": { "en": "THE SOUND", "pt": "O SOM" },
+      "text": {
+        "en": "A sound like a paving stone dragged across a driveway. One second long. Then nothing.\nWhen you open your eyes it is not in the corner. It is a full stride out of the corner, one arm raised a little, as if it had been walking and someone took a photograph.\nNobody saw it move. That is the point. That is the whole point.\nThe kid is making a noise that is not a word.",
+        "pt": "Um som de pedra arrastada sobre calçada. Um segundo. Depois nada.\nQuando você abre os olhos ela não está no canto. Está um passo inteiro fora do canto, um braço meio erguido, como se estivesse andando e alguém tivesse tirado uma foto.\nNinguém viu ela se mover. É esse o ponto. É todo o ponto.\nO garoto faz um barulho que não é palavra."
+      },
+      "set": ["moved"],
+      "choices": [
+        { "label": { "en": "Keep working", "pt": "Continuar o serviço" }, "to": "mop2" },
+        { "label": { "en": "Back to the door", "pt": "Recuar até a porta" }, "to": "retreat_early" }
+      ]
+    },
+    "retreat_early": {
+      "title": { "en": "THE DOOR", "pt": "A PORTA" },
+      "text": {
+        "en": "You back up to the door, all three, eyes forward. The intercom clicks.\n'The floor is not done.'\n'It moved,' you say.\n'That is what it does. The floor is not done.'\nThe tall man has his hand on the door. The kid is crying without sound. The thing stands where it stopped, smiling at nobody.",
+        "pt": "Vocês recuam até a porta, os três, olhos para a frente. O interfone clica.\n'O chão não está pronto.'\n'Ela se mexeu', você diz.\n'É o que ela faz. O chão não está pronto.'\nO homem alto está com a mão na porta. O garoto chora sem som. A coisa está parada onde parou, sorrindo para ninguém."
+      },
+      "choices": [
+        { "label": { "en": "Insist. Open it.", "pt": "Insistir. Abrir." }, "to": "end_early" },
+        { "label": { "en": "Go back to work", "pt": "Voltar ao serviço" }, "to": "mop2" }
+      ]
+    },
+    "mop2": {
+      "title": { "en": "THE FLOOR", "pt": "O CHÃO" },
+      "text": {
+        "en": "The second half. Every square you clean brings the bucket closer to the thing. You can smell it now, under the bleach: wet cement and old copper.\n'My eyes,' the kid says. 'I can't. I can't keep them open.'\nHe is on watch. He is one of the two. If he goes, there is one pair of eyes on it, and one pair is not enough for long.",
+        "pt": "A segunda metade. Cada pedaço que você limpa traz o balde para mais perto da coisa. Dá para sentir o cheiro agora, sob a água sanitária: cimento molhado e cobre velho.\n'Meus olhos', diz o garoto. 'Não consigo. Não consigo manter abertos.'\nEle está na vigia. Ele é um dos dois. Se ele falhar, sobra um par de olhos nela, e um par não basta por muito tempo."
+      },
+      "choices": [
+        { "label": { "en": "Take his turn", "pt": "Assumir o turno" }, "to": "cover_kid" },
+        { "label": { "en": "Tell him to hold", "pt": "Mandar ele segurar" }, "roll": { "dice": "1d6", "dc": 4, "pass": "mop3", "fail": "snap_kid" } },
+        { "label": { "en": "Leave now", "pt": "Sair agora" }, "to": "retreat_early", "require": ["moved"] }
+      ]
+    },
+    "cover_kid": {
+      "title": { "en": "TWO TURNS", "pt": "DOIS TURNOS" },
+      "text": {
+        "en": "'Close them,' you tell the kid. 'Count to ten. I have it.'\nYou drop the mop and turn. Now it is you and the tall man, and the tall man has been watching for a long time already, and his eyes are red as a rabbit's.\nTen seconds is nothing. Ten seconds is a year. The smile does not change. Your eyes burn and water and blur and the thing becomes a grey shape in a grey room and you cannot tell anymore if it is where it was.",
+        "pt": "'Fecha', você diz ao garoto. 'Conta até dez. Eu seguro.'\nVocê larga o esfregão e vira. Agora é você e o homem alto, e o homem alto já vigia há muito tempo, e os olhos dele estão vermelhos como os de um coelho.\nDez segundos não é nada. Dez segundos é um ano. O sorriso não muda. Seus olhos ardem, lacrimejam, embaçam, e a coisa vira um vulto cinza numa sala cinza e você já não sabe se ela está onde estava."
+      },
+      "choices": [
+        { "label": { "en": "Hold ten seconds", "pt": "Segurar dez seg." }, "roll": { "dice": "1d6", "dc": 5, "pass": "mop3", "fail": "snap_kid" } }
+      ]
+    },
+    "snap_kid": {
+      "title": { "en": "THE SNAP", "pt": "O ESTALO" },
+      "text": {
+        "en": "A scrape. A sound like a green branch breaking.\nThe kid is on the floor. His head is turned all the way round, looking at the door he was hoping for.\nThe thing is standing over him, two paces from you, arms out. Close enough to count the cracks in its paint.\nYou did not see it move. Nobody ever does.\nThe tall man makes a sound like a sob and does not blink.",
+        "pt": "Um raspar. Um som de galho verde quebrando.\nO garoto está no chão. A cabeça virada até o fim, olhando para a porta que ele tanto queria.\nA coisa está em pé sobre ele, a dois passos de você, braços abertos. Perto o bastante para contar as rachaduras da tinta.\nVocê não viu ela se mover. Ninguém nunca vê.\nO homem alto faz um som de soluço e não pisca."
+      },
+      "choices": [
+        { "label": { "en": "Back to the door", "pt": "Recuar até a porta" }, "to": "retreat_two" },
+        { "label": { "en": "Freeze. Stare.", "pt": "Congelar. Encarar." }, "to": "freeze" }
+      ]
+    },
+    "freeze": {
+      "title": { "en": "STARING", "pt": "ENCARANDO" },
+      "text": {
+        "en": "You do not move. It does not move. That is the only deal it offers.\nThe tall man breaks first. He runs for the door, and when he runs he turns his head, and for one full second you are the only eyes in the room.\nYou hear his boots. You hear the scrape start, right in front of you, close enough to feel it in your teeth.\nYour eyes are open. Keep them open.",
+        "pt": "Você não se move. Ela não se move. É o único acordo que ela oferece.\nO homem alto cede primeiro. Corre para a porta, e ao correr vira a cabeça, e por um segundo inteiro você é os únicos olhos da sala.\nVocê ouve as botas dele. Ouve o raspar começar, bem na sua frente, perto o bastante para sentir nos dentes.\nSeus olhos estão abertos. Mantenha abertos."
+      },
+      "roll": { "dice": "1d6", "dc": 4, "pass": "retreat_two", "fail": "end_neck" }
+    },
+    "retreat_two": {
+      "title": { "en": "TWO LEFT", "pt": "SOBRARAM DOIS" },
+      "text": {
+        "en": "Two of you now. Backwards, one step at a time, one saying 'blink' and the other saying 'go'. It stands where it stopped with its arms out like it wants to be picked up.\nYour back finds the steel. The other one hammers on it with his elbow. The intercom says 'Stand by.'\nStand by. With two pairs of eyes, both of them full of water, and a thing that only needs one of them to close.",
+        "pt": "Agora são dois. De costas, um passo de cada vez, um dizendo 'pisca' e o outro dizendo 'vai'. Ela está parada onde parou, braços abertos como se quisesse colo.\nSuas costas encontram o aço. O outro bate na porta com o cotovelo. O interfone diz 'Aguardem'.\nAguardem. Com dois pares de olhos, os dois cheios d'água, e uma coisa que só precisa que um deles se feche."
+      },
+      "roll": { "dice": "1d6", "dc": 4, "pass": "end_survivor", "fail": "alone" }
+    },
+    "alone": {
+      "title": { "en": "ALONE", "pt": "SOZINHO" },
+      "text": {
+        "en": "He said 'blink'. You said 'go'. You do not know what he did in that second, and you never will, because when your eyes open again he is sitting against the wall with his chin resting on his own shoulder blade.\nThe thing is an arm's length away. Its smile is at the height of your throat.\nOne pair of eyes. Yours. The door is still shut.\nDo not blink.",
+        "pt": "Ele disse 'pisca'. Você disse 'vai'. Você não sabe o que ele fez naquele segundo, e nunca vai saber, porque quando seus olhos abrem de novo ele está sentado contra a parede com o queixo apoiado na própria omoplata.\nA coisa está a um braço de distância. O sorriso está na altura da sua garganta.\nUm par de olhos. O seu. A porta continua fechada.\nNão pisque."
+      },
+      "choices": [
+        { "label": { "en": "Hold. Do not blink.", "pt": "Segurar. Não pisque" }, "roll": { "dice": "1d6", "dc": 5, "pass": "end_survivor", "fail": "end_neck" } },
+        { "label": { "en": "Close your eyes", "pt": "Fechar os olhos" }, "to": "end_neck" }
+      ]
+    },
+    "mop3": {
+      "title": { "en": "LAST SQUARE", "pt": "ÚLTIMO PEDAÇO" },
+      "text": {
+        "en": "The kid holds. Somehow he holds. The last of the floor goes from brown to grey under the mop and the water in the bucket is the color of a bad river.\nThe intercom: 'Two minutes.'\nThere is one square left. The square behind the thing, where it stood before, where the stain is darkest. To clean it, whoever mops has to go round it, and for a moment the watchers will be watching its back.",
+        "pt": "O garoto aguenta. De algum jeito aguenta. O resto do chão passa de marrom a cinza sob o esfregão e a água do balde tem cor de rio ruim.\nO interfone: 'Dois minutos.'\nFalta um pedaço. O pedaço atrás da coisa, onde ela estava antes, onde a mancha é mais escura. Para limpar, quem esfrega precisa dar a volta nela, e por um instante os vigias vão estar vigiando as costas dela."
+      },
+      "choices": [
+        { "label": { "en": "Clean behind it", "pt": "Limpar atrás dela" }, "to": "corner" },
+        { "label": { "en": "Good enough. Go.", "pt": "Está bom. Sair." }, "to": "exit_walk" }
+      ]
+    },
+    "corner": {
+      "title": { "en": "BEHIND IT", "pt": "ATRÁS DELA" },
+      "text": {
+        "en": "You go round it. Close. Closer than you have been to anything you hated.\nFrom behind it is only concrete, a rough grey back with the rebar showing at the shoulder like a bone. There is no face on this side. It is easier, not seeing the face. It is also worse.\nThe tall man is watching. The kid is watching. You mop, fast, and the scrape of your bucket on the floor sounds exactly like the other scrape, and everyone in the room stops breathing at once.",
+        "pt": "Você dá a volta nela. Perto. Mais perto do que já esteve de qualquer coisa que odiou.\nPor trás é só concreto, umas costas cinzas e ásperas com o vergalhão aparecendo no ombro como um osso. Não há rosto deste lado. É mais fácil não ver o rosto. Também é pior.\nO homem alto vigia. O garoto vigia. Você esfrega, rápido, e o raspar do seu balde no chão soa exatamente igual ao outro raspar, e todo mundo na sala para de respirar ao mesmo tempo."
+      },
+      "roll": { "dice": "1d6", "dc": 4, "pass": "exit_walk", "fail": "snap_tall" }
+    },
+    "snap_tall": {
+      "title": { "en": "THE SNAP", "pt": "O ESTALO" },
+      "text": {
+        "en": "It was not your bucket the second time.\nThe tall man is on the floor. He never said a word in your hearing, and he does not say one now. The thing is beside him with its head cocked, as if listening for the sound it just made.\nThe kid is screaming with his eyes wide open. That is good. Screaming is fine. Just keep them open.\nYou are on the wrong side of it. You have to walk past it to reach the door.",
+        "pt": "Da segunda vez não foi o seu balde.\nO homem alto está no chão. Ele nunca disse uma palavra na sua frente, e não diz uma agora. A coisa está ao lado dele com a cabeça inclinada, como se escutasse o som que acabou de fazer.\nO garoto grita de olhos arregalados. Isso é bom. Gritar pode. Só mantenha abertos.\nVocê está do lado errado dela. Precisa passar por ela para chegar à porta."
+      },
+      "choices": [
+        { "label": { "en": "Walk past it", "pt": "Passar por ela" }, "to": "retreat_two" },
+        { "label": { "en": "Freeze. Stare.", "pt": "Congelar. Encarar." }, "to": "freeze" }
+      ]
+    },
+    "exit_walk": {
+      "title": { "en": "THE WALK", "pt": "A VOLTA" },
+      "text": {
+        "en": "Buckets in one hand, mops in the other, backwards across a clean wet floor. 'Blink.' 'Back.' 'Blink.' 'Back.' It is almost a song by now.\nThe thing stays where it is and smiles at the place where you were.\nThe door is behind you. The intercom says 'Stand by for release.' There is a delay on the lock. There is always a delay on the lock.",
+        "pt": "Baldes numa mão, esfregões na outra, de costas por um chão limpo e molhado. 'Pisca.' 'Voltei.' 'Pisca.' 'Voltei.' A essa altura é quase uma música.\nA coisa fica onde está e sorri para o lugar onde você estava.\nA porta está atrás de vocês. O interfone diz 'Aguardem a liberação'. Há um atraso na tranca. Sempre há um atraso na tranca."
+      },
+      "roll": { "dice": "1d6", "dc": 3, "pass": "end_clean", "fail": "door_delay" }
+    },
+    "door_delay": {
+      "title": { "en": "STAND BY", "pt": "AGUARDEM" },
+      "text": {
+        "en": "The lock does not open. The intercom does not answer. And the lights, the flat white lights that have been the only mercy in this room, flicker once.\nThey come back. The thing has not moved. Not yet.\nThey flicker again, longer. In the dark, a scrape. When the light returns the thing is a step closer and the kid is saying 'no no no' very quietly.\nThe door will open. The guard said it would. The question is what you do until it does.",
+        "pt": "A tranca não abre. O interfone não responde. E as luzes, as luzes brancas e chapadas que foram a única misericórdia desta sala, piscam uma vez.\nVoltam. A coisa não se moveu. Ainda não.\nPiscam de novo, mais longo. No escuro, um raspar. Quando a luz volta a coisa está um passo mais perto e o garoto diz 'não não não' bem baixinho.\nA porta vai abrir. O guarda disse que abria. A pergunta é o que você faz até lá."
+      },
+      "choices": [
+        { "label": { "en": "Eyes on it. Wait.", "pt": "Olhos nela. Esperar" }, "roll": { "dice": "1d6", "dc": 4, "pass": "end_clean", "fail": "end_dark" } },
+        { "label": { "en": "Turn, force door", "pt": "Virar, forçar porta" }, "to": "end_blink" }
+      ]
+    },
+    "end_clean": {
+      "title": { "en": "RELEASED", "pt": "LIBERADOS" },
+      "text": {
+        "en": "The lock clacks. The door opens outward and you fall through it, all three, and someone slams it shut on a smile that has not changed at all.\nThe guard checks his card. 'Floor clean?'\n'Floor clean.'\nHe writes something. You are walked back to your cells with your eyes still wide, and that night you sleep with them open, and it is a while before you stop saying 'blink' out loud before you do.",
+        "pt": "A tranca estala. A porta abre para fora e vocês caem por ela, os três, e alguém a bate na cara de um sorriso que não mudou nada.\nO guarda confere o cartão. 'Chão limpo?'\n'Chão limpo.'\nEle anota algo. Vocês voltam para as celas de olhos ainda arregalados, e naquela noite você dorme com eles abertos, e leva um tempo até parar de dizer 'pisca' em voz alta antes de piscar."
+      },
+      "ending": "good"
+    },
+    "end_survivor": {
+      "title": { "en": "RELEASED", "pt": "LIBERADO" },
+      "text": {
+        "en": "The lock clacks behind you. You go through it backwards, eyes on the thing until the steel cuts between you.\nThe corridor is very bright. The guard looks past you at the window, then at his card, then at you.\n'Floor clean?'\nYou start to laugh and cannot stop. He waits. Then he writes 'partial' and walks you back.\nThey will send another crew next week. They will tell them about the eyes. They will not tell them about you.",
+        "pt": "A tranca estala atrás de você. Você atravessa de costas, olhos na coisa até o aço cortar entre vocês.\nO corredor é muito claro. O guarda olha por cima do seu ombro para a janela, depois para o cartão, depois para você.\n'Chão limpo?'\nVocê começa a rir e não consegue parar. Ele espera. Depois escreve 'parcial' e te leva de volta.\nVão mandar outra equipe semana que vem. Vão falar dos olhos. Não vão falar de você."
+      },
+      "ending": "good"
+    },
+    "end_early": {
+      "title": { "en": "UNFINISHED", "pt": "INACABADO" },
+      "text": {
+        "en": "The door opens. You do not know why. Maybe the guard has seen enough crews to know which ones come back.\nThe floor is half done. The report says 'incomplete, personnel intact', which is not a phrase that report uses often.\nYou are back on the list for next week. Same room. Same floor. You lie awake and practice not blinking, and you get very good at it, and it does not help at all.",
+        "pt": "A porta abre. Você não sabe por quê. Talvez o guarda já tenha visto equipes suficientes para saber quais voltam.\nO chão ficou pela metade. O relatório diz 'incompleto, pessoal intacto', que não é uma frase que esse relatório usa com frequência.\nVocê está de volta na lista da semana que vem. Mesma sala. Mesmo chão. Você fica acordado praticando não piscar, e fica muito bom nisso, e não ajuda em nada."
+      },
+      "ending": "neutral"
+    },
+    "end_refuse": {
+      "title": { "en": "REFUSED", "pt": "RECUSA" },
+      "text": {
+        "en": "You refuse. The guard does not argue. Two others walk you back, and a fourth number is called from the list to take your place.\nYou hear later that the crew came out with two. You hear the kid was one of them. You do not ask which.\nThe next month they call your number again, for the same room. Refusing only works once.",
+        "pt": "Você recusa. O guarda não discute. Dois outros te levam de volta, e um quarto número é chamado da lista para o seu lugar.\nVocê ouve depois que a equipe saiu com dois. Ouve que o garoto era um deles. Não pergunta qual.\nNo mês seguinte chamam o seu número de novo, para a mesma sala. Recusar só funciona uma vez."
+      },
+      "ending": "neutral"
+    },
+    "end_neck": {
+      "title": { "en": "THE SNAP", "pt": "O ESTALO" },
+      "text": {
+        "en": "Your eyes close. It is only for a moment. It has only ever needed a moment.\nYou hear the scrape. You do not hear the rest.\nOn the other side of the glass the guard makes a note: three entered, floor partially cleaned, object relocated to the north wall. Cleaning to be rescheduled.",
+        "pt": "Seus olhos se fecham. É só por um instante. Ela nunca precisou de mais do que um instante.\nVocê ouve o raspar. O resto você não ouve.\nDo outro lado do vidro o guarda anota: três entraram, chão parcialmente limpo, objeto realocado para a parede norte. Limpeza a ser remarcada."
+      },
+      "ending": "bad"
+    },
+    "end_dark": {
+      "title": { "en": "LIGHTS OUT", "pt": "APAGÃO" },
+      "text": {
+        "en": "The lights go out and stay out.\nIn the dark there are no eyes. In the dark the rule does not exist, and the thing that lives by the rule is free.\nScrape. Scrape. A sound like a branch. Another. You press your back to the steel and stare into black and it does not matter how wide your eyes are.\nWhen the lights come back the room is very clean, and very quiet, and the door opens on time.",
+        "pt": "As luzes apagam e não voltam.\nNo escuro não há olhos. No escuro a regra não existe, e a coisa que vive pela regra está solta.\nRaspar. Raspar. Um som de galho. Outro. Você prensa as costas no aço e encara o preto e não importa o quanto seus olhos estão abertos.\nQuando as luzes voltam a sala está muito limpa, e muito quieta, e a porta abre na hora."
+      },
+      "ending": "bad"
+    },
+    "end_blink": {
+      "title": { "en": "THE DOOR", "pt": "A PORTA" },
+      "text": {
+        "en": "You turn. It is half a second. You put your shoulder into the steel and the steel does not care.\nThe others are still watching it, you think. Two pairs is enough, you think.\nBut the kid turned when you turned, because you were the one who knew what to do, and for half a second there was only the tall man, and the tall man had bleach in his eyes.\nYou hear the scrape behind you. You do not turn back around. There is no point.",
+        "pt": "Você vira. É meio segundo. Você joga o ombro no aço e o aço não se importa.\nOs outros continuam olhando para ela, você pensa. Dois pares bastam, você pensa.\nMas o garoto virou quando você virou, porque era você quem sabia o que fazer, e por meio segundo só havia o homem alto, e o homem alto estava com água sanitária nos olhos.\nVocê ouve o raspar atrás de você. Não vira de volta. Não faz diferença."
+      },
+      "ending": "bad"
+    }
+  }
+}

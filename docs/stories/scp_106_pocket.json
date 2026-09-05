@@ -1,0 +1,294 @@
+{
+  "meta": {
+    "title": { "en": "106: Pocket", "pt": "106: O Bolso" },
+    "author": "Marcelo Souza / Kumodot.art (adaptation)",
+    "version": 1,
+    "tier": 3,
+    "category": "SCP",
+    "start": "post",
+    "blurb": {
+      "en": "The Old Man walks through walls. Where he walks, the walls rot. Foundation Files, no. 5.",
+      "pt": "O Velho atravessa paredes. Por onde passa, as paredes apodrecem. Arquivos da Fundação, n. 5."
+    },
+    "langs": ["en", "pt"],
+    "license": "CC BY-SA 3.0",
+    "based_on": "SCP-106 by Dr Gears, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-106 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+    "series": "Foundation Files",
+    "stats": { "grit": 5, "luck": 3 }
+  },
+  "flags": ["knows_protocol", "met_victim", "heard_lure"],
+  "nodes": {
+    "post": {
+      "title": { "en": "NIGHT SHIFT", "pt": "TURNO NOITE" },
+      "text": {
+        "en": "You are Security Officer Reyes, Site-19, Sector 3, night shift. Your post is a desk, a monitor and a door. The monitor shows an empty corridor. It has shown an empty corridor for six years.\nAt 02:14 the lights go amber. A voice says: 'Containment breach, SCP-106. All personnel keep clear of walls, floors and ceilings.'\nYou look at the wall beside your desk. A dark stain is spreading on it, slowly, like tea on paper. It smells of rust and something older.",
+        "pt": "Você é o oficial de segurança Reyes, Site-19, Setor 3, turno da noite. Seu posto é uma mesa, um monitor e uma porta. O monitor mostra um corredor vazio. Mostra um corredor vazio há seis anos.\nÀs 02:14 as luzes ficam âmbar. Uma voz diz: 'Quebra de contenção, SCP-106. Todo o pessoal deve se afastar de paredes, pisos e tetos.'\nVocê olha para a parede ao lado da mesa. Uma mancha escura se espalha nela, devagar, como chá em papel. Cheira a ferrugem e a algo mais antigo."
+      },
+      "choices": [
+        { "label": { "en": "Call control", "pt": "Chamar o controle" }, "to": "radio" },
+        { "label": { "en": "Check the corridor", "pt": "Olhar o corredor" }, "to": "corridor" },
+        { "label": { "en": "Stay at the post", "pt": "Ficar no posto" }, "to": "hide" }
+      ]
+    },
+    "radio": {
+      "title": { "en": "CONTROL", "pt": "CONTROLE" },
+      "text": {
+        "en": "'Control, Reyes, Sector 3. I have corrosion on my wall.'\nA pause long enough to mean something. 'Copy. It is in your sector. Recall protocol is staging in Cell 3, end of your corridor. Do not touch anything black. Do not stand still near a surface. Move to Cell 3 and hold there.'\n'What is the recall protocol?'\n'You will hear it,' control says, and clicks off.",
+        "pt": "'Controle, Reyes, Setor 3. Tenho corrosão na minha parede.'\nUma pausa longa o bastante para significar algo. 'Copiado. Ele está no seu setor. O protocolo de recolha está sendo montado na Cela 3, no fim do seu corredor. Não toque em nada preto. Não fique parado perto de uma superfície. Vá para a Cela 3 e segure lá.'\n'O que é o protocolo de recolha?'\n'Você vai ouvir', diz o controle, e desliga."
+      },
+      "set": ["knows_protocol"],
+      "goto": "corridor"
+    },
+    "hide": {
+      "title": { "en": "THE POST", "pt": "O POSTO" },
+      "text": {
+        "en": "You stay. The desk is bolted to the floor and the door is steel and there is a procedure for this, somewhere, in a binder.\nThe stain on the wall is the size of a man now. It drips. The drops do not fall; they crawl down the wall like they are choosing where to go.\nSomething behind the paint pushes outward. The wall bulges, wet, and does not break.",
+        "pt": "Você fica. A mesa é aparafusada no chão, a porta é de aço e existe um procedimento para isso, em algum lugar, numa pasta.\nA mancha na parede já tem o tamanho de um homem. Ela pinga. As gotas não caem; elas escorrem pela parede como se escolhessem para onde ir.\nAlgo atrás da tinta empurra para fora. A parede estufa, molhada, e não se rompe."
+      },
+      "choices": [
+        { "label": { "en": "Get out now", "pt": "Sair agora" }, "roll": { "dice": "1d6", "stat": "luck", "dc": 5, "pass": "corridor", "fail": "wall_hand" } }
+      ]
+    },
+    "wall_hand": {
+      "title": { "en": "THE WALL", "pt": "A PAREDE" },
+      "text": {
+        "en": "You reach the door. A hand comes out of the wall beside it. Not through a hole. Out of the paint itself, the way a hand comes out of water.\nIt is grey, wet, and the skin is loose on it like an old glove. It closes on your forearm. Where it touches, your sleeve goes black and soft and comes apart.\nThe pain arrives late. The wall arrives first.",
+        "pt": "Você alcança a porta. Uma mão sai da parede ao lado dela. Não por um buraco. Da própria tinta, do jeito que uma mão sai da água.\nÉ cinza, molhada, e a pele está frouxa como uma luva velha. Ela se fecha no seu antebraço. Onde toca, a sua manga fica preta e mole e se desfaz.\nA dor chega atrasada. A parede chega primeiro."
+      },
+      "mod": { "grit": -1 },
+      "goto": "pulled"
+    },
+    "corridor": {
+      "title": { "en": "SECTOR 3", "pt": "SETOR 3" },
+      "text": {
+        "en": "The corridor is forty meters of white tile under amber light. Half of it is not white anymore. Black wet streaks run along the walls at shoulder height, the tile beneath them pitted and soft.\nHalfway down, an old man is walking out of the wall.\nHe is thin, bald, grey, and his coat hangs off him in strips. He moves like a man who has never once been in a hurry. He does not look at you. Then he does.",
+        "pt": "O corredor são quarenta metros de azulejo branco sob luz âmbar. Metade dele já não é branco. Riscos pretos e úmidos correm pelas paredes na altura do ombro, o azulejo por baixo corroído e mole.\nNo meio do caminho, um velho está saindo de dentro da parede.\nÉ magro, careca, cinza, e o casaco pende dele em tiras. Anda como um homem que nunca teve pressa na vida. Não olha para você. Depois olha."
+      },
+      "choices": [
+        { "label": { "en": "Draw and fire", "pt": "Sacar e atirar" }, "to": "fire" },
+        { "label": { "en": "Run for Cell 3", "pt": "Correr p/ Cela 3" }, "roll": { "dice": "1d6", "stat": "luck", "dc": 6, "pass": "doors", "fail": "pulled" } },
+        { "label": { "en": "Hold still", "pt": "Ficar imóvel" }, "to": "still" }
+      ]
+    },
+    "fire": {
+      "title": { "en": "SECTOR 3", "pt": "SETOR 3" },
+      "text": {
+        "en": "Three rounds, center mass, the way they taught you. They go in. He does not seem to notice they went in. The holes weep black.\nHe smiles. It is a small, polite smile, the smile of someone who has been handed a gift he was going to take anyway.\nHe steps sideways into the wall and is gone, and the floor under your boots goes soft.",
+        "pt": "Três tiros, no centro do tronco, do jeito que te ensinaram. Eles entram. Ele não parece notar que entraram. Os buracos vertem preto.\nEle sorri. É um sorriso pequeno, educado, o sorriso de alguém que recebeu de presente algo que ia pegar de qualquer jeito.\nEle dá um passo de lado para dentro da parede e some, e o chão sob suas botas fica mole."
+      },
+      "mod": { "grit": -1 },
+      "goto": "pulled"
+    },
+    "still": {
+      "title": { "en": "SECTOR 3", "pt": "SETOR 3" },
+      "text": {
+        "en": "You do not move. He walks toward you, and the walking takes a long time, and the black comes with him along the walls like a tide.\nHe stops close enough that you can see his eyes are not eyes. They are holes with something patient at the bottom.\nHe raises one hand, slowly, the way you would to a dog you were not sure of.\nYour heart is very loud. You hope he cannot hear it.",
+        "pt": "Você não se mexe. Ele caminha na sua direção, e a caminhada demora, e o preto vem com ele pelas paredes como uma maré.\nEle para perto o bastante para você ver que os olhos não são olhos. São buracos com algo paciente no fundo.\nEle ergue uma mão, devagar, do jeito que se faz com um cachorro de que não se tem certeza.\nSeu coração está muito alto. Você torce para que ele não ouça."
+      },
+      "choices": [
+        { "label": { "en": "Keep still", "pt": "Continuar parado" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 8, "pass": "passed_by", "fail": "pulled" } },
+        { "label": { "en": "Break and run", "pt": "Correr" }, "roll": { "dice": "1d6", "stat": "luck", "dc": 6, "pass": "doors", "fail": "pulled" } }
+      ]
+    },
+    "passed_by": {
+      "title": { "en": "SECTOR 3", "pt": "SETOR 3" },
+      "text": {
+        "en": "The hand stops a finger's width from your cheek. You feel the cold of it. You smell the rust.\nThen his head turns, slow, toward the end of the corridor, as if someone had said his name very quietly.\nHe lowers the hand. He walks past you, into the wall, and the wall closes over him like mud.\nYou are still standing. Your left boot has gone black at the toe. You do not look at it.",
+        "pt": "A mão para a um dedo da sua bochecha. Você sente o frio dela. Sente o cheiro de ferrugem.\nEntão a cabeça dele vira, devagar, para o fim do corredor, como se alguém tivesse dito o nome dele bem baixinho.\nEle abaixa a mão. Passa por você, entra na parede, e a parede se fecha sobre ele como lama.\nVocê continua em pé. A ponta da sua bota esquerda ficou preta. Você não olha para ela."
+      },
+      "goto": "doors"
+    },
+    "doors": {
+      "title": { "en": "CELL 3", "pt": "CELA 3" },
+      "text": {
+        "en": "Cell 3 is an observation room bolted to a bare concrete cell. Two MTF in heavy gear, a technician at a console, and a doctor who does not introduce herself.\nInside the cell, through the glass, a young man in an orange jumpsuit sits on the floor. A D-class. Something has been done to his leg. He is not screaming yet.\n'He is the lure,' the doctor says. 'It comes to the sound. When it is inside, we seal. Your job is the corridor door. Nothing leaves this room until we say.'\nThe technician's hand rests on the PA switch.",
+        "pt": "A Cela 3 é uma sala de observação parafusada a uma cela de concreto nu. Dois da FTM em equipamento pesado, um técnico num console e uma médica que não se apresenta.\nDentro da cela, através do vidro, um rapaz de macacão laranja está sentado no chão. Um Classe D. Fizeram algo com a perna dele. Ele ainda não está gritando.\n'Ele é a isca', diz a médica. 'Ele vem pelo som. Quando estiver lá dentro, selamos. Seu trabalho é a porta do corredor. Nada sai desta sala até a gente mandar.'\nA mão do técnico repousa na chave do alto-falante."
+      },
+      "choices": [
+        { "label": { "en": "Take the door", "pt": "Assumir a porta" }, "to": "recall" },
+        { "label": { "en": "Med kit first", "pt": "Kit médico antes" }, "to": "recall", "mod": { "grit": 1 } },
+        { "label": { "en": "Cut the PA", "pt": "Cortar o som" }, "to": "cut_pa" },
+        { "label": { "en": "Leave the site", "pt": "Abandonar o site" }, "to": "end_desert" }
+      ]
+    },
+    "cut_pa": {
+      "title": { "en": "CELL 3", "pt": "CELA 3" },
+      "text": {
+        "en": "You reach past the technician and slap the PA switch down. The speakers in the corridor go dead mid-breath.\nNobody stops you. That is the strange part. The doctor only looks at you, tired, as if you had done something she had seen done before.\n'He is still coming,' she says. 'He was already coming. Now he is coming to the nearest sound.'\nThe nearest sound is your breathing.\nThe floor by your boots goes black.",
+        "pt": "Você passa por cima do técnico e derruba a chave do alto-falante. As caixas do corredor morrem no meio de uma respiração.\nNinguém te impede. Essa é a parte estranha. A médica só olha para você, cansada, como se você tivesse feito algo que ela já viu alguém fazer.\n'Ele continua vindo', ela diz. 'Ele já estava vindo. Agora está vindo para o som mais próximo.'\nO som mais próximo é a sua respiração.\nO chão junto às suas botas fica preto."
+      },
+      "mod": { "grit": -1 },
+      "goto": "pulled"
+    },
+    "recall": {
+      "title": { "en": "RECALL", "pt": "RECOLHA" },
+      "text": {
+        "en": "The technician throws the switch. The young man's sound goes out over every speaker in Sector 3. You have heard men hurt before. Not like this. Not amplified.\nYou stand at the corridor door with your back to nothing, because everything is a surface now.\nEleven minutes. The corridor wall darkens from the far end toward you like a slow burn. The old man walks out of it, unhurried, head tilted toward the sound.\nHe has to pass you to reach the cell.",
+        "pt": "O técnico vira a chave. O som do rapaz sai por todos os alto-falantes do Setor 3. Você já ouviu homens feridos antes. Não assim. Não amplificado.\nVocê fica na porta do corredor com as costas para o nada, porque agora tudo é superfície.\nOnze minutos. A parede do corredor escurece do fundo até você como uma queimadura lenta. O velho sai dela, sem pressa, a cabeça inclinada para o som.\nEle precisa passar por você para chegar à cela."
+      },
+      "choices": [
+        { "label": { "en": "Hold the door", "pt": "Segurar a porta" }, "require": ["knows_protocol"], "roll": { "dice": "1d6", "stat": "grit", "dc": 7, "pass": "end_recalled", "fail": "end_taken_recall" } },
+        { "label": { "en": "Hold the door", "pt": "Segurar a porta" }, "require": ["!knows_protocol"], "roll": { "dice": "1d6", "stat": "grit", "dc": 8, "pass": "end_recalled", "fail": "end_taken_recall" } },
+        { "label": { "en": "Step aside", "pt": "Sair da frente" }, "roll": { "dice": "1d6", "stat": "luck", "dc": 5, "pass": "end_recalled", "fail": "pulled" } }
+      ]
+    },
+    "pulled": {
+      "title": { "en": "THE WALL", "pt": "A PAREDE" },
+      "text": {
+        "en": "The surface takes you. It is not a fall. It is being swallowed by something that has all the time in the world.\nBlack, and cold, and a smell of iron so thick it is a taste. Then a floor, or something that has decided to be a floor.\nYou are lying on rusted grating. The light is the color of an old bruise. Corridors run away in every direction, and two of them run uphill and downhill at the same time.\nSomewhere, far off, something is dragging its feet on metal. Taking its time.",
+        "pt": "A superfície te leva. Não é uma queda. É ser engolido por algo que tem todo o tempo do mundo.\nPreto, e frio, e um cheiro de ferro tão denso que vira gosto. Depois um chão, ou algo que decidiu ser chão.\nVocê está deitado sobre uma grade enferrujada. A luz tem a cor de um hematoma velho. Corredores fogem em todas as direções, e dois deles sobem e descem ao mesmo tempo.\nEm algum lugar, longe, algo arrasta os pés no metal. Sem pressa."
+      },
+      "goto": "pocket1"
+    },
+    "pocket1": {
+      "title": { "en": "THE POCKET", "pt": "O BOLSO" },
+      "text": {
+        "en": "The corridors are the Site's corridors, almost. Same width. Same doors. But the doors open on more corridor, and the corridor turns four left corners and arrives somewhere new.\nEverything is rust. The walls flake when you touch them. Under the flakes, more rust.\nThe dragging sound is behind you. Then it is ahead of you. It has not moved. You have.",
+        "pt": "Os corredores são os corredores do Site, quase. Mesma largura. Mesmas portas. Mas as portas abrem para mais corredor, e o corredor faz quatro curvas à esquerda e chega a um lugar novo.\nTudo é ferrugem. As paredes descascam quando você toca. Sob as lascas, mais ferrugem.\nO som de arrasto está atrás de você. Depois está na frente. Ele não se moveu. Você se moveu."
+      },
+      "choices": [
+        { "label": { "en": "Follow a corridor", "pt": "Seguir um corredor" }, "to": "pocket_corr" },
+        { "label": { "en": "Take the stairs", "pt": "Subir a escada" }, "to": "pocket_stair" },
+        { "label": { "en": "Wait and listen", "pt": "Esperar e ouvir" }, "to": "pocket_wait" }
+      ]
+    },
+    "pocket_wait": {
+      "title": { "en": "THE POCKET", "pt": "O BOLSO" },
+      "text": {
+        "en": "You stand still and listen. This is a mistake, and you understand why a moment later: standing still is what he likes.\nThe dragging comes closer. Stops. A hand rests on your shoulder from behind, light as a leaf, and stays there for a long time. It does not squeeze. It does not need to.\nThen it is gone, and you can breathe, and your shoulder is wet and cold through the cloth.\nHe is not hunting you. He is enjoying you.",
+        "pt": "Você fica parado e escuta. É um erro, e você entende por que um instante depois: ficar parado é o que ele gosta.\nO arrasto se aproxima. Para. Uma mão pousa no seu ombro, por trás, leve como uma folha, e fica ali muito tempo. Não aperta. Não precisa.\nDepois some, e você consegue respirar, e o ombro está molhado e frio através do pano.\nEle não está te caçando. Está se divertindo com você."
+      },
+      "mod": { "grit": -1 },
+      "choices": [
+        { "label": { "en": "Move. Now.", "pt": "Andar. Agora." }, "to": "pocket1", "require": ["grit>0"] },
+        { "label": { "en": "Sit down", "pt": "Sentar" }, "to": "end_kept", "require": ["grit<=0"] }
+      ]
+    },
+    "pocket_corr": {
+      "title": { "en": "RUST", "pt": "FERRUGEM" },
+      "text": {
+        "en": "You walk. The corridor is long and then it is the same corridor again, the same rust flower on the same wall.\nThere is a man sitting against it. Orange jumpsuit, or it was orange once. He is thin the way a thing gets thin over years.\n'Don't take the doors,' he says. 'He makes the doors.' His voice has not been used in a long time.\n'How long have you been here?'\nHe thinks about it. 'What year is it?'",
+        "pt": "Você anda. O corredor é longo e depois é o mesmo corredor de novo, a mesma flor de ferrugem na mesma parede.\nHá um homem sentado encostado nela. Macacão laranja, ou já foi laranja um dia. É magro do jeito que uma coisa fica magra ao longo de anos.\n'Não pegue as portas', ele diz. 'Ele faz as portas.' A voz dele não é usada há muito tempo.\n'Há quanto tempo você está aqui?'\nEle pensa. 'Que ano é?'"
+      },
+      "set": ["met_victim"],
+      "choices": [
+        { "label": { "en": "Follow him", "pt": "Ir com ele" }, "to": "victim_guide" },
+        { "label": { "en": "Go on alone", "pt": "Seguir sozinho" }, "to": "pocket_maze" }
+      ]
+    },
+    "victim_guide": {
+      "title": { "en": "RUST", "pt": "FERRUGEM" },
+      "text": {
+        "en": "He gets up like it costs him and walks ahead without looking back. He never touches the walls. You copy him.\n'There's a thin place,' he says. 'Sometimes. When he goes out, it goes thin behind him. I tried it once.'\n'What happened?'\n'He was waiting on the other side.' He shrugs. 'He likes that one.'\nHe stops at a door that looks exactly like every other door.\n'Or it's a real one. You'll know when you open it.'",
+        "pt": "Ele se levanta como se custasse e vai na frente sem olhar para trás. Nunca toca nas paredes. Você faz igual.\n'Tem um lugar fino', ele diz. 'Às vezes. Quando ele sai, fica fino atrás dele. Eu tentei uma vez.'\n'O que aconteceu?'\n'Ele estava esperando do outro lado.' Dá de ombros. 'Ele gosta dessa.'\nEle para numa porta que parece exatamente igual a todas as outras.\n'Ou é uma de verdade. Você vai saber quando abrir.'"
+      },
+      "choices": [
+        { "label": { "en": "Open the door", "pt": "Abrir a porta" }, "roll": { "dice": "1d6", "stat": "luck", "dc": 5, "pass": "pocket_door", "fail": "hunted" } },
+        { "label": { "en": "Leave the door", "pt": "Deixar a porta" }, "to": "pocket_stair" }
+      ]
+    },
+    "pocket_stair": {
+      "title": { "en": "THE STAIRS", "pt": "A ESCADA" },
+      "text": {
+        "en": "An iron stair goes up. You climb it for a long time and arrive at the bottom of it.\nOn the second try you count. Forty steps up, and the landing is the landing you left, and your own boot prints are in the rust.\nOn the third try there is a sound. Faint, through the metal, like a radio in another apartment. A man, hurt, over a speaker.\nThe lure. Somewhere the Site is calling him home, and the walls here are thinner where the sound comes through.",
+        "pt": "Uma escada de ferro sobe. Você sobe por muito tempo e chega ao pé dela.\nNa segunda tentativa você conta. Quarenta degraus para cima, e o patamar é o patamar de onde saiu, e as marcas das suas botas estão na ferrugem.\nNa terceira tentativa há um som. Fraco, através do metal, como um rádio em outro apartamento. Um homem, ferido, num alto-falante.\nA isca. Em algum lugar o Site está chamando ele de volta, e as paredes aqui são mais finas onde o som atravessa."
+      },
+      "set": ["heard_lure"],
+      "choices": [
+        { "label": { "en": "Follow the sound", "pt": "Seguir o som" }, "to": "follow_sound" },
+        { "label": { "en": "Away from it", "pt": "Ir para longe" }, "to": "pocket_maze" },
+        { "label": { "en": "Find the man again", "pt": "Achar o homem" }, "to": "pocket_corr", "require": ["met_victim"] }
+      ]
+    },
+    "pocket_maze": {
+      "title": { "en": "THE HUNT", "pt": "A CAÇA" },
+      "text": {
+        "en": "Corridors. A room full of chairs, all facing a wall. A corridor that is a ceiling. You keep moving because moving is the only rule you have found.\nHe is at the end of the hall. He is at the end of every hall. He walks toward you at the same slow pace no matter how fast you go, and he is smiling now, openly, the way a child smiles at a beetle.\nThere is a gap between two rusted panels on your left. It might go somewhere.",
+        "pt": "Corredores. Uma sala cheia de cadeiras, todas viradas para uma parede. Um corredor que é um teto. Você continua andando porque andar é a única regra que encontrou.\nEle está no fim do corredor. Está no fim de todos os corredores. Anda na sua direção no mesmo passo lento, não importa a sua velocidade, e agora sorri, abertamente, do jeito que uma criança sorri para um besouro.\nHá uma fresta entre dois painéis enferrujados à sua esquerda. Talvez leve a algum lugar."
+      },
+      "choices": [
+        { "label": { "en": "Through the gap", "pt": "Pela fresta" }, "roll": { "dice": "1d6", "stat": "luck", "dc": 6, "pass": "pocket_stair", "fail": "hunted" } },
+        { "label": { "en": "Face him", "pt": "Encarar" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 9, "pass": "pocket_stair", "fail": "hunted" } }
+      ]
+    },
+    "hunted": {
+      "title": { "en": "THE HUNT", "pt": "A CAÇA" },
+      "text": {
+        "en": "He catches you. It is not violent. He simply is where you were going to be.\nThe hand on your chest is cold and the cold goes in. Your shirt blackens under it. He holds you there against the rust and looks at you for a long time, as if reading something written small.\nThen he lets go. He steps back into the wall. He wants you to run again.\nYou understand now. This is the whole point of the place. Not the catching. The letting go.",
+        "pt": "Ele te pega. Não é violento. Ele simplesmente está onde você ia estar.\nA mão no seu peito é fria e o frio entra. A camisa escurece embaixo dela. Ele te segura ali contra a ferrugem e te olha por muito tempo, como quem lê algo escrito em letra miúda.\nDepois solta. Recua para dentro da parede. Ele quer que você corra de novo.\nAgora você entende. É esse o sentido do lugar. Não é pegar. É soltar."
+      },
+      "mod": { "grit": -1 },
+      "choices": [
+        { "label": { "en": "Get up", "pt": "Levantar" }, "to": "pocket1", "require": ["grit>0"] },
+        { "label": { "en": "Stay down", "pt": "Ficar no chão" }, "to": "end_kept", "require": ["grit<=0"] }
+      ]
+    },
+    "follow_sound": {
+      "title": { "en": "THIN PLACE", "pt": "LUGAR FINO" },
+      "text": {
+        "en": "You follow the sound down a corridor that gets narrower as the sound gets louder. The rust here is wet and warm. The wall at the end is not rust at all. It is concrete, painted white, seen from the wrong side.\nHe is here. Of course he is. He stands with his palm flat on the concrete, listening to the man on the other side, and he is going through.\nThe wall is going soft around him like a wound opening. Behind him, for a few seconds, it will still be soft.",
+        "pt": "Você segue o som por um corredor que estreita conforme o som aumenta. A ferrugem aqui é úmida e morna. A parede do fim não é ferrugem. É concreto, pintado de branco, visto pelo lado errado.\nEle está aqui. Claro que está. Está de pé com a palma da mão no concreto, escutando o homem do outro lado, e está atravessando.\nA parede amolece em volta dele como um ferimento abrindo. Atrás dele, por alguns segundos, ainda vai estar mole."
+      },
+      "choices": [
+        { "label": { "en": "Go through after", "pt": "Atravessar atrás" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 7, "pass": "end_out", "fail": "hunted" } },
+        { "label": { "en": "Wait for him to go", "pt": "Esperar ele sumir" }, "roll": { "dice": "1d6", "stat": "luck", "dc": 6, "pass": "end_out", "fail": "pocket_wait" } }
+      ]
+    },
+    "pocket_door": {
+      "title": { "en": "THE DOOR", "pt": "A PORTA" },
+      "text": {
+        "en": "The door opens on dark, and the dark has a draft in it. Real air. Cold, dry, with car exhaust in it.\nThe man in the jumpsuit does not follow. 'Been here too long,' he says. 'I'd come out wrong.' He sits back down against his wall.\nYou step through. For a moment you are inside concrete, held, like a thought something is having.\nThen you fall onto a floor that stays a floor.",
+        "pt": "A porta abre para o escuro, e o escuro tem uma corrente de ar. Ar de verdade. Frio, seco, com cheiro de escapamento.\nO homem de macacão não vem. 'Faz tempo demais', ele diz. 'Eu sairia errado.' Ele senta de novo encostado na parede dele.\nVocê atravessa. Por um momento está dentro do concreto, contido, como um pensamento que algo está tendo.\nDepois cai num chão que continua sendo chão."
+      },
+      "goto": "end_elsewhere"
+    },
+    "end_recalled": {
+      "title": { "en": "SEALED", "pt": "SELADO" },
+      "text": {
+        "en": "He passes you. He is close enough to touch and he does not, because the sound is better than you are, and he knows it.\nHe walks into Cell 3 and kneels by the young man, tender as a nurse. The door slams. Forty layers of lead-lined steel close one after another, and the sound stops, and then the speakers stop.\nThe doctor signs something. The MTF take off their helmets. Nobody looks through the glass.\n'Good work,' the doctor says, and she means it, and you never want to hear it again.",
+        "pt": "Ele passa por você. Perto o bastante para tocar, e não toca, porque o som é melhor do que você, e ele sabe.\nEle entra na Cela 3 e se ajoelha junto do rapaz, delicado como um enfermeiro. A porta bate. Quarenta camadas de aço forrado de chumbo se fecham uma após a outra, e o som para, e depois os alto-falantes param.\nA médica assina alguma coisa. Os da FTM tiram os capacetes. Ninguém olha pelo vidro.\n'Bom trabalho', diz a médica, e ela fala sério, e você nunca mais quer ouvir isso."
+      },
+      "ending": "good"
+    },
+    "end_out": {
+      "title": { "en": "THROUGH", "pt": "ATRAVESSADO" },
+      "text": {
+        "en": "You go into the soft place behind him with your eyes shut. Concrete. Cold. Then tile, and amber light, and a corridor that is only forty meters long.\nYou are lying in Sector 3 in front of Cell 3. Two MTF have their weapons on you. Behind them, through the glass, the old man kneels over the lure, and the doors are already closing.\n'Reyes,' the doctor says, checking a tablet. 'You went in at 02:31.' She looks at the clock. 'Nine days.'\nYou were gone nine days. It felt like one very long night. You do not tell her the man in the jumpsuit is still in there. She knows.",
+        "pt": "Você entra no lugar mole atrás dele de olhos fechados. Concreto. Frio. Depois azulejo, e luz âmbar, e um corredor que só tem quarenta metros.\nVocê está deitado no Setor 3, na frente da Cela 3. Dois da FTM apontam as armas para você. Atrás deles, pelo vidro, o velho se ajoelha sobre a isca, e as portas já estão fechando.\n'Reyes', diz a médica, conferindo um tablet. 'Você entrou às 02:31.' Ela olha o relógio. 'Nove dias.'\nVocê ficou nove dias fora. Pareceu uma noite muito longa. Você não conta a ela que o homem de macacão ainda está lá. Ela sabe."
+      },
+      "ending": "good"
+    },
+    "end_elsewhere": {
+      "title": { "en": "ELSEWHERE", "pt": "OUTRO LUGAR" },
+      "text": {
+        "en": "A parking garage. Level 4. Two in the morning, and a security camera turning slowly to look at you.\nThe wall you came out of is a normal wall. The stain on it is already drying.\nThe Foundation finds you in three hours. The date they give you is seven weeks after the breach. They ask about the inside. You tell them about the man in the jumpsuit. A researcher writes down 'D-3184' and then crosses it out, and then writes it again.\nYou keep your job. You never work Sector 3. Some nights, in your apartment, you check the walls before you sleep.",
+        "pt": "Um estacionamento. Nível 4. Duas da manhã, e uma câmera de segurança girando devagar para te olhar.\nA parede de onde você saiu é uma parede normal. A mancha nela já está secando.\nA Fundação te encontra em três horas. A data que te dão é sete semanas depois da quebra. Perguntam sobre o lado de dentro. Você fala do homem de macacão. Um pesquisador anota 'D-3184', depois risca, depois escreve de novo.\nVocê mantém o emprego. Nunca mais trabalha no Setor 3. Algumas noites, no apartamento, você confere as paredes antes de dormir."
+      },
+      "ending": "neutral"
+    },
+    "end_desert": {
+      "title": { "en": "THE EXIT", "pt": "A SAÍDA" },
+      "text": {
+        "en": "You walk out. Nobody stops you; they are busy. You take the stairs to the surface with your back to the center of every corridor, touching nothing.\nAbove ground it is raining. You sit in your car for an hour with the engine off.\nAt 03:02 the site alarm changes tone. Recall complete. The young man's sound stops, wherever it was going.\nThey do not fire you. They reassign you to a records office in a building with very thick walls, and that is not the comfort it was meant to be.",
+        "pt": "Você sai. Ninguém te impede; estão ocupados. Você sobe a escada até a superfície com as costas para o centro de cada corredor, sem tocar em nada.\nLá fora está chovendo. Você fica uma hora no carro com o motor desligado.\nÀs 03:02 o alarme do site muda de tom. Recolha concluída. O som do rapaz para, aonde quer que estivesse indo.\nNão te demitem. Te transferem para um arquivo num prédio de paredes muito grossas, e isso não é o consolo que deveria ser."
+      },
+      "ending": "neutral"
+    },
+    "end_kept": {
+      "title": { "en": "KEPT", "pt": "GUARDADO" },
+      "text": {
+        "en": "You sit down against the rust. It is warm, almost. You stop counting corridors because the number was never going to mean anything.\nHe comes and sits across from you. He does not do anything. That is what he does. Sometimes he goes away for a day, a month, and the dragging sound comes back and you find you were waiting for it.\nOne day a stranger in a Site-19 uniform comes around the corner, wide-eyed, and you hear yourself say: 'Don't take the doors.'",
+        "pt": "Você senta encostado na ferrugem. É quase morna. Para de contar corredores porque o número nunca ia significar nada.\nEle vem e senta na sua frente. Não faz nada. É isso o que ele faz. Às vezes vai embora por um dia, um mês, e o som de arrasto volta e você percebe que estava esperando por ele.\nUm dia um estranho de uniforme do Site-19 dobra a esquina, de olhos arregalados, e você se ouve dizer: 'Não pegue as portas.'"
+      },
+      "ending": "bad"
+    },
+    "end_taken_recall": {
+      "title": { "en": "THE DOOR", "pt": "A PORTA" },
+      "text": {
+        "en": "He stops in front of you. The sound is right there, twenty steps behind you, and still he stops, because he has ten or fifteen minutes and he has never once been in a hurry.\nHe puts his hand on the door frame beside your head. The steel goes black and runs like wax.\n'Reyes,' the doctor says, very calmly, on the other side of the glass. 'Do not move.'\nYou do not move. It does not matter.\nThe recall protocol is logged as a success at 02:58. One casualty, corridor door.",
+        "pt": "Ele para na sua frente. O som está bem ali, vinte passos atrás de você, e mesmo assim ele para, porque tem dez ou quinze minutos e nunca teve pressa na vida.\nEle põe a mão no batente ao lado da sua cabeça. O aço fica preto e escorre como cera.\n'Reyes', diz a médica, muito calma, do outro lado do vidro. 'Não se mexa.'\nVocê não se mexe. Não faz diferença.\nO protocolo de recolha é registrado como sucesso às 02:58. Uma baixa, porta do corredor."
+      },
+      "ending": "bad"
+    }
+  }
+}

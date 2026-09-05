@@ -1,7 +1,7 @@
 {
   "name": "Moventure Library",
   "updated": "2026-09-05",
-  "count": 4,
+  "count": 14,
   "books": [
     {
       "id": "hollow_lighthouse",
@@ -109,6 +109,276 @@
       "endings": 8,
       "words": 1168,
       "pages": 59,
+      "version": 1
+    },
+    {
+      "id": "scp_173_blink",
+      "file": "stories/scp_173_blink.json",
+      "title": {
+        "en": "173: Blink",
+        "pt": "173: Pisque"
+      },
+      "blurb": {
+        "en": "A concrete statue that only moves when no one is looking. Three cleaners, one floor, and the sound of scraping. Foundation Files, no. 2.",
+        "pt": "Uma estátua de concreto que só se move quando ninguém olha. Três faxineiros, um chão, e um som de raspar. Arquivos da Fundação, n. 2."
+      },
+      "author": "Marcelo Souza / Kumodot.art (adaptation)",
+      "category": "SCP",
+      "tier": 2,
+      "langs": [
+        "en",
+        "pt"
+      ],
+      "license": "CC BY-SA 3.0",
+      "based_on": "SCP-173 by Moto42, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-173 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+      "series": "Foundation Files",
+      "nodes": 29,
+      "endings": 7,
+      "words": 2182,
+      "pages": 96,
+      "version": 1
+    },
+    {
+      "id": "scp_096_face",
+      "file": "stories/scp_096_face.json",
+      "title": {
+        "en": "096: The Face",
+        "pt": "096: O Rosto"
+      },
+      "blurb": {
+        "en": "A hiker's photo of a mountain. Four pixels in the corner. Never look at the face. Foundation Files, no. 3.",
+        "pt": "A foto de uma montanha tirada por um andarilho. Quatro pixels no canto. Nunca olhe o rosto. Arquivos da Fundação, n. 3."
+      },
+      "author": "Marcelo Souza / Kumodot.art (adaptation)",
+      "category": "SCP",
+      "tier": 2,
+      "langs": [
+        "en",
+        "pt"
+      ],
+      "license": "CC BY-SA 3.0",
+      "based_on": "SCP-096 by Dr Dan, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-096 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+      "series": "Foundation Files",
+      "nodes": 27,
+      "endings": 7,
+      "words": 2030,
+      "pages": 90,
+      "version": 1
+    },
+    {
+      "id": "scp_049_cure",
+      "file": "stories/scp_049_cure.json",
+      "title": {
+        "en": "049: The Cure",
+        "pt": "049: A Cura"
+      },
+      "blurb": {
+        "en": "A polite doctor in a beaked mask. A disease only he can see. Keep calm, keep your distance. Foundation Files, no. 4.",
+        "pt": "Um médico educado com máscara de bico. Uma doença que só ele vê. Mantenha a calma e a distância. Arquivos da Fundação, n. 4."
+      },
+      "author": "Marcelo Souza / Kumodot.art (adaptation)",
+      "category": "SCP",
+      "tier": 3,
+      "langs": [
+        "en",
+        "pt"
+      ],
+      "license": "CC BY-SA 3.0",
+      "based_on": "SCP-049 by Gabriel Jade and djkaktus, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-049 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+      "series": "Foundation Files",
+      "nodes": 27,
+      "endings": 6,
+      "words": 2011,
+      "pages": 95,
+      "version": 1
+    },
+    {
+      "id": "scp_106_pocket",
+      "file": "stories/scp_106_pocket.json",
+      "title": {
+        "en": "106: Pocket",
+        "pt": "106: O Bolso"
+      },
+      "blurb": {
+        "en": "The Old Man walks through walls. Where he walks, the walls rot. Foundation Files, no. 5.",
+        "pt": "O Velho atravessa paredes. Por onde passa, as paredes apodrecem. Arquivos da Fundação, n. 5."
+      },
+      "author": "Marcelo Souza / Kumodot.art (adaptation)",
+      "category": "SCP",
+      "tier": 3,
+      "langs": [
+        "en",
+        "pt"
+      ],
+      "license": "CC BY-SA 3.0",
+      "based_on": "SCP-106 by Dr Gears, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-106 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+      "series": "Foundation Files",
+      "nodes": 27,
+      "endings": 6,
+      "words": 2257,
+      "pages": 102,
+      "version": 1
+    },
+    {
+      "id": "scp_914_fine",
+      "file": "stories/scp_914_fine.json",
+      "title": {
+        "en": "914: Very Fine",
+        "pt": "914: Muito Fino"
+      },
+      "blurb": {
+        "en": "A clockwork machine with five settings. Whatever goes in comes out refined. Never put anything living in. Foundation Files, no. 6.",
+        "pt": "Uma máquina de relojoaria com cinco ajustes. O que entra sai refinado. Nunca coloque nada vivo. Arquivos da Fundação, n. 6."
+      },
+      "author": "Marcelo Souza / Kumodot.art (adaptation)",
+      "category": "SCP",
+      "tier": 2,
+      "langs": [
+        "en",
+        "pt"
+      ],
+      "license": "CC BY-SA 3.0",
+      "based_on": "SCP-914 by Dr Gears, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-914 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+      "series": "Foundation Files",
+      "nodes": 29,
+      "endings": 8,
+      "words": 2152,
+      "pages": 100,
+      "version": 1
+    },
+    {
+      "id": "scp_682_acid",
+      "file": "stories/scp_682_acid.json",
+      "title": {
+        "en": "682: The Acid",
+        "pt": "682: O Ácido"
+      },
+      "blurb": {
+        "en": "Five metres of acid hold a thing that hates everything alive. Your job is to keep it wet. Foundation Files, no. 7.",
+        "pt": "Cinco metros de ácido seguram algo que odeia tudo o que vive. Seu trabalho é mantê-lo molhado. Arquivos da Fundação, n. 7."
+      },
+      "author": "Marcelo Souza / Kumodot.art (adaptation)",
+      "category": "SCP",
+      "tier": 3,
+      "langs": [
+        "en",
+        "pt"
+      ],
+      "license": "CC BY-SA 3.0",
+      "based_on": "SCP-682 by Dr Gears and Epic Phail Spy, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-682 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+      "series": "Foundation Files",
+      "nodes": 30,
+      "endings": 6,
+      "words": 2361,
+      "pages": 106,
+      "version": 1
+    },
+    {
+      "id": "scp_3008_store",
+      "file": "stories/scp_3008_store.json",
+      "title": {
+        "en": "3008: Closing",
+        "pt": "3008: Fechando"
+      },
+      "blurb": {
+        "en": "A furniture store with no far wall. When the lights go out, the Staff ask you to leave. Foundation Files, no. 8.",
+        "pt": "Uma loja de móveis sem parede do fundo. Quando as luzes apagam, os Funcionários pedem que você saia. Arquivos da Fundação, n. 8."
+      },
+      "author": "Marcelo Souza / Kumodot.art (adaptation)",
+      "category": "SCP",
+      "tier": 3,
+      "langs": [
+        "en",
+        "pt"
+      ],
+      "license": "CC BY-SA 3.0",
+      "based_on": "SCP-3008 by Mortos, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-3008 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+      "series": "Foundation Files",
+      "nodes": 30,
+      "endings": 6,
+      "words": 2321,
+      "pages": 103,
+      "version": 1
+    },
+    {
+      "id": "scp_1730_site13",
+      "file": "stories/scp_1730_site13.json",
+      "title": {
+        "en": "1730: Site-13",
+        "pt": "1730: Sítio-13"
+      },
+      "blurb": {
+        "en": "A Foundation site that was never built appeared in the desert overnight. Something inside is still on. Foundation Files, no. 9.",
+        "pt": "Um sítio da Fundação que nunca foi construído surgiu no deserto da noite para o dia. Algo lá dentro ainda está ligado. Arquivos da Fundação, n. 9."
+      },
+      "author": "Marcelo Souza / Kumodot.art (adaptation)",
+      "category": "SCP",
+      "tier": 3,
+      "langs": [
+        "en",
+        "pt"
+      ],
+      "license": "CC BY-SA 3.0",
+      "based_on": "SCP-1730 by djkaktus, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-1730 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+      "series": "Foundation Files",
+      "nodes": 28,
+      "endings": 7,
+      "words": 2183,
+      "pages": 99,
+      "version": 1
+    },
+    {
+      "id": "scp_2521_silence",
+      "file": "stories/scp_2521_silence.json",
+      "title": {
+        "en": "2521: Hush",
+        "pt": "2521: Silêncio"
+      },
+      "blurb": {
+        "en": "It takes anything that says what it is. Words, voices, the people who use them. Pictures are safe. Foundation Files, no. 10.",
+        "pt": "Ele leva tudo o que diz o que ele é. Palavras, vozes, quem as usa. Desenhos são seguros. Arquivos da Fundação, n. 10."
+      },
+      "author": "Marcelo Souza / Kumodot.art (adaptation)",
+      "category": "SCP",
+      "tier": 1,
+      "langs": [
+        "en",
+        "pt"
+      ],
+      "license": "CC BY-SA 3.0",
+      "based_on": "SCP-2521 by LurkD, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-2521 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+      "series": "Foundation Files",
+      "nodes": 28,
+      "endings": 6,
+      "words": 2440,
+      "pages": 105,
+      "version": 1
+    },
+    {
+      "id": "scp_1471_malo",
+      "file": "stories/scp_1471_malo.json",
+      "title": {
+        "en": "1471: MalO",
+        "pt": "1471: MalO"
+      },
+      "blurb": {
+        "en": "A free app with no icon that sends you photos. On the third day, something is standing beside you in them. Foundation Files, no. 11.",
+        "pt": "Um app grátis sem ícone que te manda fotos. No terceiro dia, algo está de pé ao seu lado nelas. Arquivos da Fundação, n. 11."
+      },
+      "author": "Marcelo Souza / Kumodot.art (adaptation)",
+      "category": "SCP",
+      "tier": 2,
+      "langs": [
+        "en",
+        "pt"
+      ],
+      "license": "CC BY-SA 3.0",
+      "based_on": "SCP-1471 by LurkD, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-1471 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+      "series": "Foundation Files",
+      "nodes": 29,
+      "endings": 8,
+      "words": 2704,
+      "pages": 117,
       "version": 1
     }
   ]

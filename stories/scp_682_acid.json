@@ -1,0 +1,334 @@
+{
+  "meta": {
+    "title": { "en": "682: The Acid", "pt": "682: O Ácido" },
+    "author": "Marcelo Souza / Kumodot.art (adaptation)",
+    "version": 1,
+    "tier": 3,
+    "category": "SCP",
+    "start": "shift",
+    "blurb": {
+      "en": "Five metres of acid hold a thing that hates everything alive. Your job is to keep it wet. Foundation Files, no. 7.",
+      "pt": "Cinco metros de ácido seguram algo que odeia tudo o que vive. Seu trabalho é mantê-lo molhado. Arquivos da Fundação, n. 7."
+    },
+    "langs": ["en", "pt"],
+    "license": "CC BY-SA 3.0",
+    "based_on": "SCP-682 by Dr Gears and Epic Phail Spy, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-682 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+    "series": "Foundation Files",
+    "stats": { "grit": 5, "nerve": 4 }
+  },
+  "flags": ["patched", "has_valve_key", "watched_gauge", "spoke_682", "vieira_saved", "vieira_left", "flooded", "sprayed", "adapted"],
+  "nodes": {
+    "shift": {
+      "title": { "en": "ACID TEAM", "pt": "EQUIPE ÁCIDO" },
+      "text": {
+        "en": "You are an engineer on the acid tank team. Your badge says so, in a smaller font than the word RESTRICTED.\nBelow the gallery, five metres of hydrochloric acid hold something the files call a reptile. It is not a reptile. It is what stays alive when nothing should.\nToday the chamber is drained to a third so Chemistry can pour their new compound on it. Your job is the acid level. Keep it where the protocol says, and go home.\nThe pumps hum. Vieira, your partner, is late.",
+        "pt": "Você é engenheiro da equipe do tanque de ácido. Seu crachá diz isso, numa fonte menor que a palavra RESTRITO.\nAbaixo da galeria, cinco metros de ácido clorídrico seguram algo que os arquivos chamam de réptil. Não é um réptil. É o que continua vivo quando nada deveria.\nHoje a câmara vai ser drenada até um terço para a Química despejar o composto novo em cima dele. Seu trabalho é o nível do ácido. Mantenha onde o protocolo manda, e vá para casa.\nAs bombas zumbem. Vieira, seu parceiro, está atrasado."
+      },
+      "choices": [
+        { "label": { "en": "Check the pumps", "pt": "Checar as bombas" }, "to": "pumps" },
+        { "label": { "en": "Find Vieira", "pt": "Procurar Vieira" }, "to": "vieira" },
+        { "label": { "en": "Go up to gallery", "pt": "Subir à galeria" }, "to": "gallery" }
+      ]
+    },
+    "pumps": {
+      "title": { "en": "PUMP ROOM", "pt": "SALA DAS BOMBAS" },
+      "text": {
+        "en": "The pump room is under the chamber, all pipe and drip. Seal C on the refill line is weeping, a slow yellow bead every few seconds. The log says it was replaced last month. The seal says otherwise.\nYou could patch it now, with the compound and the clamp in your kit, and get acid on your gloves doing it. Or you could write it down and let the day shift find the note.\nAbove you, through a metre of steel, something shifts its weight.",
+        "pt": "A sala das bombas fica sob a câmara, só cano e gotejo. O selo C da linha de reposição está chorando, uma gota amarela lenta a cada poucos segundos. O registro diz que foi trocado mês passado. O selo diz outra coisa.\nVocê pode remendar agora, com a massa e a braçadeira do seu kit, e pegar ácido nas luvas fazendo isso. Ou anotar e deixar o turno do dia achar o bilhete.\nAcima de você, através de um metro de aço, algo muda o peso de lugar."
+      },
+      "choices": [
+        { "label": { "en": "Patch the seal", "pt": "Remendar o selo" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 8, "pass": "patched", "fail": "patch_fail" } },
+        { "label": { "en": "Log it, go up", "pt": "Anotar e subir" }, "to": "gallery" }
+      ]
+    },
+    "patched": {
+      "title": { "en": "PUMP ROOM", "pt": "SALA DAS BOMBAS" },
+      "text": {
+        "en": "The clamp bites and the bead stops. You hold your breath and count to thirty. Dry.\nYou write it up anyway, because the next person deserves to know, and climb toward the gallery with the smell of the acid still in your nose.\nOn the stairs the pipes ring, once, like a bell that does not want to be rung. Something in the tank has turned over in its sleep. It does not sleep. You know that. You climb faster anyway.",
+        "pt": "A braçadeira morde e a gota para. Você prende a respiração e conta até trinta. Seco.\nAnota mesmo assim, porque a próxima pessoa merece saber, e sobe em direção à galeria com o cheiro do ácido ainda no nariz.\nNa escada os canos vibram, uma vez, como um sino que não quer ser tocado. Algo no tanque se virou durante o sono. Ele não dorme. Você sabe disso. Sobe mais rápido mesmo assim."
+      },
+      "set": ["patched"],
+      "goto": "gallery"
+    },
+    "patch_fail": {
+      "title": { "en": "PUMP ROOM", "pt": "SALA DAS BOMBAS" },
+      "text": {
+        "en": "The clamp slips. The bead becomes a thread and the thread finds the gap in your left glove. It does not hurt at first. Then it does.\nYou get the clamp on, mostly, and hold the hand under the wash for the full minute. The skin comes up red and tight. Seal C is still weeping, slower.\nYou climb to the gallery favouring the hand, and above you the pipes ring once, like a bell that does not want to be rung.",
+        "pt": "A braçadeira escorrega. A gota vira um fio e o fio acha a fresta da sua luva esquerda. Não dói no começo. Depois dói.\nVocê encaixa a braçadeira, mais ou menos, e segura a mão sob o lava-olhos pelo minuto inteiro. A pele sai vermelha e repuxada. O selo C continua chorando, mais devagar.\nSobe para a galeria poupando a mão, e acima de você os canos vibram uma vez, como um sino que não quer ser tocado."
+      },
+      "mod": { "grit": -1 },
+      "goto": "gallery"
+    },
+    "vieira": {
+      "title": { "en": "VIEIRA", "pt": "VIEIRA" },
+      "text": {
+        "en": "Vieira is in the locker room, sitting, boots unlaced. 'Six years,' he says. 'Six years I keep that thing wet.'\nHe hands you a brass key on a cord. 'Manual bypass, valve room. If the refill line ever drops, that is the only thing down there that does not need power.' He says it the way people say prayers.\nThen he laces his boots and heads down to the pumps to do the pre-check, and does not ask you to come.",
+        "pt": "Vieira está no vestiário, sentado, botas desamarradas. 'Seis anos', ele diz. 'Seis anos mantendo aquela coisa molhada.'\nEle te entrega uma chave de latão num cordão. 'Bypass manual, sala da válvula. Se a linha de reposição cair um dia, é a única coisa lá embaixo que não precisa de energia.' Diz isso do jeito que as pessoas rezam.\nDepois amarra as botas e desce para as bombas fazer a checagem, e não pede que você vá junto."
+      },
+      "set": ["has_valve_key"],
+      "choices": [
+        { "label": { "en": "Go down with him", "pt": "Descer com ele" }, "to": "pumps" },
+        { "label": { "en": "Go up to gallery", "pt": "Subir à galeria" }, "to": "gallery" }
+      ]
+    },
+    "gallery": {
+      "title": { "en": "GALLERY", "pt": "GALERIA" },
+      "text": {
+        "en": "The observation gallery is a box of glass and cameras over the chamber. Chemistry stands in a row, tablets ready. Dr. Alves nods to you: level.\nYou start the drain. The acid drops, metre by metre, and it comes up out of it like a shoreline. Grey plates, half melted. A jaw that is mostly bone. An eye. Then the eye finds the glass.\nIt is not supposed to be able to see you through that glass. It can see you.",
+        "pt": "A galeria de observação é uma caixa de vidro e câmeras sobre a câmara. A Química está enfileirada, tablets a postos. A Dra. Alves acena para você: nível.\nVocê inicia a drenagem. O ácido baixa, metro a metro, e ele emerge como uma linha de costa. Placas cinzentas, meio derretidas. Uma mandíbula que é quase só osso. Um olho. Depois o olho acha o vidro.\nEle não deveria conseguir ver você através daquele vidro. Ele vê você."
+      },
+      "choices": [
+        { "label": { "en": "Watch it", "pt": "Olhar para ele" }, "to": "speaks" },
+        { "label": { "en": "Watch the gauge", "pt": "Olhar o medidor" }, "to": "gauge" }
+      ]
+    },
+    "speaks": {
+      "title": { "en": "IT SPEAKS", "pt": "ELE FALA" },
+      "text": {
+        "en": "It speaks. You have read that it speaks, and it is still the worst sound you have heard: a voice made of wet things forced through a shape that was never meant for words.\n'You... smell... of it.' The jaw works. 'The acid. You... feed... me.'\nChemistry goes quiet. Alves says, 'Do not respond,' to the room, to you. The eye has not left you. It is waiting to see what you are.",
+        "pt": "Ele fala. Você leu que ele fala, e ainda assim é o pior som que já ouviu: uma voz feita de coisas úmidas forçadas por uma forma que nunca foi feita para palavras.\n'Você... cheira... a isso.' A mandíbula trabalha. 'O ácido. Você... me... alimenta.'\nA Química se cala. Alves diz 'Não respondam' para a sala, para você. O olho não saiu de cima de você. Ele está esperando para ver o que você é."
+      },
+      "mod": { "nerve": -1 },
+      "choices": [
+        { "label": { "en": "Answer it", "pt": "Responder" }, "set": ["spoke_682"], "roll": { "dice": "1d6", "stat": "nerve", "dc": 7, "pass": "stared", "fail": "shaken" } },
+        { "label": { "en": "Say nothing", "pt": "Ficar em silêncio" }, "to": "alarm" }
+      ]
+    },
+    "stared": {
+      "title": { "en": "IT SPEAKS", "pt": "ELE FALA" },
+      "text": {
+        "en": "'I keep you wet,' you say. Quietly. Nobody hears it but the thing below.\nThe eye holds you for a long second. Then it turns away, slow, bored, as if you had told it the time. It goes back to melting.\nYou breathe out. Your hands are steady, which surprises you more than anything it said. Alves looks at you and decides not to write it down.",
+        "pt": "'Eu mantenho você molhado', você diz. Baixo. Ninguém ouve além da coisa lá embaixo.\nO olho segura você por um segundo comprido. Depois se desvia, lento, entediado, como se você tivesse dito as horas. Ele volta a derreter.\nVocê solta o ar. Suas mãos estão firmes, o que te surpreende mais do que qualquer coisa que ele disse. Alves olha para você e decide não anotar."
+      },
+      "mod": { "nerve": 1 },
+      "goto": "alarm"
+    },
+    "shaken": {
+      "title": { "en": "IT SPEAKS", "pt": "ELE FALA" },
+      "text": {
+        "en": "'I keep you wet,' you say. It hears. It laughs, or does the thing that must be laughing, a rattle deep in the open ribs, and says a word you will not repeat in the report.\n'Disgusting,' it says. 'All... of you.'\nYour hands are not steady. Alves is looking at you now, not at the chamber, and that is how you know how loud you were.",
+        "pt": "'Eu mantenho você molhado', você diz. Ele ouve. Ele ri, ou faz a coisa que deve ser rir, um chocalhar fundo nas costelas expostas, e diz uma palavra que você não vai repetir no relatório.\n'Nojentos', ele diz. 'Todos... vocês.'\nSuas mãos não estão firmes. Alves olha para você agora, não para a câmara, e é assim que você descobre o quanto falou alto."
+      },
+      "mod": { "nerve": -1 },
+      "goto": "alarm"
+    },
+    "gauge": {
+      "title": { "en": "THE GAUGE", "pt": "O MEDIDOR" },
+      "text": {
+        "en": "You do not look at it. You look at the numbers, which is the job.\nThe level is falling. That is right. It is falling faster than the drain curve, and that is wrong. You tap through to the refill line: flow zero. Zero on the backup too.\nBehind the glass it says something, wet and slow, and Chemistry goes quiet. You do not hear it. You have your hand on the alarm before anyone else in the room knows there is a reason to.",
+        "pt": "Você não olha para ele. Olha para os números, que é o trabalho.\nO nível está caindo. Isso é certo. Está caindo mais rápido que a curva de drenagem, e isso é errado. Você abre a linha de reposição: fluxo zero. Zero na reserva também.\nAtrás do vidro ele diz alguma coisa, úmida e lenta, e a Química se cala. Você não ouve. Sua mão já está no alarme antes que alguém na sala saiba que existe um motivo."
+      },
+      "set": ["watched_gauge"],
+      "mod": { "nerve": 1 },
+      "goto": "alarm"
+    },
+    "alarm": {
+      "title": { "en": "ALARM", "pt": "ALARME" },
+      "text": {
+        "en": "The refill line fails. Not slowly. The gauge drops past the protocol line, past the spine, past the point where five metres of acid become a puddle with a monster standing in it.\nIt stands. The chamber rings like a struck bell. Lockdown seals every door below the gallery.\nThe radio: Vieira. 'I am in the valve room. The inner door shut on me. The bypass is jammed. I am at the wall. I can hear it.'\nAlves looks at you. The flood switch is on your console. So is the map of what a full flood fills. The valve room is on it.",
+        "pt": "A linha de reposição falha. Não devagar. O medidor cai abaixo da linha do protocolo, abaixo da espinha, abaixo do ponto em que cinco metros de ácido viram uma poça com um monstro em pé dentro.\nEle fica em pé. A câmara vibra como um sino batido. O lockdown sela toda porta abaixo da galeria.\nO rádio: Vieira. 'Estou na sala da válvula. A porta interna fechou comigo. O bypass travou. Estou junto à parede. Consigo ouvir ele.'\nAlves olha para você. O botão de inundação está no seu console. O mapa do que uma inundação total enche também. A sala da válvula está nele."
+      },
+      "choices": [
+        { "label": { "en": "Go down to Vieira", "pt": "Descer até Vieira" }, "to": "pump_room" },
+        { "label": { "en": "Stay at the console", "pt": "Ficar no console" }, "to": "console" }
+      ]
+    },
+    "console": {
+      "title": { "en": "CONSOLE", "pt": "CONSOLE" },
+      "text": {
+        "en": "The console shows you everything. Level: 0.6 m. Refill: none. Flood reserve: full, one switch, ninety seconds to five metres.\nAnd the sump. The valve room drains into the same sump. A full flood fills it to the ceiling before it fills the chamber.\nOn the camera, it is climbing the drain wall. On the radio, Vieira is breathing.\nAlves does not tell you what to do. That is the worst thing she has ever done to you.",
+        "pt": "O console mostra tudo. Nível: 0,6 m. Reposição: nenhuma. Reserva de inundação: cheia, um botão, noventa segundos até cinco metros.\nE o poço. A sala da válvula drena para o mesmo poço. Uma inundação total enche o poço até o teto antes de encher a câmara.\nNa câmera, ele está escalando a parede do dreno. No rádio, Vieira está respirando.\nAlves não diz o que fazer. É a pior coisa que ela já fez com você."
+      },
+      "choices": [
+        { "label": { "en": "Flood the chamber", "pt": "Inundar a câmara" }, "to": "flood_now" },
+        { "label": { "en": "Wait for Vieira", "pt": "Esperar Vieira" }, "to": "wait" },
+        { "label": { "en": "Go down to Vieira", "pt": "Descer até Vieira" }, "to": "pump_room" }
+      ]
+    },
+    "flood_now": {
+      "title": { "en": "FLOOD", "pt": "INUNDAÇÃO" },
+      "text": {
+        "en": "You press it. You will remember the sound of the switch for the rest of your life, which is the point of switches like that.\nThe reserve dumps. The gauge climbs. On the radio, Vieira says your name once, not loud, and then the channel is water.\nOn the camera, it turns toward the rising acid and does something with its jaw that you refuse to call a smile. It knows what you just chose. It approves.",
+        "pt": "Você aperta. Vai lembrar do som do botão pelo resto da vida, que é o objetivo de botões assim.\nA reserva despeja. O medidor sobe. No rádio, Vieira diz seu nome uma vez, sem gritar, e depois o canal é água.\nNa câmera, ele se vira para o ácido que sobe e faz com a mandíbula algo que você se recusa a chamar de sorriso. Ele sabe o que você acabou de escolher. Ele aprova."
+      },
+      "set": ["flooded"],
+      "choices": [
+        { "label": { "en": "Watch the gauge", "pt": "Olhar o medidor" }, "to": "end_flood_cold", "require": ["patched"] },
+        { "label": { "en": "Watch the gauge", "pt": "Olhar o medidor" }, "to": "seal_bursts", "require": ["!patched"] }
+      ]
+    },
+    "seal_bursts": {
+      "title": { "en": "SEAL C", "pt": "SELO C" },
+      "text": {
+        "en": "Seal C. The one you did not fix, or fixed with half a hand. Under the reserve's pressure it does not weep, it lets go, and the flood pours into the pump room instead of the chamber.\nThe gauge stalls at two metres. It stands in the acid to the chest and it is not sinking. It is feeding.\nThen the gallery glass goes white with cracks, and it is on the other side of them, and then it is not on the other side of anything.",
+        "pt": "Selo C. O que você não consertou, ou consertou com meia mão. Sob a pressão da reserva ele não chora, ele solta, e a inundação despeja na sala das bombas em vez da câmara.\nO medidor trava em dois metros. Ele está no ácido até o peito e não afunda. Está se alimentando.\nDepois o vidro da galeria fica branco de rachaduras, e ele está do outro lado delas, e depois não está do outro lado de nada."
+      },
+      "goto": "breach"
+    },
+    "wait": {
+      "title": { "en": "WAITING", "pt": "ESPERANDO" },
+      "text": {
+        "en": "You do not press it. 'Vieira. The hatch. The maintenance hatch by the sump, the one with the wheel.' Silence. Then: 'It is stiff.' Then: 'I am on it.'\nOn the camera, it reaches the top of the drain wall. It looks straight into the lens. It knows where the lens is.\nYou count. You have ninety seconds of reserve and no idea how many seconds of anything else.",
+        "pt": "Você não aperta. 'Vieira. A escotilha. A escotilha de manutenção do lado do poço, a que tem a roda.' Silêncio. Depois: 'Está dura.' Depois: 'Estou nela.'\nNa câmera, ele chega ao topo da parede do dreno. Olha direto para a lente. Ele sabe onde a lente está.\nVocê conta. Tem noventa segundos de reserva e nenhuma ideia de quantos segundos de qualquer outra coisa."
+      },
+      "roll": { "dice": "1d6", "stat": "nerve", "dc": 7, "pass": "vieira_out", "fail": "breach" }
+    },
+    "vieira_out": {
+      "title": { "en": "THE HATCH", "pt": "A ESCOTILHA" },
+      "text": {
+        "en": "The wheel turns. Vieira comes up through the gallery floor hatch grey to the lips, sits on the deck and says nothing at all.\nBelow, it is halfway up the wall. Its claws leave grooves in steel that was built to resist claws. Alves says your name.\nYou look at the flood switch, and at Seal C on the map, and you think about how well you patched it. Or did not.",
+        "pt": "A roda gira. Vieira sobe pela escotilha do piso da galeria cinza até os lábios, senta no deck e não diz nada.\nEmbaixo, ele está na metade da parede. As garras deixam sulcos num aço feito para resistir a garras. Alves diz seu nome.\nVocê olha para o botão de inundação, e para o selo C no mapa, e pensa em como remendou bem aquele selo. Ou não."
+      },
+      "set": ["vieira_saved"],
+      "choices": [
+        { "label": { "en": "Flood the chamber", "pt": "Inundar a câmara" }, "to": "end_recontained", "require": ["patched"] },
+        { "label": { "en": "Flood the chamber", "pt": "Inundar a câmara" }, "to": "seal_bursts", "require": ["!patched"] }
+      ]
+    },
+    "pump_room": {
+      "title": { "en": "VALVE ROOM", "pt": "SALA DA VÁLVULA" },
+      "text": {
+        "en": "You go down. The stairwell is warm, which it never is. The valve room door has shut with Vieira on the other side, and between you and it is the bypass: a wheel the size of a bicycle tyre, frozen with six years of rust and acid salt.\nThrough the door, Vieira: 'It is on the wall. It is on the wall right above me.'\nThe wheel has a keyed release at the hub. Or it has you, and whatever is left in your arms.",
+        "pt": "Você desce. A escada está quente, o que nunca acontece. A porta da sala da válvula fechou com Vieira do outro lado, e entre você e ela está o bypass: uma roda do tamanho de um pneu de bicicleta, travada com seis anos de ferrugem e sal de ácido.\nAtravés da porta, Vieira: 'Ele está na parede. Está na parede bem em cima de mim.'\nA roda tem uma trava com chave no cubo. Ou tem você, e o que sobrou dos seus braços."
+      },
+      "choices": [
+        { "label": { "en": "Use the key", "pt": "Usar a chave" }, "to": "valve_open", "require": ["has_valve_key"] },
+        { "label": { "en": "Force the wheel", "pt": "Forçar a roda" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 8, "pass": "valve_open", "fail": "valve_stuck" } }
+      ]
+    },
+    "valve_stuck": {
+      "title": { "en": "THE WHEEL", "pt": "A RODA" },
+      "text": {
+        "en": "The wheel moves a finger's width and takes the skin of your palms with it. Something in your shoulder goes. You sit down on the wet floor without deciding to.\nAbove, a sound like a ship being folded. Concrete dust falls in your hair.\nVieira, through the door, very calm: 'You should go up.' He does not say it like a man who expects you to.",
+        "pt": "A roda anda a largura de um dedo e leva a pele das suas palmas junto. Algo no seu ombro cede. Você senta no chão molhado sem decidir sentar.\nAcima, um som de navio sendo dobrado. Pó de concreto cai no seu cabelo.\nVieira, através da porta, muito calmo: 'Você devia subir.' Não diz como quem espera que você suba."
+      },
+      "mod": { "grit": -1 },
+      "choices": [
+        { "label": { "en": "Try again", "pt": "Tentar de novo" }, "require": ["grit>0"], "roll": { "dice": "1d6", "stat": "grit", "dc": 8, "pass": "valve_open", "fail": "valve_stuck" } },
+        { "label": { "en": "Leave him. Go up.", "pt": "Deixá-lo. Subir." }, "to": "breach", "require": ["grit>0"], "set": ["vieira_left"], "mod": { "nerve": -1 } },
+        { "label": { "en": "Stay down", "pt": "Ficar no chão" }, "to": "end_spent", "require": ["grit<=0"] }
+      ]
+    },
+    "valve_open": {
+      "title": { "en": "THE WHEEL", "pt": "A RODA" },
+      "text": {
+        "en": "The wheel turns. Behind the wall, a sound you have waited for your whole shift: the refill line coughing, then roaring.\nThe door's pressure lock lets go and Vieira falls through it into your arms, alive, shaking, swearing in a language you did not know he spoke.\nThe gauge on the wall climbs. One metre. Two. Above you, it has stopped tearing at the wall. It has noticed the sound too.",
+        "pt": "A roda gira. Atrás da parede, um som que você esperou o turno inteiro: a linha de reposição tossindo, depois rugindo.\nA trava de pressão da porta solta e Vieira cai por ela nos seus braços, vivo, tremendo, xingando numa língua que você não sabia que ele falava.\nO medidor na parede sobe. Um metro. Dois. Acima, ele parou de rasgar a parede. Também notou o som."
+      },
+      "set": ["vieira_saved"],
+      "choices": [
+        { "label": { "en": "Up to the console", "pt": "Subir ao console" }, "to": "end_valve", "require": ["watched_gauge"] },
+        { "label": { "en": "Up to the console", "pt": "Subir ao console" }, "to": "breach", "require": ["!watched_gauge"] }
+      ]
+    },
+    "breach": {
+      "title": { "en": "BREACH", "pt": "BRECHA" },
+      "text": {
+        "en": "It is in the maintenance corridor. All of it. Six metres of grey plate and open ribs filling the space wall to wall, and behind it the door to the outer site. The tank is a hole in the wall behind you, and whatever the gauge says now, it says it to nobody.\nAt your hip, the wash-down hose: raw feed from the reserve line, enough acid to strip a truck. At the far end of the corridor, past it, the reserve flood panel.\nIt looks at you. 'Engineer,' it says. It has learned the word from somewhere.",
+        "pt": "Ele está no corredor de manutenção. Inteiro. Seis metros de placa cinzenta e costelas expostas enchendo o espaço de parede a parede, e atrás dele a porta para o resto do sítio. O tanque é um buraco na parede às suas costas, e o que quer que o medidor diga agora, diz para ninguém.\nNo seu quadril, a mangueira de lavagem: alimentação direta da linha de reserva, ácido bastante para descascar um caminhão. No fim do corredor, depois dele, o painel da inundação de reserva.\nEle olha para você. 'Engenheiro', ele diz. Aprendeu a palavra em algum lugar."
+      },
+      "choices": [
+        { "label": { "en": "Spray it", "pt": "Jogar ácido" }, "require": ["!sprayed"], "set": ["sprayed"], "roll": { "dice": "1d6", "stat": "nerve", "dc": 7, "pass": "pushed_back", "fail": "swiped" } },
+        { "label": { "en": "Spray it again", "pt": "Jogar de novo" }, "require": ["sprayed", "!adapted"], "to": "adapting" },
+        { "label": { "en": "Spray it again", "pt": "Jogar de novo" }, "require": ["adapted"], "to": "end_adapted" },
+        { "label": { "en": "Run for the panel", "pt": "Correr ao painel" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 8, "pass": "panel", "fail": "swiped" } }
+      ]
+    },
+    "swiped": {
+      "title": { "en": "STRUCK", "pt": "ATINGIDO" },
+      "text": {
+        "en": "You are not fast enough. Nothing is. A claw the length of your arm takes you across the chest and the wall stops you.\nIt does not finish you. It leans in until the wet of its breath is on your face and says, 'Feed... me.' Then it draws back, waiting.\nIt wants you to try again. It wants to see what you do. Everything you do, it keeps.",
+        "pt": "Você não é rápido o bastante. Nada é. Uma garra do comprimento do seu braço te pega atravessado no peito e a parede te para.\nEle não termina o serviço. Se inclina até o úmido da respiração dele estar no seu rosto e diz: 'Me... alimenta.' Depois recua, esperando.\nEle quer que você tente de novo. Quer ver o que você faz. Tudo o que você faz, ele guarda."
+      },
+      "mod": { "grit": -1 },
+      "choices": [
+        { "label": { "en": "Get up", "pt": "Levantar" }, "to": "breach", "require": ["grit>0"] },
+        { "label": { "en": "Stay down", "pt": "Ficar no chão" }, "to": "end_spent", "require": ["grit<=0"] }
+      ]
+    },
+    "pushed_back": {
+      "title": { "en": "THE HOSE", "pt": "A MANGUEIRA" },
+      "text": {
+        "en": "The jet takes it in the open ribs. It screams, which is worse than the talking, and goes back a full body length, plates sloughing, steam off it in sheets.\nIt is hurt. You have hurt it. For a second the corridor to the panel is clear.\nThen the plates on its flank stop sloughing. They thicken. It is watching the hose now, not you. It is learning the hose.",
+        "pt": "O jato pega nas costelas expostas. Ele grita, o que é pior que a fala, e recua um corpo inteiro, placas descamando, vapor saindo dele em lençóis.\nEle está ferido. Você o feriu. Por um segundo o corredor até o painel está livre.\nDepois as placas do flanco param de descamar. Engrossam. Ele está olhando para a mangueira agora, não para você. Está aprendendo a mangueira."
+      },
+      "choices": [
+        { "label": { "en": "Run for the panel", "pt": "Correr ao painel" }, "to": "panel" },
+        { "label": { "en": "Keep spraying", "pt": "Continuar jogando" }, "to": "adapting" }
+      ]
+    },
+    "adapting": {
+      "title": { "en": "ADAPTING", "pt": "ADAPTANDO" },
+      "text": {
+        "en": "The second jet does less. The third does nothing. The acid runs off it like rain off a roof, and where it runs, the skin is new and glassy and does not care.\nIt has always done this. Every file says so. Whatever hurts it, it learns, and you have just spent the only thing this site had that it never learned.\n'Again,' it says. 'Teach... me... again.'",
+        "pt": "O segundo jato faz menos. O terceiro não faz nada. O ácido escorre dele como chuva num telhado, e por onde escorre a pele é nova e vítrea e não se importa.\nEle sempre fez isso. Todo arquivo diz. O que o fere, ele aprende, e você acabou de gastar a única coisa neste sítio que ele nunca tinha aprendido.\n'De novo', ele diz. 'Me... ensina... de novo.'"
+      },
+      "set": ["adapted"],
+      "mod": { "nerve": -1 },
+      "choices": [
+        { "label": { "en": "Run for the panel", "pt": "Correr ao painel" }, "roll": { "dice": "1d6", "stat": "grit", "dc": 8, "pass": "panel", "fail": "swiped" } },
+        { "label": { "en": "Keep spraying", "pt": "Continuar jogando" }, "to": "end_adapted" }
+      ]
+    },
+    "panel": {
+      "title": { "en": "THE PANEL", "pt": "O PAINEL" },
+      "text": {
+        "en": "The panel is behind a cage. The cage is not locked, because who would come here on purpose.\nYou pull the handle down and the reserve line drops its whole weight into the chamber and the corridor drain, five metres in ninety seconds, and the floor under you is suddenly a river of the only thing on earth that ever held it.\nIt turns toward the sound of the acid. Slowly. As if it were interested.",
+        "pt": "O painel fica atrás de uma grade. A grade não está trancada, porque quem viria aqui de propósito.\nVocê puxa a alavanca e a linha de reserva despeja todo o seu peso na câmara e no dreno do corredor, cinco metros em noventa segundos, e o chão sob você vira de repente um rio da única coisa no mundo que já o segurou.\nEle se vira para o som do ácido. Devagar. Como se estivesse interessado."
+      },
+      "choices": [
+        { "label": { "en": "Hold on", "pt": "Segurar firme" }, "to": "end_recontained", "require": ["vieira_saved", "!adapted"] },
+        { "label": { "en": "Hold on", "pt": "Segurar firme" }, "to": "end_flood_cold", "require": ["!vieira_saved", "!adapted"] },
+        { "label": { "en": "Hold on", "pt": "Segurar firme" }, "to": "end_immune", "require": ["adapted"] }
+      ]
+    },
+    "end_recontained": {
+      "title": { "en": "CONTAINED", "pt": "CONTIDO" },
+      "text": {
+        "en": "It goes under. Not quietly. It hits the walls until the walls stop ringing, and then the acid closes over the last of the plates and the gauge reads five metres and stays there.\nVieira sits beside you on the deck and neither of you says anything for a long time.\nThe report calls it a partial breach, contained. The report does not call you anything. That is fine. You keep it wet. That is the job.",
+        "pt": "Ele afunda. Não em silêncio. Bate nas paredes até as paredes pararem de vibrar, e depois o ácido se fecha sobre a última das placas e o medidor marca cinco metros e fica ali.\nVieira senta ao seu lado no deck e nenhum dos dois diz nada por um bom tempo.\nO relatório chama de brecha parcial, contida. O relatório não chama você de nada. Tudo bem. Você mantém ele molhado. Esse é o trabalho."
+      },
+      "ending": "good"
+    },
+    "end_valve": {
+      "title": { "en": "REFILLED", "pt": "REPOSTO" },
+      "text": {
+        "en": "It never leaves the chamber. The refill catches it at the drain wall with its jaw over the lip, and there is a moment when you think it will climb anyway, out of spite. Then the level takes its legs, and its chest, and it lets go.\nChemistry never gets to pour their compound. Nobody is sorry.\nVieira buys you a coffee from the bad machine. You drink it with the hand that still works and watch the gauge for the rest of the night. Five metres. Five metres. Five.",
+        "pt": "Ele nunca sai da câmara. A reposição o pega na parede do dreno com a mandíbula sobre a borda, e há um momento em que você acha que ele vai subir mesmo assim, por despeito. Depois o nível toma as pernas, e o peito, e ele solta.\nA Química nunca chega a despejar o composto. Ninguém lamenta.\nVieira te paga um café da máquina ruim. Você bebe com a mão que ainda funciona e olha o medidor pelo resto da noite. Cinco metros. Cinco metros. Cinco."
+      },
+      "ending": "good"
+    },
+    "end_flood_cold": {
+      "title": { "en": "FIVE METRES", "pt": "CINCO METROS" },
+      "text": {
+        "en": "Five metres. It goes under and stays under. The alarms stop one by one until the room is only the sound of the pumps.\nVieira does not come up. When they open the sump two days later, you are not asked to be there, and you are not.\nThe report calls it contained. You go home. You come back the next day, because it is still down there, and it still needs to be wet, and there is nobody else now who knows Seal C by name.",
+        "pt": "Cinco metros. Ele afunda e fica afundado. Os alarmes param um a um até a sala ser só o som das bombas.\nVieira não sobe. Quando abrem o poço dois dias depois, não pedem que você esteja lá, e você não está.\nO relatório chama de contido. Você vai para casa. Volta no dia seguinte, porque ele continua lá embaixo, e continua precisando ficar molhado, e agora não há mais ninguém que conheça o selo C pelo nome."
+      },
+      "ending": "neutral"
+    },
+    "end_immune": {
+      "title": { "en": "IMMUNE", "pt": "IMUNE" },
+      "text": {
+        "en": "The acid closes over it and nothing happens. It stands in five metres of the only thing that ever held it, and it breathes, and the new glassy skin does not so much as steam.\nIt looks up through the acid, through the glass, at you.\nSomewhere upstairs the word 'contained' is quietly retired. It walks out of the tank. The reports will say the containment failed. You know better. The containment did not fail. It was taught.",
+        "pt": "O ácido se fecha sobre ele e nada acontece. Ele fica em pé em cinco metros da única coisa que já o segurou, e respira, e a pele nova e vítrea nem sequer solta vapor.\nEle olha para cima através do ácido, através do vidro, para você.\nEm algum andar acima a palavra 'contido' é aposentada em silêncio. Ele sai do tanque andando. Os relatórios vão dizer que a contenção falhou. Você sabe que não. A contenção não falhou. Ela foi ensinada."
+      },
+      "ending": "bad"
+    },
+    "end_spent": {
+      "title": { "en": "SPENT", "pt": "ESGOTADO" },
+      "text": {
+        "en": "You do not get up. Your body has decided, and it is right.\nIt waits, because it likes to watch, and then it stops waiting.\nThe last thing you see is the corridor light on the wet floor. The last thing you hear is your own name in that voice, tried out once, kept.\nUpstairs, the reserve floods the chamber on a timer, ninety seconds late, onto nothing at all.",
+        "pt": "Você não levanta. Seu corpo decidiu, e está certo.\nEle espera, porque gosta de olhar, e depois para de esperar.\nA última coisa que você vê é a luz do corredor no chão molhado. A última que ouve é o seu próprio nome naquela voz, experimentado uma vez, guardado.\nLá em cima, a reserva inunda a câmara por temporizador, noventa segundos atrasada, sobre nada."
+      },
+      "ending": "bad"
+    },
+    "end_adapted": {
+      "title": { "en": "THE TEACHER", "pt": "O PROFESSOR" },
+      "text": {
+        "en": "You keep spraying because it is the only thing you have. It stands in it. It drinks it. It comes down the corridor through the jet like a man walking into rain.\nWhen it takes the hose, it is gentle about it, almost. 'Thank... you,' it says.\nIn the file, years later, the acid tank is a footnote. Somewhere in that footnote, if you knew where to look, would be a name. Yours. The engineer who taught it.",
+        "pt": "Você continua jogando porque é a única coisa que tem. Ele fica parado dentro do jato. Bebe. Vem pelo corredor através do jato como um homem andando na chuva.\nQuando toma a mangueira, é quase gentil. 'Obri... gado', ele diz.\nNo arquivo, anos depois, o tanque de ácido é uma nota de rodapé. Em algum lugar dessa nota, se você soubesse onde olhar, haveria um nome. O seu. O engenheiro que o ensinou."
+      },
+      "ending": "bad"
+    }
+  }
+}

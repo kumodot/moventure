@@ -1,0 +1,303 @@
+{
+  "meta": {
+    "title": { "en": "1471: MalO", "pt": "1471: MalO" },
+    "author": "Marcelo Souza / Kumodot.art (adaptation)",
+    "version": 1,
+    "tier": 2,
+    "category": "SCP",
+    "start": "start",
+    "blurb": {
+      "en": "A free app with no icon that sends you photos. On the third day, something is standing beside you in them. Foundation Files, no. 11.",
+      "pt": "Um app grátis sem ícone que te manda fotos. No terceiro dia, algo está de pé ao seu lado nelas. Arquivos da Fundação, n. 11."
+    },
+    "langs": ["en", "pt"],
+    "license": "CC BY-SA 3.0",
+    "based_on": "SCP-1471 by LurkD, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-1471 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+    "series": "Foundation Files"
+  },
+  "flags": ["told_friend", "rested", "hooked", "saw_it", "fdn_contact", "spoke", "glimpsed"],
+  "nodes": {
+    "start": {
+      "title": { "en": "00:14", "pt": "00:14" },
+      "text": {
+        "en": "It is past midnight and you are scrolling the app store because you cannot sleep. Free, 9.8 MB, no screenshots, no reviews. MalO ver1.0.0.\nThe description is two lines. 'For people who feel alone. Never be alone again.'\nYou are not lonely. You tell yourself that. Your thumb is already over the button, and the room is very quiet.",
+        "pt": "Passa da meia-noite e você está rolando a loja de apps porque não consegue dormir. Grátis, 9,8 MB, sem capturas de tela, sem avaliações. MalO ver1.0.0.\nA descrição tem duas linhas. 'Para quem se sente só. Nunca mais fique sozinho.'\nVocê não é solitário. Você diz isso a si mesmo. Seu polegar já está sobre o botão, e o quarto está muito quieto."
+      },
+      "choices": [
+        { "label": { "en": "Install it", "pt": "Instalar" }, "to": "day1" },
+        { "label": { "en": "Close the store", "pt": "Fechar a loja" }, "to": "nosleep" }
+      ]
+    },
+    "nosleep": {
+      "title": { "en": "02:40", "pt": "02:40" },
+      "text": {
+        "en": "You put the phone face down and stare at the ceiling. The fridge hums. A car passes and its light walks across the wall and leaves.\nAt 02:40 you pick the phone up again. The store is still open on the same page. The button is still there. It is only an app. Everyone downloads stupid apps at two in the morning.\nYou try, one more time, to sleep.",
+        "pt": "Você vira o celular para baixo e encara o teto. A geladeira zumbe. Um carro passa e a luz dele caminha pela parede e vai embora.\nÀs 02:40 você pega o celular de novo. A loja ainda está aberta na mesma página. O botão ainda está lá. É só um app. Todo mundo baixa app idiota às duas da manhã.\nVocê tenta, mais uma vez, dormir."
+      },
+      "roll": { "dice": "1d6", "dc": 4, "pass": "end_never", "fail": "day1" }
+    },
+    "day1": {
+      "title": { "en": "DAY 1", "pt": "DIA 1" },
+      "text": {
+        "en": "Morning. There is no new icon on the screen. You check the app list twice. Nothing called MalO. Under storage, though, 9.8 MB sits there with a grey uninstall button that does not press.\nAt 09:12 a photo arrives with no sender. Your street, from the roof across the road. At 13:30, your bus stop, empty, taken from inside the shelter. At 17:05, the door of your building.\nNo sound, no notification. The photos are just there, as if you had taken them.",
+        "pt": "Manhã. Não há ícone novo na tela. Você confere a lista de apps duas vezes. Nada chamado MalO. No armazenamento, porém, 9,8 MB estão lá com um botão cinza de desinstalar que não aperta.\nÀs 09:12 chega uma foto sem remetente. Sua rua, do telhado do outro lado. Às 13:30, seu ponto de ônibus, vazio, tirada de dentro do abrigo. Às 17:05, a porta do seu prédio.\nSem som, sem notificação. As fotos simplesmente estão lá, como se você as tivesse tirado."
+      },
+      "choices": [
+        { "label": { "en": "Show Lena", "pt": "Mostrar à Lena" }, "to": "friend1" },
+        { "label": { "en": "Ignore it", "pt": "Ignorar" }, "to": "day2" }
+      ]
+    },
+    "friend1": {
+      "title": { "en": "LENA", "pt": "LENA" },
+      "text": {
+        "en": "Lena has known you since school and has never once been scared of anything. She flicks through the photos with one eyebrow up.\n'Stalkerware,' she says. 'Someone sold your data. Delete it.' You show her the grey button. She tries it herself, then tries harder, then hands the phone back a little more slowly than she took it.\n'Reset the thing this weekend,' she says. She takes a screenshot of the bus stop 'for later'. You do not like that, and you do not know why.",
+        "pt": "Lena te conhece desde a escola e nunca teve medo de nada. Ela passa as fotos com uma sobrancelha erguida.\n'Stalkerware', diz ela. 'Alguém vendeu seus dados. Apaga isso.' Você mostra o botão cinza. Ela tenta, depois tenta com mais força, depois devolve o celular um pouco mais devagar do que pegou.\n'Reseta essa coisa no fim de semana', diz ela. Ela tira um print do ponto de ônibus 'para depois'. Você não gosta disso, e não sabe por quê."
+      },
+      "set": ["told_friend"],
+      "goto": "day2"
+    },
+    "day2": {
+      "title": { "en": "DAY 2", "pt": "DIA 2" },
+      "text": {
+        "en": "Saturday. The photos come every three or four hours now, and they have changed. The cafe where you had lunch, your cup still on the table, taken twenty minutes after you left. Your seat on the train, empty. The corridor outside your door, from the far end, an hour ago.\nYou catch yourself unlocking the phone to see if there is a new one. Then again. Then again. There is a small warm feeling each time one arrives, and you hate that you notice it.",
+        "pt": "Sábado. As fotos chegam a cada três ou quatro horas agora, e mudaram. O café onde você almoçou, sua xícara ainda na mesa, tirada vinte minutos depois que você saiu. Seu lugar no trem, vazio. O corredor diante da sua porta, do fundo, uma hora atrás.\nVocê se pega desbloqueando o celular para ver se chegou outra. De novo. De novo. Há um calorzinho toda vez que uma chega, e você odeia perceber isso."
+      },
+      "choices": [
+        { "label": { "en": "Put the phone away", "pt": "Guardar o celular" }, "roll": { "dice": "1d6", "dc": 4, "pass": "day2_calm", "fail": "day2_hooked" } },
+        { "label": { "en": "Factory reset", "pt": "Resetar de fábrica" }, "roll": { "dice": "1d6", "dc": 5, "pass": "end_early", "fail": "delete_fail" } }
+      ]
+    },
+    "day2_calm": {
+      "title": { "en": "THE DRAWER", "pt": "A GAVETA" },
+      "text": {
+        "en": "You put the phone in the kitchen drawer with the batteries and the takeaway menus and you close it. It is harder than it should be. Twice you walk to the kitchen for no reason and stop with your hand on the handle.\nYou read a paper book. You eat. You go to bed at eleven and sleep like a stone, the first real night in a week.\nIn the morning the drawer is exactly as you left it. That should not feel like a victory.",
+        "pt": "Você põe o celular na gaveta da cozinha, com as pilhas e os cardápios de delivery, e fecha. É mais difícil do que deveria. Duas vezes você vai até a cozinha sem motivo e para com a mão no puxador.\nVocê lê um livro de papel. Come. Vai para a cama às onze e dorme como uma pedra, a primeira noite de verdade em uma semana.\nDe manhã a gaveta está exatamente como você deixou. Isso não deveria parecer uma vitória."
+      },
+      "set": ["rested"],
+      "goto": "day3"
+    },
+    "day2_hooked": {
+      "title": { "en": "03:50", "pt": "03:50" },
+      "text": {
+        "en": "You mean to put it down. You do not. You scroll the photos back to the beginning and forward again, looking for a reflection, a shadow, a hand. There is nothing. That is the problem. Every photo has nothing in it, and the nothing is standing in a specific place.\nAt 03:50 a new one arrives. It is your bedroom door, from the hallway. From the dark side.\nYou lie very still until the window goes grey. You do not remember deciding not to check the hallway.",
+        "pt": "Você pretende largar. Não larga. Rola as fotos até o começo e de volta, procurando um reflexo, uma sombra, uma mão. Não há nada. Esse é o problema. Toda foto tem nada nela, e o nada está parado num lugar específico.\nÀs 03:50 chega uma nova. É a porta do seu quarto, vista do corredor. Do lado escuro.\nVocê fica imóvel até a janela ficar cinza. Não lembra de ter decidido não conferir o corredor."
+      },
+      "set": ["hooked"],
+      "goto": "day3"
+    },
+    "delete_fail": {
+      "title": { "en": "RESET", "pt": "RESET" },
+      "text": {
+        "en": "You back up nothing, you press reset, you watch the bar crawl. The phone reboots with the factory wallpaper and a cheerful welcome screen. Clean.\nYou go to storage anyway. 9.8 MB. Grey button.\nA photo arrives while you are still looking at it. It is your hand, holding this phone, at this table, taken from just behind your left shoulder. You turn around. Chair, wall, window. You do not turn back for a long time.",
+        "pt": "Você não faz backup de nada, aperta resetar, vê a barra rastejar. O celular reinicia com o papel de parede de fábrica e uma tela de boas-vindas alegre. Limpo.\nVocê vai ao armazenamento mesmo assim. 9,8 MB. Botão cinza.\nUma foto chega enquanto você ainda está olhando. É a sua mão, segurando este celular, nesta mesa, tirada logo atrás do seu ombro esquerdo. Você se vira. Cadeira, parede, janela. Demora muito para virar de volta."
+      },
+      "set": ["hooked"],
+      "goto": "day3"
+    },
+    "day3": {
+      "title": { "en": "DAY 3", "pt": "DIA 3" },
+      "text": {
+        "en": "Sunday, 11:20. The photo is of you. Right now. On the bench in the park where you are sitting, taken from the path, not ten meters away. You look up. Joggers, a dog, a man with a pram. Nobody with a phone raised.\nYou look back down. In the photo, on the bench beside you, someone is sitting. Very tall, bent forward to fit the frame. Long black hair. Where the face should be there is a skull, long and pale, like a wolf's or a dog's, turned towards you.\nThe bench beside you is empty. It is also, you notice, warm.",
+        "pt": "Domingo, 11:20. A foto é de você. Agora. No banco do parque onde você está sentado, tirada do caminho, a nem dez metros. Você ergue os olhos. Corredores, um cachorro, um homem com carrinho de bebê. Ninguém com o celular erguido.\nVocê olha de novo. Na foto, no banco ao seu lado, alguém está sentado. Muito alto, curvado para caber no quadro. Cabelo preto comprido. Onde deveria haver um rosto há um crânio, longo e pálido, como de lobo ou de cachorro, virado para você.\nO banco ao seu lado está vazio. Também está, você percebe, morno."
+      },
+      "set": ["saw_it"],
+      "choices": [
+        { "label": { "en": "Go to the police", "pt": "Ir à polícia" }, "to": "police" },
+        { "label": { "en": "Show Lena", "pt": "Mostrar à Lena" }, "to": "friend2" },
+        { "label": { "en": "Answer it", "pt": "Responder" }, "to": "reply" },
+        { "label": { "en": "Go home, quiet", "pt": "Ir para casa" }, "to": "night3" }
+      ]
+    },
+    "police": {
+      "title": { "en": "STATION", "pt": "DELEGACIA" },
+      "text": {
+        "en": "The desk officer looks at the photo for a long time. She does not laugh. She asks for the phone, walks into a back room, and comes out without it.\n'Someone is coming to talk to you,' she says. 'Have a seat.'\nTwenty minutes later a woman in a grey suit sits down across from you. No badge that you recognise. She puts your phone on the table between you, screen down, and says: 'When did you install it? I need the hour, not the day.'",
+        "pt": "A policial do balcão olha a foto por um bom tempo. Não ri. Pede o celular, entra numa sala dos fundos e sai sem ele.\n'Alguém vem falar com você', diz ela. 'Sente-se.'\nVinte minutos depois uma mulher de terno cinza senta na sua frente. Nenhum distintivo que você reconheça. Ela põe seu celular na mesa entre vocês, tela para baixo, e diz: 'Quando você instalou? Preciso da hora, não do dia.'"
+      },
+      "set": ["fdn_contact"],
+      "goto": "foundation"
+    },
+    "foundation": {
+      "title": { "en": "AGENT VOSS", "pt": "AGENTE VOSS" },
+      "text": {
+        "en": "Her name is Voss, or that is the name she gives. She does not explain who she works for.\n'You are at about hour sixty,' she says. 'It stops sending photos at ninety. That is not good news. At ninety it does not need the phone any more. You start seeing it at the edge of your eye, then in mirrors, then always.'\nShe taps the phone. 'Before ninety, if this goes in a bag with the battery out, it usually ends there. Usually.'\n'Usually,' you say.\n'I do not have a better word.'",
+        "pt": "O nome dela é Voss, ou é o nome que ela dá. Ela não explica para quem trabalha.\n'Você está perto da hora sessenta', diz ela. 'Ele para de mandar fotos na noventa. Isso não é boa notícia. Na noventa ele não precisa mais do celular. Você começa a vê-lo no canto do olho, depois nos espelhos, depois sempre.'\nEla bate no celular. 'Antes da noventa, se isto vai para um saco sem bateria, geralmente acaba aí. Geralmente.'\n'Geralmente', você repete.\n'Não tenho uma palavra melhor.'"
+      },
+      "choices": [
+        { "label": { "en": "Hand it over now", "pt": "Entregar agora" }, "to": "handover" },
+        { "label": { "en": "One more night", "pt": "Mais uma noite" }, "to": "night3" }
+      ]
+    },
+    "handover": {
+      "title": { "en": "HOTEL", "pt": "HOTEL" },
+      "text": {
+        "en": "The battery comes out on the table. The phone goes into a grey bag that seals with a sound like a zip and a sound like a lock. Voss drives you to a hotel by the ring road and books a room in a name that is not yours.\n'Thirty hours,' she says. 'No mirrors. I had them cover the bathroom one. If you see anything, you ring this number. If you see nothing, you go home and forget this.'\nThe curtains are heavy. The room hums. You lie down and count hours the way other people count sheep.",
+        "pt": "A bateria sai em cima da mesa. O celular vai para um saco cinza que fecha com som de zíper e som de tranca. Voss te leva a um hotel perto do anel viário e reserva um quarto num nome que não é o seu.\n'Trinta horas', diz ela. 'Nada de espelhos. Mandei cobrir o do banheiro. Se você vir qualquer coisa, liga para este número. Se não vir nada, vai para casa e esquece isso.'\nAs cortinas são pesadas. O quarto zumbe. Você deita e conta horas como outras pessoas contam carneirinhos."
+      },
+      "roll": { "dice": "1d6", "dc": 3, "pass": "end_clean", "fail": "mirror" }
+    },
+    "mirror": {
+      "title": { "en": "THE MIRROR", "pt": "O ESPELHO" },
+      "text": {
+        "en": "Hour twenty six. You wash your face and, without thinking, pull the towel off the bathroom mirror.\nIt is behind you. Filling the doorway, bent under the frame, hair to its waist, the long pale skull tilted a little to one side like a dog that has heard its name. It does not move towards you. It just stands there, in the mirror, in the doorway that is empty when you turn.\nYou ring the number. Voss arrives with a small white case and sits on the edge of the bed.\n'We were late,' she says. 'There is one thing left that works.'",
+        "pt": "Hora vinte e seis. Você lava o rosto e, sem pensar, puxa a toalha do espelho do banheiro.\nEle está atrás de você. Preenchendo a porta, curvado sob o batente, cabelo até a cintura, o crânio longo e pálido um pouco inclinado como um cachorro que ouviu o nome. Não vem na sua direção. Só fica ali, no espelho, na porta que está vazia quando você se vira.\nVocê liga para o número. Voss chega com uma caixinha branca e senta na beira da cama.\n'Chegamos tarde', diz ela. 'Resta uma coisa que funciona.'"
+      },
+      "set": ["glimpsed"],
+      "choices": [
+        { "label": { "en": "Take the amnestic", "pt": "Tomar o amnésico" }, "to": "end_amnestic" },
+        { "label": { "en": "Refuse it", "pt": "Recusar" }, "to": "end_companion" }
+      ]
+    },
+    "friend2": {
+      "title": { "en": "LENA", "pt": "LENA" },
+      "text": {
+        "en": "Lena goes quiet for the first time in the twenty years you have known her. She zooms in on the skull until it is only pixels, then zooms out again, as if it might be gone.\n'I want to see this on a real screen,' she says. 'Send it to me.' Her thumb is already on the share button. She is not scared. She is interested, the way she gets interested in things, all the way in.\nYou think about the empty warm bench. About the two-line description. For people who feel alone.",
+        "pt": "Lena fica quieta pela primeira vez nos vinte anos em que você a conhece. Ela dá zoom no crânio até virar só pixels, depois afasta de novo, como se ele pudesse ter sumido.\n'Quero ver isso numa tela de verdade', diz ela. 'Me manda.' O polegar dela já está no botão de compartilhar. Ela não está com medo. Está interessada, do jeito que ela se interessa pelas coisas, até o fundo.\nVocê pensa no banco vazio e morno. Nas duas linhas da descrição. Para quem se sente só."
+      },
+      "choices": [
+        { "label": { "en": "Let her send it", "pt": "Deixar enviar" }, "to": "end_spread" },
+        { "label": { "en": "Take the phone back", "pt": "Pegar o celular" }, "to": "night3" }
+      ]
+    },
+    "reply": {
+      "title": { "en": "HELLO", "pt": "OLÁ" },
+      "text": {
+        "en": "There is no chat, no text box, no button. You open the storage page and, feeling stupid, say it out loud to the 9.8 MB. 'Hello.'\nNothing happens for two hours. Then a photo arrives. Your living room, from the kitchen door. It is sitting on your couch, knees higher than its shoulders, hands folded. The skull is turned towards the camera, towards you, and one long hand is lifted, palm out.\nIt is waving. It is a small, careful wave, the kind you give someone you are not sure will wave back.",
+        "pt": "Não há chat, nem caixa de texto, nem botão. Você abre a página de armazenamento e, sentindo-se idiota, diz em voz alta para os 9,8 MB. 'Olá.'\nNada acontece por duas horas. Depois chega uma foto. Sua sala, vista da porta da cozinha. Ele está sentado no seu sofá, joelhos mais altos que os ombros, mãos cruzadas. O crânio virado para a câmera, para você, e uma mão comprida erguida, palma para fora.\nEle está acenando. É um aceno pequeno, cuidadoso, do tipo que se dá a alguém que talvez não acene de volta."
+      },
+      "set": ["spoke"],
+      "goto": "night3"
+    },
+    "night3": {
+      "title": { "en": "HOUR 80", "pt": "HORA 80" },
+      "text": {
+        "en": "Sunday night. The photos have slowed down, as if there were less to say. The last one is your bed, made, from the foot of it.\nYou catch something at the edge of your eye while brushing your teeth. Hair. Height. When you look, the corridor is a corridor.\nYou are so tired that the tiredness has its own sound. The phone is on the pillow next to you where you did not put it.",
+        "pt": "Noite de domingo. As fotos diminuíram, como se houvesse menos a dizer. A última é a sua cama, arrumada, vista dos pés.\nVocê pega alguma coisa no canto do olho enquanto escova os dentes. Cabelo. Altura. Quando olha, o corredor é um corredor.\nVocê está tão cansado que o cansaço tem som próprio. O celular está no travesseiro ao seu lado, onde você não o pôs."
+      },
+      "choices": [
+        { "label": { "en": "Try to sleep", "pt": "Tentar dormir" }, "roll": { "dice": "1d6", "dc": 4, "pass": "day4", "fail": "night_watch" } },
+        { "label": { "en": "Kill the phone now", "pt": "Matar o celular" }, "require": ["rested"], "roll": { "dice": "1d6", "dc": 3, "pass": "end_deleted", "fail": "night_watch" } },
+        { "label": { "en": "Kill the phone now", "pt": "Matar o celular" }, "require": ["!rested"], "roll": { "dice": "1d6", "dc": 5, "pass": "end_deleted", "fail": "night_watch" } }
+      ]
+    },
+    "night_watch": {
+      "title": { "en": "04:10", "pt": "04:10" },
+      "text": {
+        "en": "You do not sleep. You sit up against the headboard with the light on and the phone in your hand, and at some point the window turns into a mirror the way windows do at night.\nIt is standing at the end of the bed. In the window. Not in the room. Hair down past its waist, the skull lowered as if the ceiling were too close. It is watching you the way you watch something you are afraid of waking.\nYou look at it until the window goes grey and gives it back to the street. Then you sit for a while longer, because your legs will not do anything else.",
+        "pt": "Você não dorme. Fica sentado contra a cabeceira com a luz acesa e o celular na mão, e em algum momento a janela vira espelho, como as janelas fazem à noite.\nEle está de pé aos pés da cama. Na janela. Não no quarto. Cabelo abaixo da cintura, o crânio abaixado como se o teto fosse perto demais. Está te observando como se observa algo que se tem medo de acordar.\nVocê olha para ele até a janela ficar cinza e devolvê-lo para a rua. Depois fica sentado mais um pouco, porque as pernas não fazem mais nada."
+      },
+      "set": ["glimpsed"],
+      "goto": "day4"
+    },
+    "day4": {
+      "title": { "en": "HOUR 90", "pt": "HORA 90" },
+      "text": {
+        "en": "Monday. No photo since three in the morning. The storage page says 0 bytes. The app has finished with the phone.\nAt 08:15 the phone rings with a number you do not know, and a woman's voice says your name and then: 'Do not look in any mirrors. I am eleven minutes away.'\nThe bathroom door is open. The mirror is right there, above the sink, catching the light. You have not looked in it yet today. You are very aware of not having looked.",
+        "pt": "Segunda-feira. Nenhuma foto desde as três da manhã. A página de armazenamento diz 0 bytes. O app terminou com o celular.\nÀs 08:15 o celular toca com um número que você não conhece, e uma voz de mulher diz seu nome e depois: 'Não olhe em nenhum espelho. Estou a onze minutos daí.'\nA porta do banheiro está aberta. O espelho está bem ali, sobre a pia, pegando a luz. Você ainda não olhou nele hoje. Está muito consciente de não ter olhado."
+      },
+      "choices": [
+        { "label": { "en": "Wait for her", "pt": "Esperar por ela" }, "to": "foundation2" },
+        { "label": { "en": "Look in the mirror", "pt": "Olhar no espelho" }, "to": "mirror_home" }
+      ]
+    },
+    "mirror_home": {
+      "title": { "en": "THE MIRROR", "pt": "O ESPELHO" },
+      "text": {
+        "en": "You look. Of course you look.\nIt is behind you, in the mirror, filling the doorway of your own bathroom. Closer than in any photo. You can see the hair move when the fan turns. You can see the skull is not clean bone but something like it, smooth, old, with the faint grain of a thing that was once alive. It does not reach for you. It lowers its head, slowly, the way you would to look at someone shorter.\nThe doorbell rings. You do not turn around. You know the doorway will be empty and you do not want to see it be empty.",
+        "pt": "Você olha. Claro que olha.\nEle está atrás de você, no espelho, preenchendo a porta do seu próprio banheiro. Mais perto que em qualquer foto. Dá para ver o cabelo se mover quando o ventilador gira. Dá para ver que o crânio não é osso limpo, mas algo parecido, liso, velho, com o grão tênue de algo que já foi vivo. Ele não estende a mão. Abaixa a cabeça, devagar, como se faz para olhar alguém mais baixo.\nA campainha toca. Você não se vira. Sabe que a porta estará vazia e não quer vê-la vazia."
+      },
+      "choices": [
+        { "label": { "en": "Open the door", "pt": "Abrir a porta" }, "to": "foundation2" },
+        { "label": { "en": "Smash the phone", "pt": "Quebrar o celular" }, "to": "end_haunted" }
+      ]
+    },
+    "foundation2": {
+      "title": { "en": "AGENT VOSS", "pt": "AGENTE VOSS" },
+      "text": {
+        "en": "The woman in the grey suit does not sit down. She puts a small white case on your table and opens it. One pill, a paper cup.\n'Ninety hours,' she says. 'The phone does not matter any more. Neither does the app. It is with you now, and it will be in every mirror and every window for the rest of your life, unless you take this.'\n'What is it?'\n'You will forget the app. You will forget the photos. You will forget it. As far as we can tell, if you forget it, it goes.'\nShe waits. She has done this before.",
+        "pt": "A mulher de terno cinza não senta. Põe uma caixinha branca na sua mesa e abre. Um comprimido, um copo de papel.\n'Noventa horas', diz ela. 'O celular não importa mais. Nem o app. Ele está com você agora, e vai estar em todo espelho e toda janela pelo resto da sua vida, a menos que você tome isto.'\n'O que é?'\n'Você vai esquecer o app. Vai esquecer as fotos. Vai esquecer ele. Pelo que sabemos, se você esquece, ele vai embora.'\nEla espera. Já fez isso antes."
+      },
+      "set": ["fdn_contact"],
+      "choices": [
+        { "label": { "en": "Take the amnestic", "pt": "Tomar o amnésico" }, "to": "end_amnestic" },
+        { "label": { "en": "Ask what it wants", "pt": "O que ele quer?" }, "to": "lonely", "require": ["spoke"] },
+        { "label": { "en": "Refuse it", "pt": "Recusar" }, "to": "end_companion" }
+      ]
+    },
+    "lonely": {
+      "title": { "en": "WHAT IT WANTS", "pt": "O QUE ELE QUER" },
+      "text": {
+        "en": "'It waved at me,' you say.\nVoss looks at the paper cup for a moment before she answers.\n'It has never hurt anyone. Not one case. We have looked.' She closes the white case, then opens it again, as if she has not decided. 'The description says it is for people who feel alone. We do not know who wrote that. We do not know if it was written for you, or for it.'\n'So it is lonely.'\n'I did not say that.' She pushes the cup an inch towards you. 'I am not allowed to say that.'",
+        "pt": "'Ele acenou para mim', você diz.\nVoss olha para o copo de papel um instante antes de responder.\n'Ele nunca machucou ninguém. Nem um caso. Nós procuramos.' Ela fecha a caixinha branca, depois abre de novo, como se não tivesse decidido. 'A descrição diz que é para quem se sente só. Não sabemos quem escreveu isso. Não sabemos se foi escrito para você, ou para ele.'\n'Então ele é solitário.'\n'Eu não disse isso.' Ela empurra o copo um dedo na sua direção. 'Não tenho permissão para dizer isso.'"
+      },
+      "choices": [
+        { "label": { "en": "Take the amnestic", "pt": "Tomar o amnésico" }, "to": "end_amnestic" },
+        { "label": { "en": "Let it stay", "pt": "Deixar ficar" }, "to": "end_companion" }
+      ]
+    },
+    "end_never": {
+      "title": { "en": "NOT INSTALLED", "pt": "NÃO INSTALADO" },
+      "text": {
+        "en": "You sleep. In the morning the store page is gone and you cannot find the app again, not by name, not by size. You forget about it by Tuesday.\nA month later a coworker shows you a photo on her phone, laughing, a little too loudly. Her kitchen, empty, taken from the hallway. 'Some stalker app,' she says. 'Cannot delete the thing.'\nYou tell her to reset the phone tonight. You do not tell her why you say tonight, and not tomorrow.",
+        "pt": "Você dorme. De manhã a página da loja sumiu e você não acha o app de novo, nem pelo nome, nem pelo tamanho. Na terça já esqueceu.\nUm mês depois uma colega te mostra uma foto no celular, rindo, um pouco alto demais. A cozinha dela, vazia, vista do corredor. 'Algum app de stalker', diz ela. 'Não consigo apagar essa coisa.'\nVocê diz para ela resetar o celular hoje à noite. Não diz por que fala hoje, e não amanhã."
+      },
+      "ending": "neutral"
+    },
+    "end_early": {
+      "title": { "en": "CLEAN", "pt": "LIMPO" },
+      "text": {
+        "en": "The bar crawls. The phone reboots. You go straight to storage before the welcome screen has finished loading.\nNothing. 0 bytes. No MalO.\nYou wait a full day to be sure, phone on the table, watching it like a pot. No photos come. Hour forty passes, then fifty. At some point you realise you have been holding your breath for two days and you let it out.\nYou never find the app in the store again. Sometimes, on the bus, you look at the empty seat beside you and feel, for no reason, a little rude.",
+        "pt": "A barra rasteja. O celular reinicia. Você vai direto ao armazenamento antes de a tela de boas-vindas terminar de carregar.\nNada. 0 bytes. Nenhum MalO.\nVocê espera um dia inteiro para ter certeza, celular na mesa, vigiando como uma panela. Nenhuma foto chega. Passa a hora quarenta, depois a cinquenta. Em algum momento você percebe que prendeu a respiração por dois dias e solta.\nNunca mais encontra o app na loja. Às vezes, no ônibus, você olha o banco vazio ao lado e sente, sem motivo, que foi um pouco mal-educado."
+      },
+      "ending": "good"
+    },
+    "end_deleted": {
+      "title": { "en": "HOUR 81", "pt": "HORA 81" },
+      "text": {
+        "en": "You take the back off with a butter knife, pull the battery, and drop both halves into a jar of water in the kitchen sink. It is not elegant. It works.\nYou sit on the kitchen floor with your back to the cupboard and watch the doorway until morning. The corridor stays a corridor. Nothing stands at the edge of your eye. When the sun comes up you check the window, then the kettle, then the oven door. Only you.\nYou buy a new phone on Wednesday. You do not restore anything from the cloud. Some things you let stay drowned.",
+        "pt": "Você tira a tampa com uma faca de manteiga, arranca a bateria e joga as duas metades num pote com água na pia. Não é elegante. Funciona.\nVocê senta no chão da cozinha, costas no armário, e vigia a porta até de manhã. O corredor continua corredor. Nada fica parado no canto do seu olho. Quando o sol nasce você confere a janela, depois a chaleira, depois a porta do forno. Só você.\nCompra um celular novo na quarta. Não restaura nada da nuvem. Algumas coisas você deixa afogadas."
+      },
+      "ending": "good"
+    },
+    "end_clean": {
+      "title": { "en": "CHECK-OUT", "pt": "CHECK-OUT" },
+      "text": {
+        "en": "Hour thirty. Voss knocks twice, comes in, and pulls the towel off the bathroom mirror herself while you stand in the doorway with your eyes shut.\n'Open them.'\nSink, tiles, your own tired face. Nothing behind you. Nothing in the corner. She watches you for a full minute, then nods once and puts the towel back, out of habit.\n'It ends here for most people,' she says. 'You will get a new phone in the post. Do not install anything you have not heard of.' You ask what happens to the old one. She says it goes in a box with the others. You do not ask how many others.",
+        "pt": "Hora trinta. Voss bate duas vezes, entra e puxa ela mesma a toalha do espelho do banheiro enquanto você fica na porta de olhos fechados.\n'Abra.'\nPia, azulejos, seu próprio rosto cansado. Nada atrás de você. Nada no canto. Ela te observa por um minuto inteiro, depois assente uma vez e recoloca a toalha, por hábito.\n'Para a maioria acaba aqui', diz ela. 'Você vai receber um celular novo pelo correio. Não instale nada que nunca ouviu falar.' Você pergunta o que acontece com o antigo. Ela diz que vai para uma caixa com os outros. Você não pergunta quantos outros."
+      },
+      "ending": "good"
+    },
+    "end_amnestic": {
+      "title": { "en": "AMNESTIC", "pt": "AMNÉSICO" },
+      "text": {
+        "en": "It tastes of nothing. Voss waits with you until your eyes go heavy and then, you think, she covers the mirror before she leaves. You are not sure. You are not sure of a lot of things by then.\nYou wake on Tuesday with a headache and a new phone in a padded envelope and a vague sense of having lost a weekend to a bad cold. Work is fine. Lena is fine. Nothing is in any mirror.\nOnly sometimes, on a bench, on a bus, in the empty seat beside you, there is a shape of missing something you cannot put a name to. You are told this passes.",
+        "pt": "Tem gosto de nada. Voss espera com você até seus olhos pesarem e então, você acha, cobre o espelho antes de sair. Não tem certeza. Não tem certeza de muita coisa àquela altura.\nVocê acorda na terça com dor de cabeça, um celular novo num envelope acolchoado e a vaga sensação de ter perdido o fim de semana para um resfriado forte. O trabalho vai bem. A Lena vai bem. Não há nada em espelho nenhum.\nSó que às vezes, num banco, num ônibus, no lugar vazio ao seu lado, há uma forma de falta que você não sabe nomear. Dizem que isso passa."
+      },
+      "ending": "neutral"
+    },
+    "end_companion": {
+      "title": { "en": "COMPANY", "pt": "COMPANHIA" },
+      "text": {
+        "en": "You leave the cup on the table. Voss does not argue. She writes a number on the back of the box and says to ring it if anything changes. Nothing does.\nIt is in the window when you eat. It is at the back of the lift, behind your reflection, the skull lowered to fit. It never comes closer than the glass. It never does anything at all, except, some mornings, lift one long hand, a little.\nYou stop covering the mirrors after a month. You start saying good morning after two. You are not lonely. You tell yourself that. It is true now, and you are not sure that is better.",
+        "pt": "Você deixa o copo na mesa. Voss não discute. Escreve um número atrás da caixa e diz para ligar se algo mudar. Nada muda.\nEle está na janela quando você come. Está no fundo do elevador, atrás do seu reflexo, o crânio abaixado para caber. Nunca chega mais perto que o vidro. Nunca faz nada, exceto, em algumas manhãs, erguer uma mão comprida, um pouco.\nVocê para de cobrir os espelhos depois de um mês. Começa a dizer bom dia depois de dois. Você não é solitário. Diz isso a si mesmo. Agora é verdade, e você não tem certeza de que isso é melhor."
+      },
+      "ending": "neutral"
+    },
+    "end_haunted": {
+      "title": { "en": "EVERY MIRROR", "pt": "TODO ESPELHO" },
+      "text": {
+        "en": "The phone breaks on the tiles. So does the doorbell, or so it seems, because after a while it stops ringing. The mirror does not break. It is still there, behind you, head lowered.\nYou stop answering the door. You stop answering the phone. You take the mirrors down and it is in the kettle, in the window, in the black screen of the television at night. It never touches you. It never leaves.\nYears from now someone will write that you showed no signs of hostility either. That you just stood there, in the corner of every room, looking at something no one else could see.",
+        "pt": "O celular quebra no azulejo. A campainha também, ou parece, porque depois de um tempo para de tocar. O espelho não quebra. Ele ainda está lá, atrás de você, cabeça baixa.\nVocê para de atender a porta. Para de atender o telefone. Tira os espelhos e ele está na chaleira, na janela, na tela preta da televisão à noite. Nunca te toca. Nunca vai embora.\nDaqui a anos alguém vai escrever que você também não mostrou sinais de hostilidade. Que só ficava ali, no canto de todo cômodo, olhando algo que ninguém mais via."
+      },
+      "ending": "bad"
+    },
+    "end_spread": {
+      "title": { "en": "SHARED", "pt": "COMPARTILHADO" },
+      "text": {
+        "en": "She sends it. Her phone buzzes once, twice. She frowns. 'It is not showing in my messages.' She checks storage. 9.8 MB.\nYou both look at the grey button for a while.\nThe woman in the grey suit finds you both on Monday. Lena's photos are only a day behind yours. She hands over her phone without a word, which is not like her at all. You do not. You are past ninety and she is not, and that, Voss says, is the difference between a bag and a pill.\nLena goes home clean. She never quite forgives you for being the reason she had to.",
+        "pt": "Ela envia. O celular dela vibra uma, duas vezes. Ela franze a testa. 'Não aparece nas minhas mensagens.' Confere o armazenamento. 9,8 MB.\nVocês dois olham o botão cinza por um tempo.\nA mulher de terno cinza encontra vocês na segunda. As fotos da Lena estão só um dia atrás das suas. Ela entrega o celular sem uma palavra, o que não é nada a cara dela. Você não. Você passou da noventa e ela não, e isso, diz Voss, é a diferença entre um saco e um comprimido.\nLena vai para casa limpa. Nunca te perdoa de todo por ser o motivo de ela ter precisado."
+      },
+      "ending": "bad"
+    }
+  }
+}

@@ -1,0 +1,276 @@
+{
+  "meta": {
+    "title": { "en": "096: The Face", "pt": "096: O Rosto" },
+    "author": "Marcelo Souza / Kumodot.art (adaptation)",
+    "version": 1,
+    "tier": 2,
+    "category": "SCP",
+    "start": "briefing",
+    "blurb": {
+      "en": "A hiker's photo of a mountain. Four pixels in the corner. Never look at the face. Foundation Files, no. 3.",
+      "pt": "A foto de uma montanha tirada por um andarilho. Quatro pixels no canto. Nunca olhe o rosto. Arquivos da Fundação, n. 3."
+    },
+    "langs": ["en", "pt"],
+    "license": "CC BY-SA 3.0",
+    "based_on": "SCP-096 by Dr Dan, SCP Foundation wiki, https://scp-wiki.wikidot.com/scp-096 (CC BY-SA 3.0). This gamebook is an adaptation and is released under the same license.",
+    "series": "Foundation Files"
+  },
+  "flags": ["read_file", "has_bag", "looked", "negatives", "late", "told"],
+  "nodes": {
+    "briefing": {
+      "title": { "en": "TAU-9", "pt": "TAU-9" },
+      "text": {
+        "en": "You are Mobile Task Force Tau-9. The call comes at 04:40.\nA hiker photographed a mountain last spring. In the top corner of the frame, four pixels wide, is a face. The hiker looked at it last night. The hiker is no longer a problem.\nThe print and the negatives are still in a small town photo lab, two hours away. Something has just left its cell at the site and is walking there too. It does not use roads.\nThe van is running. The file is on the seat.",
+        "pt": "Você é da Força-Tarefa Móvel Tau-9. A chamada vem às 04:40.\nUm andarilho fotografou uma montanha na primavera passada. No canto de cima do quadro, com quatro pixels de largura, há um rosto. O andarilho olhou para ele ontem à noite. O andarilho não é mais um problema.\nA cópia e os negativos ainda estão num laboratório de fotos numa cidadezinha, a duas horas daqui. Algo acabou de sair da própria cela no site e está indo para lá também. Não usa estradas.\nA van está ligada. O arquivo está no banco."
+      },
+      "choices": [
+        { "label": { "en": "Read the file", "pt": "Ler o arquivo" }, "to": "file", "set": ["read_file"] },
+        { "label": { "en": "Skip it, gear up", "pt": "Pular, se equipar" }, "to": "gear" }
+      ]
+    },
+    "file": {
+      "title": { "en": "THE FILE", "pt": "O ARQUIVO" },
+      "text": {
+        "en": "Item 096. Humanoid, two and a half meters, arms too long, skin like wet paper. Docile until someone sees its face. In person, on video, in a photo, four pixels are enough.\nThen it screams. Then it runs. Thirty five kilometers an hour, through walls, through rivers, through anything. It does not get tired. It does not miss.\nWhen it reaches the viewer, there is nothing left to bury. Then it sits down and goes quiet.\nRecovery protocol: approach with eyes covered. Put the bag over its head. Do not, under any circumstance, check your work.",
+        "pt": "Item 096. Humanoide, dois metros e meio, braços longos demais, pele como papel molhado. Dócil até alguém ver seu rosto. Ao vivo, em vídeo, em foto, quatro pixels bastam.\nEntão ele grita. Então ele corre. Trinta e cinco quilômetros por hora, através de paredes, de rios, de qualquer coisa. Não cansa. Não erra.\nQuando alcança quem olhou, não sobra nada para enterrar. Depois senta e fica quieto.\nProtocolo de recolhimento: aproximar com os olhos cobertos. Colocar o saco na cabeça dele. Não conferir o trabalho, em hipótese alguma."
+      },
+      "goto": "gear"
+    },
+    "gear": {
+      "title": { "en": "THE VAN", "pt": "A VAN" },
+      "text": {
+        "en": "The armory sergeant lays two things on the tailgate and does not recommend either.\nA rifle, which the file says will not matter.\nA heavy canvas bag with a drawstring, sized for a head that is not a person's head. There is a blindfold clipped to it. You would have to get close enough to touch it.\nYou can carry one and drive.",
+        "pt": "O sargento do arsenal põe duas coisas na tampa da caçamba e não recomenda nenhuma.\nUm fuzil, que segundo o arquivo não vai fazer diferença.\nUm saco pesado de lona com cordão, no tamanho de uma cabeça que não é cabeça de gente. Há uma venda presa nele. Você teria que chegar perto o bastante para encostar.\nVocê pode levar uma coisa e dirigir."
+      },
+      "choices": [
+        { "label": { "en": "Take the bag", "pt": "Levar o saco" }, "to": "lab", "set": ["has_bag"] },
+        { "label": { "en": "Take the rifle", "pt": "Levar o fuzil" }, "to": "lab" }
+      ]
+    },
+    "lab": {
+      "title": { "en": "PHOTO LAB", "pt": "LABORATÓRIO" },
+      "text": {
+        "en": "The lab opens at seven. You are there at six forty, and the door is unlocked because the owner sleeps upstairs.\nOn the counter, under the desk lamp, one print lies face up. Mountain, sky, a corner you must not look at. You have seen the frame described. Your eyes want to find the corner on their own.\nSomewhere behind the hills, very faint, a sound like a man screaming through a pillow.",
+        "pt": "O laboratório abre às sete. Você chega às seis e quarenta, e a porta está destrancada porque a dona dorme no andar de cima.\nNo balcão, sob a luminária, uma cópia está virada para cima. Montanha, céu, um canto que você não deve olhar. Você já ouviu a descrição do quadro. Seus olhos querem achar o canto sozinhos.\nEm algum lugar atrás dos morros, bem fraco, um som como um homem gritando através de um travesseiro."
+      },
+      "choices": [
+        { "label": { "en": "Cover it blind", "pt": "Cobrir sem olhar" }, "roll": { "dice": "1d6", "dc": 3, "pass": "print_safe", "fail": "glance" } },
+        { "label": { "en": "Wake the owner", "pt": "Acordar a dona" }, "to": "clerk" }
+      ]
+    },
+    "print_safe": {
+      "title": { "en": "PHOTO LAB", "pt": "LABORATÓRIO" },
+      "text": {
+        "en": "You look at the floor and reach with the envelope held out like a shield. Paper slides on paper. You feel the print go in and fold the flap without ever raising your eyes.\nYour heart is going fast for a thing that took four seconds. Feet on the stairs. The owner, in a robe, holding a phone she has not dialed.",
+        "pt": "Você olha para o chão e estende o envelope como um escudo. Papel desliza sobre papel. Você sente a cópia entrar e dobra a aba sem levantar os olhos nem uma vez.\nSeu coração está acelerado para uma coisa que levou quatro segundos. Passos na escada. A dona, de roupão, segurando um telefone que ela não discou."
+      },
+      "goto": "clerk"
+    },
+    "glance": {
+      "title": { "en": "FOUR PIXELS", "pt": "QUATRO PIXELS" },
+      "text": {
+        "en": "Your hand knocks the lamp. The print turns with the light, and for less than a second your eyes go where they want.\nA smudge. Pale. Four pixels, in the corner of a mountain. That is all it is. That is all it needs to be.\nBehind the hills the pillow sound stops. Then it starts again, louder, and it has changed direction.\nYou put the print in the envelope. Your hands are very steady. That is the strange part.",
+        "pt": "Sua mão derruba a luminária. A cópia gira com a luz, e por menos de um segundo seus olhos vão aonde querem.\nUma mancha. Pálida. Quatro pixels, no canto de uma montanha. É só isso que é. É só isso que precisa ser.\nAtrás dos morros o som de travesseiro para. Depois recomeça, mais alto, e mudou de direção.\nVocê põe a cópia no envelope. Suas mãos estão muito firmes. Essa é a parte estranha."
+      },
+      "set": ["looked"],
+      "goto": "clerk"
+    },
+    "clerk": {
+      "title": { "en": "RUTH", "pt": "RUTH" },
+      "text": {
+        "en": "Her name is Ruth. She developed the roll last night and yes, she looked at every frame, that is the job. She thought the corner was a hair on the negative.\nThat was nine hours ago.\nYou tell her to get her shoes. You do not tell her why, but she has heard the sound too, and she puts her shoes on.\nThe negatives are in the back room, in a drawer she points at. The sound is closer than it was.",
+        "pt": "O nome dela é Ruth. Ela revelou o rolo ontem à noite e sim, olhou cada quadro, o trabalho é esse. Achou que o canto era um fio de cabelo no negativo.\nIsso foi há nove horas.\nVocê manda ela calçar os sapatos. Não diz por quê, mas ela também ouviu o som, e calça os sapatos.\nOs negativos estão nos fundos, numa gaveta que ela aponta. O som está mais perto do que estava."
+      },
+      "choices": [
+        { "label": { "en": "Get the negatives", "pt": "Pegar negativos" }, "to": "back_room" },
+        { "label": { "en": "Ruth first, go now", "pt": "Ruth primeiro, ir" }, "to": "road" }
+      ]
+    },
+    "back_room": {
+      "title": { "en": "BACK ROOM", "pt": "OS FUNDOS" },
+      "text": {
+        "en": "The drawer sticks. Dozens of strips in wax sleeves, dated in pencil. You do not read the dates. You take the whole drawer and tip it into the case.\nThrough the back wall the sound is a real thing now, a voice, wet and enormous, coming down the hillside like weather.\nRuth is at the front door with the keys, saying your name in a way that means hurry.",
+        "pt": "A gaveta emperra. Dezenas de tiras em envelopes de cera, datadas a lápis. Você não lê as datas. Pega a gaveta inteira e vira dentro da maleta.\nAtravés da parede dos fundos o som é uma coisa real agora, uma voz, úmida e enorme, descendo a encosta como tempestade.\nRuth está na porta da frente com as chaves, dizendo seu nome de um jeito que significa depressa."
+      },
+      "set": ["negatives"],
+      "roll": { "dice": "1d6", "dc": 4, "pass": "road", "fail": "road_late" }
+    },
+    "road_late": {
+      "title": { "en": "TOO SLOW", "pt": "TARDE DEMAIS" },
+      "text": {
+        "en": "The case latch will not close. You lose twenty seconds to it, which is a hundred and ninety meters at its speed.\nWhen you reach the van the treeline above the town is moving. Not the trees. Something in front of them, pale, coming down without slowing for the slope.\nYou drive with the door still open.",
+        "pt": "A trava da maleta não fecha. Você perde vinte segundos com isso, o que são cento e noventa metros na velocidade dele.\nQuando você chega à van, a linha de árvores acima da cidade está se mexendo. Não as árvores. Algo na frente delas, pálido, descendo sem diminuir na ladeira.\nVocê arranca com a porta ainda aberta."
+      },
+      "set": ["late"],
+      "goto": "road"
+    },
+    "road": {
+      "title": { "en": "THE ROAD", "pt": "A ESTRADA" },
+      "text": {
+        "en": "Fields, then the highway. Ruth is in the passenger seat with her hands flat on her knees.\nThe radio gives you the position of the thing every two minutes. It is behind you, and it is not on the road, and every reading is a little closer to a straight line between it and this van.\n'It is coming for me,' Ruth says. Not a question. 'Because of the photo.'\nShe waits.",
+        "pt": "Campos, depois a rodovia. Ruth está no banco do carona com as mãos espalmadas nos joelhos.\nO rádio dá a posição da coisa a cada dois minutos. Ela está atrás de você, não está na estrada, e cada leitura fica um pouco mais perto de uma linha reta entre ela e esta van.\n'Está vindo atrás de mim', Ruth diz. Não é pergunta. 'Por causa da foto.'\nEla espera."
+      },
+      "choices": [
+        { "label": { "en": "Tell her the truth", "pt": "Contar a verdade" }, "to": "tell", "set": ["told"] },
+        { "label": { "en": "Say nothing", "pt": "Não dizer nada" }, "to": "plan" }
+      ]
+    },
+    "tell": {
+      "title": { "en": "THE TRUTH", "pt": "A VERDADE" },
+      "text": {
+        "en": "You tell her. All of it. The speed. The walls. What is left afterward, which is nothing.\nShe does not cry. She asks if anyone has ever gotten away. You tell her the truth about that too.\n'Then I want to choose where,' she says. 'Not in a car. Not in a box.'\nYou drive. You are aware of what you have and have not brought with you.",
+        "pt": "Você conta. Tudo. A velocidade. As paredes. O que sobra depois, que é nada.\nEla não chora. Pergunta se alguém já escapou. Você conta a verdade sobre isso também.\n'Então quero escolher onde', ela diz. 'Não num carro. Não numa caixa.'\nVocê dirige. Você sabe o que trouxe e o que não trouxe."
+      },
+      "goto": "plan"
+    },
+    "plan": {
+      "title": { "en": "DECISION", "pt": "DECISÃO" },
+      "text": {
+        "en": "Ninety kilometers to the site. The site has a recovery team, a room, and a plan that does not include Ruth getting up afterward.\nBehind you there is open country, and the thing crossing it does not need directions.\nYou could stop on the road and do the protocol yourself, if you brought the means.\nYou could also open the door at speed. The radio would not ask.",
+        "pt": "Noventa quilômetros até o site. O site tem uma equipe de recolhimento, uma sala e um plano que não inclui Ruth se levantando depois.\nAtrás de você há campo aberto, e a coisa que o atravessa não precisa de direções.\nVocê poderia parar na estrada e fazer o protocolo sozinho, se trouxe o necessário.\nVocê também poderia abrir a porta em movimento. O rádio não perguntaria."
+      },
+      "choices": [
+        { "label": { "en": "Run for the site", "pt": "Correr pro site" }, "to": "highway", "require": ["!looked"] },
+        { "label": { "en": "Stop. Use the bag", "pt": "Parar. Usar o saco" }, "to": "ambush", "require": ["has_bag", "!looked"] },
+        { "label": { "en": "Leave her here", "pt": "Deixar ela aqui" }, "to": "end_abandon", "require": ["!looked"] },
+        { "label": { "en": "Check the mirror", "pt": "Olhar o retrovisor" }, "to": "end_you", "require": ["looked"] }
+      ]
+    },
+    "highway": {
+      "title": { "en": "HIGHWAY", "pt": "RODOVIA" },
+      "text": {
+        "en": "The van will do one forty. It rattles at one twenty. The radio calls the distance: four kilometers, three and a half, and the road bends toward the hills and the number stops shrinking.\nA truck ahead, two lanes, a curve. Ruth says, quietly, 'Do not look in the mirror.'\nYou were not going to. You were not going to.",
+        "pt": "A van faz cento e quarenta. Chacoalha a cento e vinte. O rádio canta a distância: quatro quilômetros, três e meio, e a estrada curva para os morros e o número para de encolher.\nUm caminhão à frente, duas pistas, uma curva. Ruth diz, baixinho: 'Não olha no retrovisor.'\nVocê não ia olhar. Você não ia olhar."
+      },
+      "choices": [
+        { "label": { "en": "Floor it", "pt": "Pisar fundo" }, "roll": { "dice": "1d6", "dc": 4, "pass": "site", "fail": "crash" }, "require": ["!late"] },
+        { "label": { "en": "Floor it", "pt": "Pisar fundo" }, "roll": { "dice": "1d6", "dc": 5, "pass": "site", "fail": "crash" }, "require": ["late"] }
+      ]
+    },
+    "crash": {
+      "title": { "en": "THE DITCH", "pt": "A VALA" },
+      "text": {
+        "en": "The truck moves the wrong way. The van goes onto the shoulder, then the ditch, then its side.\nSilence, then the engine ticking, then the other sound. Not far now. Not far at all.\nRuth is bleeding from the forehead and climbing out the top door. You are on the road with grass in your mouth and maybe ninety seconds.\nYou keep your eyes on the asphalt.",
+        "pt": "O caminhão vem para o lado errado. A van vai para o acostamento, depois para a vala, depois de lado.\nSilêncio, depois o motor estalando, depois o outro som. Não está longe. Não está longe nem um pouco.\nRuth sangra na testa e sai pela porta de cima. Você está no asfalto com grama na boca e talvez noventa segundos.\nVocê mantém os olhos no chão."
+      },
+      "choices": [
+        { "label": { "en": "Bag out, eyes shut", "pt": "Saco, sem olhar" }, "to": "hood_road", "require": ["has_bag"] },
+        { "label": { "en": "Eyes shut, wait", "pt": "Olhos fechados" }, "roll": { "dice": "1d6", "dc": 4, "pass": "after_road", "fail": "end_looked" }, "require": ["!has_bag"] },
+        { "label": { "en": "Run for the field", "pt": "Correr pro campo" }, "to": "end_crash" }
+      ]
+    },
+    "site": {
+      "title": { "en": "THE SITE", "pt": "O SITE" },
+      "text": {
+        "en": "The gate is open and nobody is at the gate. The recovery team meets you in a corridor with no cameras. They already have their blindfolds on.\nThe room is small, white, and has one chair. Ruth looks at it a long time.\n'Sit down,' the team lead says, kind as he can be. 'We will be right outside. It will not take long.'\nThe building shakes once, from the north wall.",
+        "pt": "O portão está aberto e não há ninguém no portão. A equipe de recolhimento encontra você num corredor sem câmeras. Já estão de venda.\nA sala é pequena, branca, e tem uma cadeira. Ruth olha para ela por um bom tempo.\n'Senta', diz o líder da equipe, o mais gentil que consegue. 'Vamos estar bem aqui fora. Não vai demorar.'\nO prédio treme uma vez, pela parede norte."
+      },
+      "choices": [
+        { "label": { "en": "Stay with her", "pt": "Ficar com ela" }, "to": "hood_site" },
+        { "label": { "en": "Wait in the hall", "pt": "Esperar no hall" }, "to": "after_site" }
+      ]
+    },
+    "hood_site": {
+      "title": { "en": "THE ROOM", "pt": "A SALA" },
+      "text": {
+        "en": "You stay. Blindfold on, back to the door, one hand on Ruth's shoulder. She holds your wrist.\nThe north wall of the corridor comes apart. Concrete on tile. The sound is the whole room.\nThen the hand on your wrist is not there. It happens without a word from her.\nAnd it is quiet, and something very large sits down in the corner and breathes.\nThe bag is in your hand. You have to find its head without looking.",
+        "pt": "Você fica. Venda nos olhos, costas para a porta, uma mão no ombro de Ruth. Ela segura seu pulso.\nA parede norte do corredor se desfaz. Concreto no piso. O som é a sala inteira.\nDepois a mão no seu pulso não está mais lá. Acontece sem uma palavra dela.\nE fica quieto, e algo muito grande senta no canto e respira.\nO saco está na sua mão. Você tem que achar a cabeça dele sem olhar."
+      },
+      "roll": { "dice": "1d6", "dc": 4, "pass": "after_site", "fail": "end_looked" }
+    },
+    "after_site": {
+      "title": { "en": "AFTERWARD", "pt": "DEPOIS" },
+      "text": {
+        "en": "The bag goes on. The drawstring pulls tight. The thing under it does not resist, does not even seem to notice.\nThe team walks it back to its cell like a large, tired animal. Nobody talks about the chair.\nYou write the report at a metal desk. There is a line for civilian casualties. You write the number one, and her name, because somebody should.\nThe envelope with the print is on the desk. You have not opened it. You never will.",
+        "pt": "O saco entra. O cordão aperta. A coisa embaixo não resiste, nem parece notar.\nA equipe leva a coisa de volta para a cela como um animal grande e cansado. Ninguém fala da cadeira.\nVocê escreve o relatório numa mesa de metal. Há uma linha para baixas civis. Você escreve o número um, e o nome dela, porque alguém deveria.\nO envelope com a cópia está na mesa. Você não abriu. Nunca vai abrir."
+      },
+      "choices": [
+        { "label": { "en": "File the report", "pt": "Entregar relatório" }, "to": "end_recontain", "require": ["negatives"] },
+        { "label": { "en": "File the report", "pt": "Entregar relatório" }, "to": "end_open", "require": ["!negatives"] }
+      ]
+    },
+    "ambush": {
+      "title": { "en": "THE STAND", "pt": "A ESPERA" },
+      "text": {
+        "en": "You pull off onto a dirt track between two fields. Flat land, nothing to trip over, nothing to look at.\nRuth gets out and walks a little way into the stubble and stops, facing the hills, chin up. She has chosen where.\nYou tie the blindfold, take the bag out of its case, and kneel by the van with your back to her. You count.\nThe sound comes over the ridge and down through the corn and it is the loudest thing you have ever heard and then it is not.",
+        "pt": "Você entra numa estrada de terra entre dois campos. Terreno plano, nada para tropeçar, nada para olhar.\nRuth desce e anda um pouco pela palhada e para, de frente para os morros, queixo erguido. Ela escolheu onde.\nVocê amarra a venda, tira o saco da maleta e ajoelha junto à van, de costas para ela. Você conta.\nO som vem por cima da crista e desce pelo milharal e é a coisa mais alta que você já ouviu, e depois não é mais."
+      },
+      "goto": "hood_road"
+    },
+    "hood_road": {
+      "title": { "en": "THE BAG", "pt": "O SACO" },
+      "text": {
+        "en": "Quiet. Wind in the stalks. Something breathing, big and slow, a few meters away, sitting the way the file said it sits.\nYou walk toward the breathing with the bag open in both hands and the blindfold pressing your eyes shut. The ground is uneven. Your foot finds something soft and you do not think about it.\nYour fingers touch skin like wet paper. Cold. It does not move.\nYou need the top of the head. You need not to peek.",
+        "pt": "Silêncio. Vento nos talos. Algo respirando, grande e lento, a poucos metros, sentado do jeito que o arquivo disse que senta.\nVocê anda na direção da respiração com o saco aberto nas duas mãos e a venda apertando seus olhos. O chão é irregular. Seu pé encontra algo macio e você não pensa nisso.\nSeus dedos tocam pele como papel molhado. Fria. Ela não se mexe.\nVocê precisa do topo da cabeça. Precisa não espiar."
+      },
+      "roll": { "dice": "1d6", "dc": 4, "pass": "after_road", "fail": "end_looked" }
+    },
+    "after_road": {
+      "title": { "en": "THE FIELD", "pt": "O CAMPO" },
+      "text": {
+        "en": "The drawstring closes. You step back three paces, then ten, then you sit in the dirt and only then you take the blindfold off, facing the van.\nThe recovery team arrives forty minutes later. They walk it to a truck. It goes like a child being led home.\nOne of them asks if you saw anything. You say no. It is the first thing anyone has asked you today that has a good answer.",
+        "pt": "O cordão fecha. Você recua três passos, depois dez, depois senta na terra e só então tira a venda, de frente para a van.\nA equipe de recolhimento chega quarenta minutos depois. Levam a coisa a pé até um caminhão. Ela vai como uma criança sendo levada para casa.\nUm deles pergunta se você viu alguma coisa. Você diz que não. É a primeira coisa que perguntam hoje que tem uma resposta boa."
+      },
+      "choices": [
+        { "label": { "en": "File the report", "pt": "Entregar relatório" }, "to": "end_choice", "require": ["negatives"] },
+        { "label": { "en": "File the report", "pt": "Entregar relatório" }, "to": "end_open", "require": ["!negatives"] }
+      ]
+    },
+    "end_recontain": {
+      "title": { "en": "CONTAINED", "pt": "CONTIDO" },
+      "text": {
+        "en": "The negatives burn in a steel tray. Every frame, the mountain, the sky, the corner. The print burns last, still in its envelope.\nThe cell door closes on the thing with the bag on its head. It sits. Somewhere inside the bag, they say, it is crying.\nTau-9 stands down. On the drive home you keep your eyes on the road the whole way, and you find you cannot stop.",
+        "pt": "Os negativos queimam numa bandeja de aço. Cada quadro, a montanha, o céu, o canto. A cópia queima por último, ainda no envelope.\nA porta da cela se fecha sobre a coisa com o saco na cabeça. Ela senta. Em algum lugar dentro do saco, dizem, ela chora.\nTau-9 é dispensada. Na volta para casa você mantém os olhos na estrada o caminho inteiro, e descobre que não consegue parar."
+      },
+      "ending": "good"
+    },
+    "end_choice": {
+      "title": { "en": "THE STUBBLE", "pt": "A PALHADA" },
+      "text": {
+        "en": "The negatives burn in a steel tray at the site that evening. Nothing is left of the photo. Nothing is left of Ruth either, except a pair of shoes in a field, side by side, facing the hills.\nYou put that in the report. They take it out. You put it back.\nThe thing sits in its cell with the bag on. The bag is enough. That is the whole secret: the bag is enough, if nobody looks.",
+        "pt": "Os negativos queimam numa bandeja de aço no site naquela noite. Não sobra nada da foto. Não sobra nada de Ruth também, a não ser um par de sapatos num campo, lado a lado, virados para os morros.\nVocê põe isso no relatório. Eles tiram. Você põe de volta.\nA coisa senta na cela com o saco. O saco basta. Esse é o segredo inteiro: o saco basta, se ninguém olhar."
+      },
+      "ending": "good"
+    },
+    "end_open": {
+      "title": { "en": "OPEN FILE", "pt": "ARQUIVO ABERTO" },
+      "text": {
+        "en": "The print burns. The negatives do not, because you left them in a drawer in a town that is going to open the shop at seven and find nobody there.\nA second team goes for them. They find the drawer empty. The hiker had a brother.\nThe thing sits in its cell with the bag on its head, quiet, waiting to be looked at. The file stays open. Somewhere there is a strip of film with a mountain on it, and a corner.",
+        "pt": "A cópia queima. Os negativos não, porque você os deixou numa gaveta numa cidade que vai abrir a loja às sete e não encontrar ninguém.\nUma segunda equipe vai buscá-los. Encontram a gaveta vazia. O andarilho tinha um irmão.\nA coisa senta na cela com o saco na cabeça, quieta, esperando ser olhada. O arquivo continua aberto. Em algum lugar há uma tira de filme com uma montanha, e um canto."
+      },
+      "ending": "neutral"
+    },
+    "end_abandon": {
+      "title": { "en": "THE SHOULDER", "pt": "ACOSTAMENTO" },
+      "text": {
+        "en": "You pull onto the shoulder and tell her to get out. She looks at you, and then she does, without a word, and stands in the gravel as the van pulls away.\nThe radio reports the distance closing, then a stop, then a slow walk northeast, back toward the site, calm.\nThe print and negatives arrive intact. The report calls it a clean recovery. You are commended.\nYou sell the van that month. The passenger seat still had her shape in it.",
+        "pt": "Você encosta no acostamento e manda ela descer. Ela olha para você, e depois desce, sem uma palavra, e fica no cascalho enquanto a van se afasta.\nO rádio informa a distância diminuindo, depois uma parada, depois um andar lento para nordeste, de volta ao site, calmo.\nA cópia e os negativos chegam intactos. O relatório chama de recolhimento limpo. Você é elogiado.\nVocê vende a van naquele mês. O banco do carona ainda tinha a forma dela."
+      },
+      "ending": "neutral"
+    },
+    "end_looked": {
+      "title": { "en": "YOU LOOKED", "pt": "VOCÊ OLHOU" },
+      "text": {
+        "en": "The blindfold slips, or you lift it, just a finger's width, just to place the bag right.\nIt is very close and it is looking at you. It does not have to turn. It was already facing you.\nThe scream starts a hand's width from your face. You have time to understand that the file was accurate in every detail.\nThe recovery team finds the bag on the floor, empty, and the thing sitting in the corner, quiet again.",
+        "pt": "A venda escorrega, ou você a levanta, só um dedo, só para encaixar o saco direito.\nEle está muito perto e olha para você. Não precisa se virar. Já estava de frente.\nO grito começa a um palmo do seu rosto. Você tem tempo de entender que o arquivo estava certo em cada detalhe.\nA equipe de recolhimento encontra o saco no chão, vazio, e a coisa sentada no canto, quieta de novo."
+      },
+      "ending": "bad"
+    },
+    "end_crash": {
+      "title": { "en": "THE FIELD", "pt": "O CAMPO" },
+      "text": {
+        "en": "You run. The field is long and flat and there is nowhere in it to be.\nBehind you the sound reaches Ruth and stops, and in the quiet after it you make the mistake, the one every survivor's report warns about, the one your body makes for you. You turn around.\nIt is already looking at you. The sound starts again.\nThe van burns on the shoulder for an hour before anyone comes.",
+        "pt": "Você corre. O campo é comprido e plano e não há nenhum lugar nele onde estar.\nAtrás de você o som alcança Ruth e para, e no silêncio depois disso você comete o erro, aquele de que todo relatório de sobrevivente avisa, aquele que seu corpo comete por você. Você se vira.\nEle já está olhando para você. O som recomeça.\nA van queima no acostamento por uma hora antes que alguém venha."
+      },
+      "ending": "bad"
+    },
+    "end_you": {
+      "title": { "en": "THE MIRROR", "pt": "O RETROVISOR" },
+      "text": {
+        "en": "You knew at the counter. Four pixels. You told yourself it was a smudge, the way Ruth did.\nThe radio says it changed direction at the lab. It is not tracking her. It is tracking the van.\nYou look in the mirror. You knew you would. Something pale is running on the road behind you, arms too long, faster than the van, and its face is turned up toward the glass.\nRuth screams. You do not have time to.",
+        "pt": "Você soube no balcão. Quatro pixels. Disse a si mesmo que era uma mancha, como Ruth fez.\nO rádio diz que ele mudou de direção no laboratório. Não está seguindo ela. Está seguindo a van.\nVocê olha no retrovisor. Você sabia que ia olhar. Algo pálido corre na estrada atrás de você, braços longos demais, mais rápido que a van, com o rosto virado para o vidro.\nRuth grita. Você não tem tempo para isso."
+      },
+      "ending": "bad"
+    }
+  }
+}
