@@ -18,6 +18,8 @@
   nav a, nav button { background:#22262f; color:var(--txt); border:1px solid var(--line); border-radius:6px; padding:8px 14px; text-decoration:none; font-family:inherit; font-size:13px; cursor:pointer; }
   nav a:hover, nav button:hover { border-color:var(--acc); }
   nav a.primary { background:var(--acc); color:#0f1115; border-color:var(--acc); font-weight:bold; }
+  nav a.kofi { border-color:#ff5e5b; color:#ff5e5b; }
+  nav a.kofi:hover { background:#ff5e5b; color:#fff; }
   nav .lang.on { border-color:var(--acc); color:var(--acc); }
   .filters { max-width:1100px; margin:8px auto 0; padding:0 22px; display:flex; gap:6px; flex-wrap:wrap; }
   .filters button { background:transparent; color:var(--dim); border:1px solid var(--line); border-radius:14px; padding:4px 12px; font-family:inherit; font-size:12px; cursor:pointer; }
@@ -52,6 +54,7 @@
     <a href="player/?player=1" class="primary" data-i18n="open_player">Open the player</a>
     <a href="studio/" data-i18n="write">Write a book</a>
     <a href="https://github.com/kumodot/moventure" data-i18n="source">Source</a>
+    <a href="https://ko-fi.com/msouza3d" class="kofi" data-i18n="kofi">&#9749; Support Marcelo Souza</a>
   </nav>
 </header>
 <p class="about" data-i18n="about">Read, turn pages, choose, roll the dice. Every book is a small text adventure written for a screen the size of a matchbox. Play here, on your phone, or on the Moventure device one day. Written in the Studio, shared as a single file.</p>
@@ -67,12 +70,12 @@ const I18N = {
   en: { tag: 'tiny gamebooks for a 128x64 screen', open_player: 'Open the player', write: 'Write a book', source: 'Source', loading: 'loading…',
         about: 'Read, turn pages, choose, roll the dice. Every book is a small text adventure written for a screen the size of a matchbox. Play here, on your phone, or on the Moventure device one day. Written in the Studio, shared as a single file.',
         foot: 'Moventure is open source. Books belong to their authors and carry their own license. Adaptations of SCP Foundation entries are CC BY-SA 3.0.',
-        support: 'support the project', play: 'Play', file: 'JSON', all: 'All', tier: 'Tier', endings: 'endings', pages: 'pages', by: 'by',
+        support: 'support the project', kofi: '\u2615 Support Marcelo Souza', play: 'Play', file: 'JSON', all: 'All', tier: 'Tier', endings: 'endings', pages: 'pages', by: 'by',
         cats: { Horror: 'Horror', Mystery: 'Mystery', Fantasy: 'Fantasy', 'Sci-Fi': 'Sci-Fi', Adventure: 'Adventure', Kids: 'Kids', SCP: 'SCP', Misc: 'Misc' } },
   pt: { tag: 'livros-jogo minúsculos para uma tela 128x64', open_player: 'Abrir o leitor', write: 'Escrever um livro', source: 'Código', loading: 'carregando…',
         about: 'Leia, vire páginas, escolha, jogue o dado. Cada livro é uma pequena aventura de texto escrita para uma tela do tamanho de uma caixa de fósforos. Jogue aqui, no celular, ou um dia no aparelho Moventure. Escrito no Studio, compartilhado como um arquivo só.',
         foot: 'Moventure é código aberto. Os livros pertencem aos seus autores e têm licença própria. Adaptações da Fundação SCP são CC BY-SA 3.0.',
-        support: 'apoie o projeto', play: 'Jogar', file: 'JSON', all: 'Todos', tier: 'Nível', endings: 'finais', pages: 'páginas', by: 'de',
+        support: 'apoie o projeto', kofi: '\u2615 Apoie o Marcelo Souza', play: 'Jogar', file: 'JSON', all: 'Todos', tier: 'Nível', endings: 'finais', pages: 'páginas', by: 'de',
         cats: { Horror: 'Terror', Mystery: 'Mistério', Fantasy: 'Fantasia', 'Sci-Fi': 'Ficção', Adventure: 'Aventura', Kids: 'Infantil', SCP: 'SCP', Misc: 'Outros' } },
 };
 let LANG = 'en';

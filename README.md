@@ -1,5 +1,7 @@
 # Moventure
 
+[![Support on Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20Marcelo%20Souza-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/msouza3d)
+
 A pocket gamebook platform: a small device with a 128x64 OLED and six buttons
 (D-pad + A + B) that loads interactive "choose your path" books. You read, turn
 pages, and at certain moments you decide, and the decision changes where the story goes.
@@ -162,6 +164,11 @@ cross-validation from `OLED_SIMULATOR_GUIDE.md` section 8.
 - [ ] Simple graphics per node (1-bit 40x40 illustrations next to the text).
 - [ ] Later: verb-menu adventures (look / move / push / pull / eat) on the same engine.
 
+## Support
+
+Moventure is free and open source. If it made you smile, or you want the pocket device to
+exist sooner: [Support Marcelo Souza on Ko-fi](https://ko-fi.com/msouza3d).
+
 ## Credits
 
-Marcelo Souza / Kumodot.art - 2026 // @Msouza3d
+Marcelo Souza / Kumodot.art - 2026 // @Msouza3d · [instagram.com/msouza3d](https://instagram.com/msouza3d) · [ko-fi.com/msouza3d](https://ko-fi.com/msouza3d)
