@@ -142,7 +142,7 @@
    SECTION 1: SSD1306 128x64 framebuffer + drawing primitives
    Mirror this class 1:1 in the firmware (see OLED_SIMULATOR_GUIDE.md).
    ========================================================================= */
-const APP_VERSION = '0.7.0';   // bump this AND the file name on every release (see CHANGELOG.md)
+const APP_VERSION = '0.7.1';   // bump this AND the file name on every release (see CHANGELOG.md)
 const WIDTH = 128, HEIGHT = 64, SCALE = 5;
 
 // Adafruit GFX glcdfont, ASCII 32..126, 5 bytes per glyph, LSB = top row.
@@ -330,6 +330,7 @@ const UI = {
         h_menu: 'A: select  B: back', h_any: 'any button: back', h_back: 'B: back',
         m_resume: 'Resume', m_stats: 'Stats', m_restart: 'Restart book', m_library: 'Library', m_lang: 'Language: ', m_about: 'About',
         m_remove: 'Remove book', mine: 'My books', confirm_rm: ['Remove this book', 'from My books?', 'A: yes   B: no'],
+        m_credits: 'Credits', CREDITS: 'CREDITS', c_adapted: 'Adapted from', c_modified: 'Modified version.', c_lic: 'License', c_written: 'Written by',
         all: 'All', deadend: ['DEAD END', 'No choices here.', 'B: menu'], m_booklang: 'Book: ',
         cats: { Horror: 'Horror', Mystery: 'Mystery', Fantasy: 'Fantasy', 'Sci-Fi': 'Sci-Fi', Adventure: 'Adventure', Kids: 'Kids', SCP: 'SCP', Misc: 'Misc' } },
   pt: { LIBRARY: 'BIBLIOTECA', CHOOSE: 'ESCOLHA', MENU: 'MENU', STATS: 'ATRIBUTOS', ABOUT: 'SOBRE', THE_END: 'FIM', ROLL: 'DADO',
@@ -339,6 +340,7 @@ const UI = {
         h_menu: 'A: escolher  B: voltar', h_any: 'qualquer botão: voltar', h_back: 'B: voltar',
         m_resume: 'Continuar', m_stats: 'Atributos', m_restart: 'Reiniciar livro', m_library: 'Biblioteca', m_lang: 'Idioma: ', m_about: 'Sobre',
         m_remove: 'Remover livro', mine: 'Meus livros', confirm_rm: ['Remover este livro', 'de Meus livros?', 'A: sim   B: não'],
+        m_credits: 'Créditos', CREDITS: 'CRÉDITOS', c_adapted: 'Adaptado de', c_modified: 'Versão modificada.', c_lic: 'Licença', c_written: 'Escrito por',
         all: 'Todos', deadend: ['BECO SEM SAÍDA', 'Nenhuma escolha aqui.', 'B: menu'],
         cats: { Horror: 'Terror', Mystery: 'Mistério', Fantasy: 'Fantasia', 'Sci-Fi': 'Ficção', Adventure: 'Aventura', Kids: 'Infantil', SCP: 'SCP', Misc: 'Outros' },
         m_booklang: 'Livro: ' },
@@ -349,6 +351,7 @@ const UI = {
         h_menu: 'A: elegir  B: volver', h_any: 'cualquier botón: volver', h_back: 'B: volver',
         m_resume: 'Continuar', m_stats: 'Atributos', m_restart: 'Reiniciar libro', m_library: 'Biblioteca', m_lang: 'Idioma: ', m_about: 'Acerca',
         m_remove: 'Quitar libro', mine: 'Mis libros', confirm_rm: ['¿Quitar este libro', 'de Mis libros?', 'A: sí   B: no'],
+        m_credits: 'Créditos', CREDITS: 'CRÉDITOS', c_adapted: 'Adaptado de', c_modified: 'Versión modificada.', c_lic: 'Licencia', c_written: 'Escrito por',
         m_booklang: 'Libro: ', all: 'Todos', deadend: ['SIN SALIDA', 'No hay opciones.', 'B: menú'],
         cats: { Horror: 'Terror', Mystery: 'Misterio', Fantasy: 'Fantasía', 'Sci-Fi': 'Ciencia ficción', Adventure: 'Aventura', Kids: 'Infantil', SCP: 'SCP', Misc: 'Otros' } },
 };
@@ -491,11 +494,34 @@ class Engine {
     if (!this.hasStats()) return;
     this.returnTo = returnTo; this.screen = 'STATS';
   }
+  // Attribution for the book being read: who wrote the source, that this is a modified
+  // version, where it came from and under which licence. Built from meta.based_on, whose
+  // shape is "<work> by <author>, <where>, <url> (<licence>). <note>".
+  creditLines() {
+    const m = this.book ? this.book.meta : {};
+    const out = [];
+    if (m.based_on) {
+      const parts = m.based_on.split(',');
+      out.push(T('c_adapted') + ':');
+      out.push(...wrap(parts[0].trim(), 21));                         // SCP-087 by Zaeyde
+      if (parts[1] && !/https?:/.test(parts[1])) out.push(...wrap(parts[1].trim(), 21));
+      const url = (m.based_on.match(/https?:\/\/[^\s)]+/) || [])[0];
+      if (url) out.push(...wrap(url.replace(/^https?:\/\//, ''), 21));
+      out.push('');
+      out.push(T('c_modified'));
+    } else if (m.author) {
+      out.push(T('c_written') + ':');
+      out.push(...wrap(String(m.author), 21));
+    }
+    if (m.license) { out.push(''); out.push(...wrap(T('c_lic') + ': ' + m.license, 21)); }
+    return out;
+  }
   openMenu() {
     this.menuKeys = this.book ? ['m_resume', 'm_restart', 'm_library', 'm_lang', 'm_about'] : ['m_library', 'm_lang', 'm_about'];
     if (this.book && Object.keys(this.stats).length) this.menuKeys.splice(1, 0, 'm_stats');
     if (this.book && bookLangs(this.book).length > 1) this.menuKeys.splice(this.menuKeys.indexOf('m_lang'), 0, 'm_booklang');
     if (this.book && this.book.meta.local) this.menuKeys.splice(this.menuKeys.indexOf('m_about'), 0, 'm_remove');
+    if (this.book && (this.book.meta.based_on || this.book.meta.license)) this.menuKeys.splice(this.menuKeys.indexOf('m_about'), 0, 'm_credits');
     this.menuItems = this.menuKeys.map(k => k === 'm_lang' ? T('m_lang') + LANG.toUpperCase() : k === 'm_booklang' ? T('m_booklang') + BOOK_LANG.toUpperCase() : T(k));
     this.cursor = 0; this.screen = 'MENU';
   }
@@ -554,12 +580,18 @@ class Engine {
         if (item === 'm_booklang') { const c = this.cursor; this.cycleBookLang(1); this.openMenu(); this.cursor = c; }
         if (item === 'm_about') this.screen = 'ABOUT';
         if (item === 'm_remove') this.screen = 'CONFIRM_RM';
+        if (item === 'm_credits') { this.scroll = 0; this.screen = 'CREDITS'; }
       }
     } else if (s === 'CONFIRM_RM') {
       if (btn === 'A') { const b = this.book; this.book = null; this.screen = 'LIBRARY'; this.cursor = 0; if (this.onRemoveBook) this.onRemoveBook(b); }
       if (btn === 'B') this.openMenu();
     } else if (s === 'STATS') {
       if (this.returnTo === 'MENU') this.openMenu(); else this.screen = this.returnTo;
+    } else if (s === 'CREDITS') {
+      const over = Math.max(0, this.creditLines().length - 6);
+      if (btn === 'DOWN') { if (this.scroll < over) this.scroll++; else this.openMenu(); }
+      else if (btn === 'UP') this.scroll = Math.max(0, this.scroll - 1);
+      else this.openMenu();
     } else if (s === 'ABOUT') {
       if (btn === 'B' || btn === 'A') this.openMenu();
     }
@@ -708,6 +740,12 @@ class Engine {
         d.rect(60, y, 66, 7); d.fillRect(61, y + 1, Math.min(64, Math.round(v * 64 / 10)), 5);   // bar, 10 = full
       });
       d.drawText(1, 57, T('h_any'), 1);
+    } else if (s === 'CREDITS') {
+      const lines = this.creditLines();
+      this.statusBar(T('CREDITS'), lines.length > 6 ? `${this.scroll + 1}/${lines.length - 5}` : '');
+      lines.slice(this.scroll, this.scroll + 6).forEach((line, i) => d.drawText(1, TEXT_Y0 + i * ROW_H, line, 1));
+      if (this.scroll < lines.length - 6) d.drawText(WIDTH - 6, TEXT_Y0 + 5 * ROW_H, 'v', 1);
+      d.drawText(1, 57, T('h_back'), 1);
     } else if (s === 'CONFIRM_RM') {
       this.statusBar(T('mine').toUpperCase());
       const c = T('confirm_rm');

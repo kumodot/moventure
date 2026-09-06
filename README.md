@@ -125,6 +125,11 @@ Hand-written books are better than generated ones. Three references, one per tie
 
 The validator proves every ending is reachable by walking every node + flag combination.
 
+Attribution is part of the product, not a footnote: every book that declares `meta.based_on`
+or `meta.license` gets a **Credits** entry in the device menu (original author, source URL,
+"modified version", licence), and its card in the portal links the source article and the
+licence deed.
+
 **Foundation Files** is the SCP series: eleven books adapted from SCP Foundation articles
 (087, 173, 096, 049, 106, 914, 682, 3008, 1730, 2521, 1471), each under CC BY-SA 3.0 with the
 original author credited in `meta.based_on`. Every SCP's rule is a mechanic: blink rolls in

@@ -6,6 +6,15 @@ browser tab, the page header, the device bezel, the boot screen and the About sc
 `run_sim.bat` always opens the newest file. Old versions can be kept or deleted, they are
 self-contained (they only share `stories.js`).
 
+## 0.7.1 - 2026-09-06 (attribution where it belongs)
+- **Credits** entry in the device menu for any book that declares a source or a licence:
+  who wrote the original, where it lives (the wiki URL), that this book is a modified version,
+  and the licence. Scrolls with Up / Down, any other button goes back.
+- Library portal: each card now spells the attribution out and links it - the source article on
+  the SCP wiki and the licence deed on creativecommons.org - instead of a grey one-liner.
+  Footer credits the SCP Foundation wiki, states that the Foundation Files books are modified
+  versions and that Moventure is not affiliated with the wiki.
+
 ## Books - 2026-09-05 (Foundation Files no. 2-11)
 - Ten new SCP gamebooks, EN + PT-BR, 27-30 nodes and 6-8 endings each, all CC BY-SA 3.0 with
   `based_on` credits: 173: Blink (T2), 096: The Face (T2), 049: The Cure (T3), 106: Pocket (T3),

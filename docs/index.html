@@ -37,7 +37,10 @@
   .row a { background:var(--acc); color:#0f1115; text-decoration:none; padding:7px 14px; border-radius:6px; font-weight:bold; font-size:13px; }
   .row .dl { background:transparent; color:var(--dim); border:1px solid var(--line); font-weight:normal; }
   .row .dl:hover { color:var(--txt); }
-  .lic { color:var(--dim); font-size:11px; }
+  .lic { color:var(--dim); font-size:11px; line-height:1.5; border-top:1px solid var(--line); padding-top:8px; }
+  .lic a { color:var(--dim); text-decoration:underline; text-underline-offset:2px; }
+  .lic a:hover { color:var(--acc); }
+  .lic .src { color:#9aa1ad; }
   footer { max-width:1100px; margin:0 auto; padding:0 22px 40px; color:var(--dim); font-size:12px; line-height:1.6; }
   footer a { color:var(--acc); }
   .about { max-width:1100px; margin:0 auto; padding:0 22px; color:var(--dim); line-height:1.6; font-size:13px; }
@@ -61,7 +64,7 @@
 <div class="filters" id="filters"></div>
 <main id="grid"><div class="empty" data-i18n="loading">loading…</div></main>
 <footer>
-  <span data-i18n="foot">Moventure is open source. Books belong to their authors and carry their own license. Adaptations of SCP Foundation entries are CC BY-SA 3.0.</span><br>
+  <span data-i18n="foot"></span><br>
   Marcelo Souza / Kumodot.art - 2026 // <a href="https://instagram.com/msouza3d">@Msouza3d</a> · <a href="https://ko-fi.com/msouza3d" data-i18n="support">support the project</a>
 </footer>
 
@@ -69,13 +72,15 @@
 const I18N = {
   en: { tag: 'tiny gamebooks for a 128x64 screen', open_player: 'Open the player', write: 'Write a book', source: 'Source', loading: 'loading…',
         about: 'Read, turn pages, choose, roll the dice. Every book is a small text adventure written for a screen the size of a matchbox. Play here, on your phone, or on the Moventure device one day. Written in the Studio, shared as a single file.',
-        foot: 'Moventure is open source. Books belong to their authors and carry their own license. Adaptations of SCP Foundation entries are CC BY-SA 3.0.',
+        foot: 'Moventure is open source (MIT). Every book keeps its own author and licence, shown on its card. The Foundation Files series is adapted from articles on the <a href="https://scp-wiki.wikidot.com/">SCP Foundation wiki</a>, each credited to its original author on the book and released, like the originals, under <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>. The Foundation Files books are modified versions, not the articles themselves. Moventure is not affiliated with the SCP Foundation wiki.',
         support: 'support the project', kofi: '\u2615 Support Marcelo Souza', play: 'Play', file: 'JSON', all: 'All', tier: 'Tier', endings: 'endings', pages: 'pages', by: 'by',
+        adapted: 'Adapted from', changed: 'This gamebook is a modified version.', under: 'Released under', credits: 'Credits and licences',
         cats: { Horror: 'Horror', Mystery: 'Mystery', Fantasy: 'Fantasy', 'Sci-Fi': 'Sci-Fi', Adventure: 'Adventure', Kids: 'Kids', SCP: 'SCP', Misc: 'Misc' } },
   pt: { tag: 'livros-jogo minúsculos para uma tela 128x64', open_player: 'Abrir o leitor', write: 'Escrever um livro', source: 'Código', loading: 'carregando…',
         about: 'Leia, vire páginas, escolha, jogue o dado. Cada livro é uma pequena aventura de texto escrita para uma tela do tamanho de uma caixa de fósforos. Jogue aqui, no celular, ou um dia no aparelho Moventure. Escrito no Studio, compartilhado como um arquivo só.',
-        foot: 'Moventure é código aberto. Os livros pertencem aos seus autores e têm licença própria. Adaptações da Fundação SCP são CC BY-SA 3.0.',
+        foot: 'Moventure é código aberto (MIT). Cada livro mantém seu autor e sua licença, mostrados no card. A série Arquivos da Fundação é adaptada de artigos da <a href="https://scp-wiki.wikidot.com/">wiki da SCP Foundation</a>, cada um creditado ao autor original no próprio livro e publicado, como os originais, sob <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>. Os livros dos Arquivos da Fundação são versões modificadas, não os artigos. Moventure não tem vínculo com a wiki da SCP Foundation.',
         support: 'apoie o projeto', kofi: '\u2615 Apoie o Marcelo Souza', play: 'Jogar', file: 'JSON', all: 'Todos', tier: 'Nível', endings: 'finais', pages: 'páginas', by: 'de',
+        adapted: 'Adaptado de', changed: 'Este livro-jogo é uma versão modificada.', under: 'Publicado sob', credits: 'Créditos e licenças',
         cats: { Horror: 'Terror', Mystery: 'Mistério', Fantasy: 'Fantasia', 'Sci-Fi': 'Ficção', Adventure: 'Aventura', Kids: 'Infantil', SCP: 'SCP', Misc: 'Outros' } },
 };
 let LANG = 'en';
@@ -85,7 +90,8 @@ const L = x => (x && typeof x === 'object') ? (x[LANG] || x.en || Object.values(
 let catalog = null, filter = 'All';
 
 function applyI18n() {
-  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = T(el.dataset.i18n); });
+  // 'foot' carries links to the SCP wiki and the licence deed, so that one is HTML.
+  document.querySelectorAll('[data-i18n]').forEach(el => { const v = T(el.dataset.i18n); if (el.dataset.i18n === 'foot') el.innerHTML = v; else el.textContent = v; });
   document.querySelectorAll('nav .lang').forEach(b => b.classList.toggle('on', b.dataset.lang === LANG));
 }
 /* a pixel "cover": the title rendered big on a fake 128x64 OLED, category decides the pattern */
@@ -125,12 +131,37 @@ function render() {
         <div class="blurb">${esc(L(b.blurb))}</div>
         <div class="meta">${T('by')} ${esc(b.author)}${b.series ? ' · ' + esc(b.series) : ''}</div>
         <div class="row"><a href="player/?player=1&book=${encodeURIComponent(b.id)}">${T('play')} &#9654;</a><a class="dl" href="${b.file}" download>${T('file')}</a></div>
-        <div class="lic">${esc(b.license)}${b.based_on ? ' · ' + esc(b.based_on.split(',')[0]) : ''}</div>
+        <div class="lic">${attribution(b)}</div>
       </div>
     </div>`).join('') || `<div class="empty">–</div>`;
   list.forEach(b => drawCover(document.querySelector(`canvas[data-cover="${b.id}"]`), b));
 }
 function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+// CC BY-SA asks for three things: name the source and its author, link the licence,
+// and say that this is a modified version. Every card carries all three.
+const LICENSE_URL = {
+  'CC BY-SA 3.0': 'https://creativecommons.org/licenses/by-sa/3.0/',
+  'CC BY-SA 4.0': 'https://creativecommons.org/licenses/by-sa/4.0/',
+  'CC BY 4.0': 'https://creativecommons.org/licenses/by/4.0/',
+  'CC BY-NC-ND 4.0': 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
+  'CC0': 'https://creativecommons.org/publicdomain/zero/1.0/',
+};
+function licenseLink(name) {
+  const url = LICENSE_URL[name];
+  return url ? `<a href="${url}" rel="license" target="_blank">${esc(name)}</a>` : esc(name || '');
+}
+function attribution(b) {
+  const out = [];
+  if (b.based_on) {
+    const url = (b.based_on.match(/https?:\/\/[^\s)]+/) || [])[0];
+    const who = b.based_on.split(',')[0].trim();                 // "SCP-087 by Zaeyde"
+    const where = (b.based_on.split(',')[1] || '').trim();       // "SCP Foundation wiki"
+    const name = esc(who) + (where ? ' (' + esc(where) + ')' : '');
+    out.push(`<span class="src">${T('adapted')} ${url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${name}</a>` : name}. ${T('changed')}</span>`);
+  }
+  if (b.license) out.push(T('under') + ' ' + licenseLink(b.license));
+  return out.join('<br>');
+}
 document.getElementById('filters').addEventListener('click', ev => { const b = ev.target.closest('[data-cat]'); if (b) { filter = b.dataset.cat; render(); } });
 document.querySelectorAll('nav .lang').forEach(b => b.addEventListener('click', () => { LANG = b.dataset.lang; try { localStorage.setItem('moventure_lang', LANG); } catch (e) {} render(); }));
 applyI18n();
